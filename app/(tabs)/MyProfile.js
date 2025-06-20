@@ -12,14 +12,18 @@ import { HomeButton } from '../utils/HomeButton';
 import { Colors } from '../../constants/Colors';
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = 'http://localhost:3030';
-import DatePicker from 'react-datepicker';
+// import DatePicker from 'react-datepicker';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import DatePicker from 'react-datepicker'; // רק לווב
 import 'react-datepicker/dist/react-datepicker.css';
+// import 'react-datepicker/dist/react-datepicker.css';
 import sharedStyles from '../../styles/sharedStyles';
-
+import { Platform } from 'react-native';
 
 
 export default function MyProfile() {
     const router = useRouter();
+
 
     const [isLoading, setIsLoading] = useState(true);
     const [name, setName] = useState('');
@@ -29,7 +33,7 @@ export default function MyProfile() {
     const [pregnancyWeek, setPregnancyWeek] = useState(null);
     const [isEditingPeriod, setIsEditingPeriod] = useState(false);
     const [editedPeriodDate, setEditedPeriodDate] = useState(null);
-
+    const [showDatePicker, setShowDatePicker] = useState(false);
 
 
     useEffect(() => {
@@ -111,45 +115,88 @@ export default function MyProfile() {
                                 <Text style={sharedStyles.text}>תאריך וסת אחרון: </Text>
 
                                 {isEditingPeriod ? (
-                                    <View style={{ zIndex: 9999, position: 'relative' }}>
-                                        <DatePicker
-                                            selected={editedPeriodDate}
-                                            onChange={(date) => {
-                                                setEditedPeriodDate(date);
-                                            }}
-                                            dateFormat="yyyy-MM-dd"
-                                            maxDate={new Date()}
-                                            portalId="root-portal"
-                                            popperPlacement="bottom"
-                                            popperClassName="datepicker-popper"
-                                            onBlur={() => setIsEditingPeriod(false)} // סוגר אם יוצאים
-                                            customInput={
-                                                <input
-                                                    autoFocus
+                                    Platform.OS === 'web' ? (
+                                        <View style={{ zIndex: 9999, position: 'relative' }}>
+                                            <DatePicker
+                                                selected={editedPeriodDate}
+                                                onChange={(date) => setEditedPeriodDate(date)}
+                                                dateFormat="yyyy-MM-dd"
+                                                maxDate={new Date()}
+                                                portalId="root-portal"
+                                                popperPlacement="bottom"
+                                                popperClassName="datepicker-popper"
+                                                onBlur={() => setIsEditingPeriod(false)} // סוגר אם יוצאים
+                                                customInput={
+                                                    <input
+                                                        autoFocus
+                                                        style={{
+                                                            width: 110,
+                                                            textAlign: 'center',
+                                                            fontSize: 16,
+                                                            padding: 8,
+                                                            border: 'none',
+                                                            borderRadius: 10,
+                                                            backgroundColor: '#f2f2f2',
+                                                            cursor: 'pointer',
+                                                        }}
+                                                    />
+                                                }
+                                            />
+                                        </View>
+                                    ) : (
+                                        <>
+                                            <Pressable onPress={() => setShowDatePicker(true)}>
+                                                <Text
                                                     style={{
-                                                        width: 110,
-                                                        textAlign: 'center',
-                                                        fontSize: 16,
-                                                        padding: 8,
-                                                        border: 'none',
-                                                        borderRadius: 10,
                                                         backgroundColor: '#f2f2f2',
-                                                        cursor: 'pointer'
+                                                        padding: 8,
+                                                        borderRadius: 10,
+                                                        textAlign: 'center',
+                                                        width: 110,
+                                                        fontSize: 16,
+                                                        color: '#000',
+                                                    }}
+                                                >
+                                                    {editedPeriodDate
+                                                        ? new Date(editedPeriodDate).toLocaleDateString('he-IL', {
+                                                            year: 'numeric',
+                                                            month: '2-digit',
+                                                            day: '2-digit',
+                                                        })
+                                                        : 'בחרי תאריך'}
+                                                </Text>
+                                            </Pressable>
+
+                                            {showDatePicker && (
+                                                <DateTimePicker
+                                                    value={editedPeriodDate || new Date()}
+                                                    mode="date"
+                                                    display="default"
+                                                    maximumDate={new Date()}
+                                                    onChange={(event, selectedDate) => {
+                                                        setShowDatePicker(false);
+                                                        setIsEditingPeriod(false);
+                                                        if (selectedDate) {
+                                                            setEditedPeriodDate(selectedDate);
+                                                        }
                                                     }}
                                                 />
-                                            }
-                                        />
-                                    </View>
+                                            )}
+                                        </>
+                                    )
                                 ) : (
                                     <>
                                         <Text style={sharedStyles.text}>
                                             {formatDate(editedPeriodDate || lastPeriodDate)}
-                                        </Text>                                            <Pressable onPress={() => {
-                                        setEditedPeriodDate(lastPeriodDate ? new Date(lastPeriodDate) : null);
-                                        setIsEditingPeriod(true);
-                                    }}>
-                                        <Feather name="edit" size={20} color={Colors.primary} style={{ marginRight: 10 }} />
-                                    </Pressable>
+                                        </Text>
+                                        <Pressable
+                                            onPress={() => {
+                                                setEditedPeriodDate(lastPeriodDate ? new Date(lastPeriodDate) : new Date());
+                                                setIsEditingPeriod(true);
+                                            }}
+                                        >
+                                            <Feather name="edit" size={20} color={Colors.primary} style={{ marginRight: 10 }} />
+                                        </Pressable>
                                     </>
                                 )}
                             </View>

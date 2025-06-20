@@ -9,10 +9,13 @@ import axios from "axios";
 import ProtectedRoute from '../../components/ProtectedRoute';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Colors } from '../../constants/Colors';
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+// import DatePicker from "react-datepicker";
+import DateTimePicker from '@react-native-community/datetimepicker';
 import { Spacing } from '../../constants/Sizes';
 import sharedStyles from '../../styles/sharedStyles';
+import { Platform } from 'react-native';
+import DatePicker from 'react-datepicker'; // רק לווב
+import 'react-datepicker/dist/react-datepicker.css';
 
 export const Register = () => {
     const router = useRouter();
@@ -22,7 +25,7 @@ export const Register = () => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
-    const [lastPeriodDate, setLastPeriodDate] = useState('');
+    // const [lastPeriodDate, setLastPeriodDate] = useState('');
     const [showDatePicker, setShowDatePicker] = useState(false);
     const [errors, setErrors] = useState({
         firstName: '',
@@ -31,6 +34,12 @@ export const Register = () => {
         password: '',
         confirmPassword: ''
     });
+    const [lastPeriodDate, setLastPeriodDate] = useState(() => {
+        const today = new Date();
+        today.setDate(today.getDate() - 28); // ברירת מחדל: לפני 28 יום
+        return today.toISOString().split('T')[0]; // מחזיר: "2025-05-23" לדוגמה
+    });
+
 
     const validateField = (fieldName, value) => {
         let valid = true;
@@ -193,41 +202,80 @@ export const Register = () => {
                             borderColor: '#d68aa1',
                             borderRadius: 25,
                             backgroundColor: '#fff',
-                            flexDirection: 'row-reverse', // ✅ כדי להפוך לצד ימין
+                            flexDirection: 'row-reverse',
                             alignItems: 'center',
                             justifyContent: 'space-between'
                         }}>
                             <Text style={authStyles.label}>תאריך וסת אחרון</Text>
 
-                            <div style={{ zIndex: 9999, position: 'relative' }}>
-                                <DatePicker
-                                    selected={lastPeriodDate ? new Date(lastPeriodDate) : null}
-                                    onChange={(date) => {
-                                        const iso = date.toISOString().split('T')[0];
-                                        setLastPeriodDate(iso);
-                                    }}
-                                    dateFormat="yyyy-MM-dd"
-                                    placeholderText="בחרי תאריך"
-                                    maxDate={new Date()}
-                                    popperPlacement="bottom"
-                                    portalId="root-portal"
-                                    popperClassName="datepicker-popper"
-                                    customInput={
-                                        <input
-                                            style={{
-                                                width: '110px',
-                                                textAlign: 'center',
-                                                fontSize: 16,
-                                                padding: '8px',
-                                                border: 'none',
-                                                borderRadius: 10,
-                                                backgroundColor: '#f2f2f2',
-                                                cursor: 'pointer'
+                            {Platform.OS === 'web' ? (
+                                <div style={{ zIndex: 9999, position: 'relative' }}>
+                                    <DatePicker
+                                        selected={lastPeriodDate ? new Date(lastPeriodDate) : null}
+                                        onChange={(date) => {
+                                            const iso = date.toISOString().split('T')[0];
+                                            setLastPeriodDate(iso);
+                                        }}
+                                        dateFormat="yyyy-MM-dd"
+                                        maxDate={new Date()}
+                                        popperPlacement="bottom"
+                                        portalId="root-portal"
+                                        popperClassName="datepicker-popper"
+                                        customInput={
+                                            <input
+                                                style={{
+                                                    width: '110px',
+                                                    textAlign: 'center',
+                                                    fontSize: 16,
+                                                    padding: '8px',
+                                                    border: 'none',
+                                                    borderRadius: 10,
+                                                    backgroundColor: '#f2f2f2',
+                                                    cursor: 'pointer'
+                                                }}
+                                            />
+                                        }
+                                    />
+                                </div>
+                            ) : (
+                                <>
+                                    <Pressable onPress={() => setShowDatePicker(true)}>
+                                        <Text style={{
+                                            width: 110,
+                                            textAlign: 'center',
+                                            fontSize: 16,
+                                            padding: 8,
+                                            borderRadius: 10,
+                                            backgroundColor: '#f2f2f2',
+                                            color: '#000'
+                                        }}>
+                                            {lastPeriodDate
+                                                ? new Date(lastPeriodDate).toLocaleDateString('he-IL', {
+                                                    year: 'numeric',
+                                                    month: '2-digit',
+                                                    day: '2-digit'
+                                                })
+                                                : 'בחרי תאריך'}
+                                        </Text>
+                                    </Pressable>
+
+                                    {showDatePicker && (
+                                        <DateTimePicker
+                                            value={lastPeriodDate ? new Date(lastPeriodDate) : new Date()}
+                                            mode="date"
+                                            display="default"
+                                            maximumDate={new Date()}
+                                            onChange={(event, selectedDate) => {
+                                                setShowDatePicker(false);
+                                                if (selectedDate) {
+                                                    const iso = selectedDate.toISOString().split('T')[0];
+                                                    setLastPeriodDate(iso);
+                                                }
                                             }}
                                         />
-                                    }
-                                />
-                            </div>
+                                    )}
+                                </>
+                            )}
                         </View>
                     </View>
 

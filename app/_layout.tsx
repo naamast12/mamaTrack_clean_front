@@ -5,6 +5,7 @@ import React from 'react';
 import { View, Text, ActivityIndicator } from 'react-native';
 import { AuthProvider, AuthContext } from '../components/ui/AuthProvider'; // ✅ נתיב נכון
 
+
 export default function RootLayout() {
     return (
         <AuthProvider>

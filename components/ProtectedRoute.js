@@ -1,80 +1,39 @@
-//ProtectedRoute
 
-import React, {useEffect, useRef, useState} from 'react';
+// /components/ProtectedRoute.js
+import React, { useEffect, useRef, useContext, useState } from 'react';
 import { Redirect } from 'expo-router';
-import Cookies from 'js-cookie';
-import axios from 'axios';
-import {dashboardStyles} from "../styles/dashboardStyles";
 import { View, Animated, Text } from 'react-native';
-
+import { AuthContext } from './ui/AuthProvider';
+import { dashboardStyles } from '../styles/dashboardStyles';
 
 export default function ProtectedRoute({ children, requireAuth }) {
-    const [isInit, setIsInit] = useState(false);
-    const [user, setUser] = useState(null);
+    const { user, isInit } = useContext(AuthContext);
     const floatAnim = useRef(new Animated.Value(0)).current;
-
-
-    useEffect(() => {
-        // נבדוק /api/user רק אם ממש צריך (או אם requireAuth=true)
-        // או שאפשר תמיד לבדוק.
-        if (requireAuth) {
-            axios.get('/api/user')
-                .then(res => {
-                    if (res.data && res.data.success) {
-                        setUser(res.data);
-                    } else {
-                        Cookies.remove('userToken');
-                        setUser(null);
-                    }
-                })
-                .catch(() => {
-                    Cookies.remove('userToken');
-                    setUser(null);
-                })
-                .finally(() => {
-                    setIsInit(true);
-                });
-        } else {
-            // עמוד שלא דורש auth
-            setIsInit(true);
-        }
-    }, [requireAuth]);
+    const [redirected, setRedirected] = useState(false); // ✅ מנגנון מניעת לולאה
 
     useEffect(() => {
         Animated.loop(
             Animated.sequence([
-                Animated.timing(floatAnim, {
-                    toValue: -10,
-                    duration: 2000,
-                    useNativeDriver: true,
-                }),
-                Animated.timing(floatAnim, {
-                    toValue: 0,
-                    duration: 2000,
-                    useNativeDriver: true,
-                }),
+                Animated.timing(floatAnim, { toValue: -10, duration: 2000, useNativeDriver: true }),
+                Animated.timing(floatAnim, { toValue: 0, duration: 2000, useNativeDriver: true }),
             ])
         ).start();
     }, []);
 
-    if (!isInit && requireAuth) {
-        // בזמן הטעינה
-        return null;
-    }
+    // ✅ אם עדיין בטעינה, לא מציגים כלום
+    if (!isInit) return null;
 
-    // אם הדף דורש התחברות אבל אין user => להפנות ל-login
-    if (requireAuth && !user) {
+    // ✅ מנגנון מניעת לולאה: רק פעם אחת נבצע הפניה
+    if (requireAuth && !user && !redirected) {
+        setRedirected(true);
         return <Redirect href="/authentication/Login" />;
     }
 
-    // אם הדף לא דורש התחברות, אבל יש user => להפנות ל-dashboard
-    if (!requireAuth && user) {
+    if (!requireAuth && user && !redirected) {
+        setRedirected(true);
         return <Redirect href="/(tabs)/Dashboard" />;
     }
 
-
-
-    // מציגים את הילדים כרגיל
     return (
         <View style={{ flex: 1 }}>
             {children}
@@ -96,5 +55,3 @@ export default function ProtectedRoute({ children, requireAuth }) {
         </View>
     );
 }
-
-//end of ProtectedRoute

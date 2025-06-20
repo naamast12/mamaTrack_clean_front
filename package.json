@@ -1,5 +1,5 @@
 {
-  "name": "mamatrack_front",
+  "name": "mamatrack_clear_front",
   "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {
@@ -22,6 +22,7 @@
     "@mui/icons-material": "^6.4.3",
     "@mui/material": "^6.4.3",
     "@react-native-async-storage/async-storage": "1.23.1",
+    "@react-native-community/datetimepicker": "^8.4.1",
     "@react-navigation/bottom-tabs": "^7.2.0",
     "@react-navigation/native": "^7.0.14",
     "@react-navigation/stack": "^7.1.1",
@@ -46,6 +47,7 @@
     "lottie-react": "^2.4.1",
     "lucide-react": "^0.488.0",
     "react": "18.3.1",
+    "react-datepicker": "^8.4.0",
     "react-dom": "18.3.1",
     "react-native": "0.76.6",
     "react-native-confetti-cannon": "^1.5.2",
