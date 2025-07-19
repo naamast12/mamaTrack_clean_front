@@ -1,0 +1,31 @@
+import React from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
+import styles from '../../styles/categoryTabs';
+
+const categories = [
+    "היגיינה וטיפוח",
+    "בגדים (לאם)",
+    "רפואי ומסמכים",
+    "מוצרים לתינוק"
+];
+
+export default function CategoryTabs({ selected, onSelect }) {
+    return (
+        <View style={styles.tabsContainer}>
+            {categories.map(cat => (
+                <TouchableOpacity
+                    key={cat}
+                    onPress={() => onSelect(cat)}
+                    style={[
+                        styles.tabButton,
+                        selected === cat && styles.tabButtonActive
+                    ]}
+                >
+                    <Text style={selected === cat ? styles.tabButtonTextActive : styles.tabButtonText}>
+                        {cat}
+                    </Text>
+                </TouchableOpacity>
+            ))}
+        </View>
+    );
+}

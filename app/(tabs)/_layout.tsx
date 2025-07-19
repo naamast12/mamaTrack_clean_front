@@ -18,7 +18,7 @@ export default function TabLayout() {
 
     return (
         <Tabs
-            initialRouteName="Dashboard" // הגדרת הטאב הראשי כ- "Dashboard"
+             //initialRouteName="Dashboard" // הגדרת הטאב הראשי כ- "Dashboard"
             screenOptions={{
                 tabBarActiveTintColor: colorScheme === 'dark' ? Colors.accent : Colors.primary,
                 headerShown: false,
@@ -34,15 +34,15 @@ export default function TabLayout() {
         >
             <Tabs.Screen name="index" options={{ href: null }} />
 
-            <Tabs.Screen
-                name="Dashboard"
-                options={{
-                    title: 'דף הבית',
-                    tabBarIcon: ({ color }) => (
-                        <IconSymbol size={28} name="house.fill" color={color} />
-                    ),
-                }}
-            />
+            {/*<Tabs.Screen*/}
+            {/*    //name="Dashboard"*/}
+            {/*    options={{*/}
+            {/*        title: 'דף הבית',*/}
+            {/*        tabBarIcon: ({ color }) => (*/}
+            {/*            <IconSymbol size={28} name="house.fill" color={color} />*/}
+            {/*        ),*/}
+            {/*    }}*/}
+            {/*/>*/}
 
             <Tabs.Screen
                 name="MyProfile"

@@ -6,13 +6,13 @@ import ProtectedRoute from '@/components/ProtectedRoute';
 import { LinearGradient } from 'expo-linear-gradient';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import {dashboardStyles} from '../../styles/dashboardStyles'
-import { Colors } from '../../constants/Colors';
-import sharedStyles from '../../styles/sharedStyles';
+import {dashboardStyles} from '../styles/dashboardStyles'
+import { Colors } from '../constants/Colors';
+import sharedStyles from '../styles/sharedStyles';
 
 
 
-export default function Dashboard() {
+export default function Index() {
     const router = useRouter();
     const [loading, setLoading] = useState(true);
 
