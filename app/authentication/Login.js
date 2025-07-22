@@ -12,7 +12,6 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Colors } from '@/constants/Colors';
 import axios from "axios";
 import sharedStyles from '../../styles/sharedStyles';
-import storage from '../utils/storage';
 
 const Login = () => {
     const [mail, setMail] = useState('');
@@ -28,7 +27,7 @@ const Login = () => {
         if (!navigationState?.key) return;
         const userToken = Cookies.get('userToken');
         if (userToken) {
-            router.replace('/(tabs)/Dashboard');
+            router.replace('/');
         }
     }, [navigationState?.key, router]);
 
@@ -53,23 +52,8 @@ const Login = () => {
             const response = await axios.post('http://localhost:3030/api/login', loginData);
 
             if (response.data.success) {
-                // Get userId from response
-                const userId = response.data.user && response.data.user.id;
-                console.log(userId);
-
-                if (userId) {
-                    await storage.set('userId', userId);
-                    const testId = await storage.get('userId');
-                    console.log('userId after saving to AsyncStorage:', testId);
-
-
-                } else {
-                    // TODO: Backend must return userId in response.data.user.id
-                    console.warn('userId not found in login response. Please update backend to return userId.');
-                }
                 alert("ההתחברות הצליחה!");
                 Cookies.set('userToken', response.data.token, { expires: 7 });
-                await storage.set('userToken', response.data.token); // ← חשוב!
                 setMail('');
                 setPassword('');
                 router.replace('/');

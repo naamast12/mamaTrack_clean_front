@@ -69,6 +69,14 @@ const contractionTimerStyles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 10,
   },
+  buttonGray: {
+    backgroundColor: '#9e9e9e', // אפור לכפתור איפוס
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginTop: 10,
+  },
   buttonText: {
     color: '#fff',
     fontWeight: 'bold',
