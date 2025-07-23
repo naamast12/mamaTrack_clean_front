@@ -5,7 +5,13 @@ import {widthPercentageToDP as wp} from "react-native-responsive-screen";
 const dashboardStyles = StyleSheet.create({
     scrollContainer: {
         alignItems: 'center',
-        backgroundColor: Colors.background,
+    },
+    dashboardContainer: {
+        backgroundColor: Colors.white,
+        borderRadius: 12,
+        padding: 20,
+        maxWidth: 600,
+        marginRight: 20,
     },
     header: {
         width: wp(90),

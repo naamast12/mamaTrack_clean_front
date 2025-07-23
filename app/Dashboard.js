@@ -9,6 +9,7 @@ import Cookies from 'js-cookie';
 import {dashboardStyles} from '../styles/dashboardStyles'
 import { Colors } from '../constants/Colors';
 import sharedStyles from '../styles/sharedStyles';
+import {myProfileStyles} from "../styles/myProfileStyles";
 
 
 
@@ -68,7 +69,10 @@ export default function Index() {
 
     return (
         <ProtectedRoute requireAuth={true}>
-            <View contentContainerStyle={dashboardStyles.scrollContainer}>
+            <View style={{ flex: 1, backgroundColor: '#f2f2f2' }}>
+
+            <ScrollView contentContainerStyle={dashboardStyles.scrollContainer}>
+
                 <View style={dashboardStyles.header}>
                     {/* לוגו מצד שמאל */}
                     <Text style={dashboardStyles.logo}>
@@ -84,6 +88,8 @@ export default function Index() {
                 </View>
 
 
+                <View style={{ flexDirection: "row-reverse", justifyContent: 'center', width: '100%' }}>
+                    <View style={dashboardStyles.dashboardContainer}>
                 <LinearGradient
                     colors={[Colors.primary, Colors.accent]}
                     start={{ x: 1, y: 0 }}
@@ -92,6 +98,7 @@ export default function Index() {
                 >
                     <Text style={dashboardStyles.gradientTitle}>ברוכים הבאים ל MamaTrack!</Text>
                 </LinearGradient>
+
 
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                     {[
@@ -115,7 +122,12 @@ export default function Index() {
                     ))}
 
                 </View>
+                    </View>
+                </View>
+            </ScrollView>
+
             </View>
+
         </ProtectedRoute>
     );
 }

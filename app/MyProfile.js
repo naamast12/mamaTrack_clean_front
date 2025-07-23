@@ -7,9 +7,9 @@ import axios from 'axios';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import { FontAwesome, Feather } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import {myProfileStyles} from '../../styles/myProfileStyles';
-import { HomeButton } from '../utils/HomeButton';
-import { Colors } from '../../constants/Colors';
+import {myProfileStyles} from '../styles/myProfileStyles';
+import { HomeButton } from './utils/HomeButton';
+import { Colors } from '../constants/Colors';
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = 'http://localhost:3030';
 // import DatePicker from 'react-datepicker';
@@ -17,8 +17,10 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import DatePicker from 'react-datepicker'; // רק לווב
 import 'react-datepicker/dist/react-datepicker.css';
 // import 'react-datepicker/dist/react-datepicker.css';
-import sharedStyles from '../../styles/sharedStyles';
+import sharedStyles from '../styles/sharedStyles';
 import { Platform } from 'react-native';
+import {dashboardStyles} from "../styles/dashboardStyles";
+
 
 
 export default function MyProfile() {
@@ -90,12 +92,22 @@ export default function MyProfile() {
 
     return (
         <ProtectedRoute requireAuth={true}>
+            <View style={{ flex: 1, backgroundColor: '#f2f2f2' }}>
+
             <ScrollView contentContainerStyle={myProfileStyles.scrollContainer}>
 
                 <HomeButton />
 
-                <View style={{ flexDirection: "row-reverse", justifyContent: 'center', width: '100%' }}>                    <View style={myProfileStyles.profileContainer}>
-                    <Text style={myProfileStyles.profileSectionTitle}>פרופיל אישי </Text>
+                <View style={{ flexDirection: "row-reverse", justifyContent: 'center', width: '100%' }}>
+                    <View style={myProfileStyles.profileContainer}>
+                        <LinearGradient
+                            colors={[Colors.primary, Colors.accent]}
+                            start={{ x: 1, y: 0 }}
+                            end={{ x: 0, y: 0 }}
+                            style={dashboardStyles.gradientTitleWrapper}
+                        >
+                            <Text style={dashboardStyles.gradientTitle}>פרופיל אישי</Text>
+                        </LinearGradient>
                     <View style={myProfileStyles.avatarWrapper}>
                         <FontAwesome name="user" size={100} color= {Colors.primary} />
                     </View>
@@ -239,6 +251,8 @@ export default function MyProfile() {
                     </View>
                 </View>
             </ScrollView>
+            </View>
+
         </ProtectedRoute>
     );
 }
