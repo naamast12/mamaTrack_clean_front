@@ -10,6 +10,8 @@ import {dashboardStyles} from '../styles/dashboardStyles'
 import { Colors } from '../constants/Colors';
 import sharedStyles from '../styles/sharedStyles';
 import {myProfileStyles} from "../styles/myProfileStyles";
+import {HomeButton} from "./utils/HomeButton";
+import {Logo} from "./utils/Logo";
 
 
 
@@ -74,11 +76,9 @@ export default function Index() {
             <ScrollView contentContainerStyle={dashboardStyles.scrollContainer}>
 
                 <View style={dashboardStyles.header}>
-                    {/* לוגו מצד שמאל */}
-                    <Text style={dashboardStyles.logo}>
-                        <Text style={dashboardStyles.mathColor}>Mama</Text>
-                        <Text style={dashboardStyles.JourneyColor}>Track</Text>
-                    </Text>
+                    {/* לוגו  */}
+                    <Logo />
+
 
                     {/* כפתור התנתקות מצד ימין */}
                     <TouchableOpacity onPress={handleLogout} style={dashboardStyles.logoutIconButton}>

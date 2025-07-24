@@ -20,6 +20,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import sharedStyles from '../styles/sharedStyles';
 import { Platform } from 'react-native';
 import {dashboardStyles} from "../styles/dashboardStyles";
+import {Logo} from "./utils/Logo";
 
 
 
@@ -97,6 +98,8 @@ export default function MyProfile() {
             <ScrollView contentContainerStyle={myProfileStyles.scrollContainer}>
 
                 <HomeButton />
+                <Logo />
+
 
                 <View style={{ flexDirection: "row-reverse", justifyContent: 'center', width: '100%' }}>
                     <View style={myProfileStyles.profileContainer}>

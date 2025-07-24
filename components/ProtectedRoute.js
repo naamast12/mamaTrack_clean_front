@@ -31,7 +31,7 @@ export default function ProtectedRoute({ children, requireAuth }) {
 
     if (!requireAuth && user && !redirected) {
         setRedirected(true);
-        return <Redirect href="/(tabs)/Dashboard" />;
+        return <Redirect href="/Dashboard" />;
     }
 
     return (
