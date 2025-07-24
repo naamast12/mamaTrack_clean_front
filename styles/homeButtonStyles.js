@@ -23,7 +23,7 @@ const homeButtonStyles = StyleSheet.create({
         elevation: 5,
     },
     buttonText: {
-        color: Colors.secondary,
+        color: Colors.danger,
         fontSize: 16,
         fontWeight: 'bold',
     },
