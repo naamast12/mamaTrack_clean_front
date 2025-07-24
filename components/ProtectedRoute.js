@@ -5,6 +5,8 @@ import { Redirect } from 'expo-router';
 import { View, Animated, Text } from 'react-native';
 import { AuthContext } from './ui/AuthProvider';
 import { dashboardStyles } from '../styles/dashboardStyles';
+import {Logo} from "../app/utils/Logo";
+import {HomeButton} from "../app/utils/HomeButton";
 
 export default function ProtectedRoute({ children, requireAuth }) {
     const { user, isInit } = useContext(AuthContext);
@@ -36,6 +38,10 @@ export default function ProtectedRoute({ children, requireAuth }) {
 
     return (
         <View style={{ flex: 1 }}>
+            <View style={{ position: 'absolute', top: 20, left: 20, zIndex: 10 }}>
+                <Logo />
+            </View>
+
             {children}
             {/* הסימנים המרחפים */}
             <Animated.View

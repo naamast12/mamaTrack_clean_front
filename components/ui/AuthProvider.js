@@ -13,27 +13,25 @@ export function AuthProvider({ children }) {
     const [isInit, setIsInit] = useState(false);
 
     useEffect(() => {
-        // קודם מנסים לטעון מה-Local Storage
         const loadUserFromCache = async () => {
-            const cachedUser = await storage.get('cachedUser');
-            if (cachedUser) {
-                setUser(JSON.parse(cachedUser));
-                setIsInit(true);
-            }
-
-            // בדיקת התחברות מהשרת
             try {
+                const cachedUser = await storage.get('userData');
+                if (cachedUser) {
+                    setUser(cachedUser); // ✅ בלי JSON.parse
+                }
+
                 const { data } = await api.get('/api/user');
-                if (data.success) {
-                    setUser(data);
-                    await storage.set('cachedUser', JSON.stringify(data)); // שומרים ב-Cache
+
+                if (data.success && data.user) {
+                    setUser(data.user); // ✅ רק את האובייקט של המשתמש
+                    await storage.set('userData', data.user);
                 } else {
-                    await storage.remove('cachedUser');
+                    await storage.remove('userData');
                     await storage.remove('userToken');
                     setUser(null);
                 }
             } catch (err) {
-                await storage.remove('cachedUser');
+                await storage.remove('userData');
                 await storage.remove('userToken');
                 setUser(null);
             } finally {
@@ -43,6 +41,7 @@ export function AuthProvider({ children }) {
 
         loadUserFromCache();
     }, []);
+
 
     return (
         <AuthContext.Provider value={{ user, isInit }}>

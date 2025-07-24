@@ -5,8 +5,8 @@ import { Colors } from '../constants/Colors';
 const homeButtonStyles = StyleSheet.create({
     buttonWrapper: {
         position: 'absolute',
-        top: 30,
-        left: 20,
+        top: 40,
+        right: 40, // ✅ מעביר את הכפתור לימין
         zIndex: 10,
     },
     gradient: {

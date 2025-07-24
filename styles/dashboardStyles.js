@@ -16,9 +16,9 @@ const dashboardStyles = StyleSheet.create({
     header: {
         width: wp(90),
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'flex-end', // ✅ שם את התוכן בימין
         alignItems: 'center',
-        marginTop: 16,
+        marginTop: 40,
     },
     logo: {
         fontSize: 25,
@@ -61,13 +61,13 @@ const dashboardStyles = StyleSheet.create({
     },
     floatingSymbol: {
         position: 'absolute',
-        top: 100,
+        bottom: 40,       // ⬇️ במקום top
         right: 20,
-        opacity: 0.15,
+        opacity: 0.45,
     },
     bottomLeft: {
         top: undefined,
-        bottom: 150,
+        bottom: 40,
         left: 20,
         right: undefined,
     },

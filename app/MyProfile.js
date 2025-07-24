@@ -1,32 +1,26 @@
-//MyProfile
+
 
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Pressable, Switch, ScrollView, StyleSheet, Image } from 'react-native';
-import { useRouter } from 'expo-router';
-import axios from 'axios';
-import ProtectedRoute from '@/components/ProtectedRoute';
+import { View, Text, Pressable, ScrollView, Platform } from 'react-native';
 import { FontAwesome, Feather } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import {myProfileStyles} from '../styles/myProfileStyles';
-import { HomeButton } from './utils/HomeButton';
-import { Colors } from '../constants/Colors';
-axios.defaults.withCredentials = true;
-axios.defaults.baseURL = 'http://localhost:3030';
-// import DatePicker from 'react-datepicker';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import DatePicker from 'react-datepicker'; // רק לווב
+import DatePicker from 'react-datepicker'; // לשימוש רק בווב
 import 'react-datepicker/dist/react-datepicker.css';
-// import 'react-datepicker/dist/react-datepicker.css';
+
+import { useRouter } from 'expo-router';
+import ProtectedRoute from '@/components/ProtectedRoute';
+import { HomeButton } from './utils/HomeButton';
+
+import { myProfileStyles } from '../styles/myProfileStyles';
 import sharedStyles from '../styles/sharedStyles';
-import { Platform } from 'react-native';
-import {dashboardStyles} from "../styles/dashboardStyles";
-import {Logo} from "./utils/Logo";
+import { dashboardStyles } from '../styles/dashboardStyles';
+import { Colors } from '../constants/Colors';
 
-
+import api from '../src/api/axiosConfig';
 
 export default function MyProfile() {
     const router = useRouter();
-
 
     const [isLoading, setIsLoading] = useState(true);
     const [name, setName] = useState('');
@@ -34,6 +28,7 @@ export default function MyProfile() {
     const [lastPeriodDate, setLastPeriodDate] = useState(null);
     const [dueDate, setDueDate] = useState(null);
     const [pregnancyWeek, setPregnancyWeek] = useState(null);
+
     const [isEditingPeriod, setIsEditingPeriod] = useState(false);
     const [editedPeriodDate, setEditedPeriodDate] = useState(null);
     const [showDatePicker, setShowDatePicker] = useState(false);
@@ -45,16 +40,16 @@ export default function MyProfile() {
 
     async function fetchUserFromServer() {
         try {
-            const res = await axios.get('/api/user');
+            const res = await api.get('/api/user');
             if (res.data && res.data.success) {
                 setName(`${res.data.firstName} ${res.data.lastName}`);
                 setEmail(res.data.mail);
                 setLastPeriodDate(res.data.lastPeriodDate);
                 setDueDate(res.data.estimatedDueDate);
-                setPregnancyWeek(res.data.pregnancyWeek); // ⬅️ חדש
+                setPregnancyWeek(res.data.pregnancyWeek);
             }
         } catch (err) {
-            console.log('Error fetching user info:', err);
+            console.log('שגיאה בקבלת נתוני משתמש:', err);
         } finally {
             setIsLoading(false);
         }
@@ -65,7 +60,7 @@ export default function MyProfile() {
 
         try {
             const iso = editedPeriodDate.toISOString().split('T')[0];
-            const res = await axios.put('/api/user/preferences', {
+            const res = await api.put('/api/user/preferences', {
                 lastPeriodDate: iso,
             });
 
@@ -73,8 +68,6 @@ export default function MyProfile() {
                 setLastPeriodDate(iso);
                 setIsEditingPeriod(false);
                 await fetchUserFromServer();
-
-                // ✅ התראה על הצלחה
                 alert('השינויים נשמרו בהצלחה!');
             }
         } catch (err) {
@@ -85,12 +78,9 @@ export default function MyProfile() {
 
     function formatDate(date) {
         if (!date) return '';
-        if (typeof date === 'string') return date; // אם זה כבר בפורמט ISO
-
-        return date.toISOString().split('T')[0]; // אם זה אובייקט Date
+        if (typeof date === 'string') return date;
+        return date.toISOString().split('T')[0];
     }
-
-
     return (
         <ProtectedRoute requireAuth={true}>
             <View style={{ flex: 1, backgroundColor: '#f2f2f2' }}>
@@ -98,7 +88,6 @@ export default function MyProfile() {
             <ScrollView contentContainerStyle={myProfileStyles.scrollContainer}>
 
                 <HomeButton />
-                <Logo />
 
 
                 <View style={{ flexDirection: "row-reverse", justifyContent: 'center', width: '100%' }}>
@@ -259,5 +248,3 @@ export default function MyProfile() {
         </ProtectedRoute>
     );
 }
-
-//end of MyProfile

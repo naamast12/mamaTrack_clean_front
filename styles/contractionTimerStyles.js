@@ -52,6 +52,8 @@ const contractionTimerStyles = StyleSheet.create({
     textAlign: 'center',
     color: '#888',
     marginVertical: 10,
+    fontSize: 16,
+
   },
   buttonBlue: {
     backgroundColor: '#2196F3',
@@ -97,6 +99,12 @@ const contractionTimerStyles = StyleSheet.create({
     fontSize: 18,
     textAlign: 'center',
   },
+  intervalText: {
+    fontSize: 12,
+    textAlign: 'right',
+    color: '#666',
+    marginRight: 12,
+  }
 });
 
 export default contractionTimerStyles;

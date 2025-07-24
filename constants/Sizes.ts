@@ -1,11 +1,11 @@
 /**
- * Below are the sizes that are used in the app. 
+ * Below are the sizes that are used in the app.
  */
 
 
 
 export const Sizes = {
-    mediom: '30px'
+    medium: '30px',
 };
 
 
