@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import contractionTimerStyles from '../../styles/contractionTimerStyles';
-
 import api from '../../src/api/axiosConfig';
 import ProtectedRoute from "../../components/ProtectedRoute";
-import {HomeButton} from "../utils/HomeButton";
+import { HomeButton } from "../utils/HomeButton";
+
 const HOSPITAL_MESSAGE = "Your contractions are regular and strong – it's time to go to the hospital!";
 
 const ContractionTimer = () => {
@@ -13,40 +13,25 @@ const ContractionTimer = () => {
   const [duration, setDuration] = useState(0);
   const [contractions, setContractions] = useState([]);
   const [showHospitalMessage, setShowHospitalMessage] = useState(false);
-  const timerRef = useRef(null);
-  const [userId, setUserId] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const timerRef = useRef(null);
 
-
-  useEffect(() => {
-    async function fetchUserId() {
-      try {
-        const res = await api.get('/api/user');
-        if (res.data && res.data.success) {
-          setUserId(res.data.userId); // 💡 מניח שזה השם של השדה אצלך
-        }
-      } catch (err) {
-        console.error('Error fetching user ID:', err);
-      }
-    }
-
-    fetchUserId();
-  }, []);
-
-
-  // פונקציה להצגת אינטרוול בצורה ידידותית (לדוגמה: "3m 45s")
   const formatInterval = (seconds) => {
     if (!seconds || seconds < 0) return '-';
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
-    return `${mins}m ${secs}s`;
+
+    const parts = [];
+    if (mins > 0) parts.push(`${mins} ${mins === 1 ? 'minute' : 'minutes'}`);
+    if (secs > 0) parts.push(`${secs} ${secs === 1 ? 'second' : 'seconds'}`);
+
+    return parts.join(' and ');
   };
 
   const fetchContractions = async () => {
-    setIsLoading(true); // ⬅️ מתחילים טעינה
+    setIsLoading(true);
     try {
-      const res = await api.get(`/api/contractions/${userId}`);
-
+      const res = await api.get('/api/contractions');
       if (res.data?.success) {
         const formatted = res.data.contractions.map((c, idx, arr) => {
           const start = new Date(c.startTime).getTime();
@@ -64,18 +49,16 @@ const ContractionTimer = () => {
       }
     } catch (err) {
       console.error('שגיאה בשליפת צירים מהשרת:', err);
-    }finally {
-      setIsLoading(false); // ⬅️ סיימנו טעינה
+    } finally {
+      setIsLoading(false);
     }
   };
+
   useEffect(() => {
-    if (!userId) return;
     fetchContractions();
-  }, [userId]);
+  }, []);
 
   const handleButtonPress = async () => {
-    if (!userId) return;
-
     if (!isTiming) {
       const now = Date.now();
       setStartTime(now);
@@ -85,7 +68,6 @@ const ContractionTimer = () => {
       setIsTiming(false);
       const endTime = Date.now();
 
-      // בדיקה אם startTime באמת הוגדר
       if (!startTime) {
         alert("⚠️ התחלה לא אותחלה – נסי שוב.");
         return;
@@ -93,14 +75,12 @@ const ContractionTimer = () => {
 
       const contractionDuration = Math.round((endTime - startTime) / 1000);
 
-      // בדיקה אם יצא משך חריג
       if (contractionDuration <= 0 || contractionDuration > 3600) {
         alert(`⚠️ משך חריג: ${contractionDuration} שניות – נא נסי שוב.`);
         return;
       }
 
       const payload = {
-        userId,
         startTime: new Date(startTime).toISOString(),
         endTime: new Date(endTime).toISOString(),
         durationSeconds: contractionDuration,
@@ -109,11 +89,19 @@ const ContractionTimer = () => {
       try {
         const res = await api.post('/api/contractions', payload);
         if (res.data && res.data.success) {
-          setContractions(prev => [...prev, {
-            startTime,
-            duration: contractionDuration,
-            interval: null
-          }]);
+          setContractions(prev => {
+            const last = prev[prev.length - 1];
+            const interval = last ? Math.round((startTime - last.startTime) / 1000) : null;
+
+            return [
+              ...prev,
+              {
+                startTime,
+                duration: contractionDuration,
+                interval
+              }
+            ];
+          });
           setShowHospitalMessage(res.data.shouldGoToHospital);
         }
       } catch (err) {
@@ -127,15 +115,19 @@ const ContractionTimer = () => {
 
   const handleResetContractions = async () => {
     try {
-      if (userId) {
-        await api.delete(`/api/contractions/${userId}`);
-        await fetchContractions(); // 🟢 ריענון הנתונים מהשרת
+      const res = await api.delete('/api/contractions');
+      console.log("🔁 delete response:", res.data);
 
+      if (res.data?.success) {
+        setContractions([]);
+        setShowHospitalMessage(false);
+        alert("הצירים נמחקו בהצלחה ✅");
+      } else {
+        alert("⚠️ לא הצלחנו למחוק את הצירים");
       }
-      setContractions([]);
-      setShowHospitalMessage(false);
     } catch (err) {
-      console.error('Error clearing contractions:', err);
+      console.error('❌ שגיאה במחיקת הצירים:', err);
+      alert("שגיאה בעת מחיקת הצירים מהשרת.");
     }
   };
 
@@ -161,8 +153,6 @@ const ContractionTimer = () => {
   return (
       <ProtectedRoute requireAuth={true}>
         <HomeButton />
-
-
         <ScrollView contentContainerStyle={contractionTimerStyles.container}>
           <Text style={contractionTimerStyles.title}>Contraction Timer</Text>
 
@@ -180,7 +170,6 @@ const ContractionTimer = () => {
               </Text>
             </TouchableOpacity>
 
-            {/* כפתור איפוס חדש */}
             <TouchableOpacity
                 style={contractionTimerStyles.buttonGray}
                 onPress={handleResetContractions}
@@ -219,19 +208,8 @@ const ContractionTimer = () => {
                   </View>
               ))
           )}
-          {contractions.map((c, idx) => (
-              <View key={idx} style={contractionTimerStyles.listRow}>
-                <Text style={contractionTimerStyles.cell}>{idx + 1}</Text>
-                <Text style={contractionTimerStyles.cell}>{formatTime(c.startTime)}</Text>
-                <Text style={contractionTimerStyles.cell}>{c.duration}</Text>
-                <Text style={contractionTimerStyles.cell}>
-                  {c.interval !== null ? formatInterval(c.interval) : '-'}
-                </Text>
-              </View>
-          ))}
         </ScrollView>
       </ProtectedRoute>
-
   );
 };
 
