@@ -5,7 +5,7 @@ import { View, Text, TextInput, Pressable, ScrollView, Alert, TouchableOpacity }
 import { useRouter } from 'expo-router';
 import { authStyles } from '../../styles/authStyles';
 import { dashboardStyles } from '../../styles/dashboardStyles'; // רק אם באמת צריךimport { Spacing } from "../../constants/Sizes";
-import axios from "axios";
+// import axios from "axios";
 import ProtectedRoute from '../../components/ProtectedRoute';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Colors } from '../../constants/Colors';
@@ -16,6 +16,7 @@ import sharedStyles from '../../styles/sharedStyles';
 import { Platform } from 'react-native';
 import DatePicker from 'react-datepicker'; // רק לווב
 import 'react-datepicker/dist/react-datepicker.css';
+import api from '../../src/api/axiosConfig';
 
 export const Register = () => {
     const router = useRouter();
@@ -124,7 +125,7 @@ export const Register = () => {
 
         try {
             const userData = { firstName, lastName, mail, password ,lastPeriodDate};
-            const response = await axios.post('http://localhost:3030/api/register', userData);
+            const response = await api.post('/api/register', userData);
 
             if (response.data.success) {
                 alert( "ההרשמה הצליחה!");
