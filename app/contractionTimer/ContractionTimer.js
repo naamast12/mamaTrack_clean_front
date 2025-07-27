@@ -5,7 +5,7 @@ import api from '../../src/api/axiosConfig';
 import ProtectedRoute from "../../components/ProtectedRoute";
 import { HomeButton } from "../utils/HomeButton";
 
-const HOSPITAL_MESSAGE = "Your contractions are regular and strong – it's time to go to the hospital!";
+const HOSPITAL_MESSAGE = "הצירים שלך סדירים וחזקים – הגיע הזמן ללכת לבית החולים!";
 
 const ContractionTimer = () => {
   const [isTiming, setIsTiming] = useState(false);
@@ -22,10 +22,10 @@ const ContractionTimer = () => {
     const secs = seconds % 60;
 
     const parts = [];
-    if (mins > 0) parts.push(`${mins} ${mins === 1 ? 'minute' : 'minutes'}`);
-    if (secs > 0) parts.push(`${secs} ${secs === 1 ? 'second' : 'seconds'}`);
+    if (mins > 0) parts.push(`${mins} ${mins === 1 ? 'דקה' : 'דקות'}`);
+    if (secs > 0) parts.push(`${secs} ${secs === 1 ? 'שנייה' : 'שניות'}`);
 
-    return parts.join(' and ');
+    return parts.join(' ו');
   };
 
   const fetchContractions = async () => {
@@ -154,11 +154,11 @@ const ContractionTimer = () => {
       <ProtectedRoute requireAuth={true}>
         <HomeButton />
         <ScrollView contentContainerStyle={contractionTimerStyles.container}>
-          <Text style={contractionTimerStyles.title}>Contraction Timer</Text>
+          <Text style={contractionTimerStyles.title}>⏱️ טיימר צירים</Text>
 
           <View style={contractionTimerStyles.timerContainer}>
             <Text style={contractionTimerStyles.timerText}>
-              {isTiming ? `Duration: ${duration} sec` : 'Press start to begin timing'}
+              {isTiming ? `משך: ${duration} שניות` : 'לחצי התחל כדי להתחיל לתזמן'}
             </Text>
 
             <TouchableOpacity
@@ -166,7 +166,7 @@ const ContractionTimer = () => {
                 onPress={handleButtonPress}
             >
               <Text style={contractionTimerStyles.buttonText}>
-                {isTiming ? 'Stop Contraction' : 'Start Contraction'}
+                {isTiming ? 'עצור ציר' : 'התחל ציר'}
               </Text>
             </TouchableOpacity>
 
@@ -174,7 +174,7 @@ const ContractionTimer = () => {
                 style={contractionTimerStyles.buttonGray}
                 onPress={handleResetContractions}
             >
-              <Text style={contractionTimerStyles.buttonText}>Clear</Text>
+              <Text style={contractionTimerStyles.buttonText}>נקה הכל</Text>
             </TouchableOpacity>
           </View>
 
@@ -184,18 +184,18 @@ const ContractionTimer = () => {
               </View>
           )}
 
-          <Text style={contractionTimerStyles.listTitle}>Contractions</Text>
+          <Text style={contractionTimerStyles.listTitle}>📋 רשימת צירים</Text>
           <View style={contractionTimerStyles.listHeader}>
             <Text style={contractionTimerStyles.headerCell}>#</Text>
-            <Text style={contractionTimerStyles.headerCell}>Start Time</Text>
-            <Text style={contractionTimerStyles.headerCell}>Duration (s)</Text>
-            <Text style={contractionTimerStyles.headerCell}>Interval (s)</Text>
+            <Text style={contractionTimerStyles.headerCell}>שעת התחלה</Text>
+            <Text style={contractionTimerStyles.headerCell}>משך (שניות)</Text>
+            <Text style={contractionTimerStyles.headerCell}>מרווח (שניות)</Text>
           </View>
 
           {isLoading ? (
               <Text style={contractionTimerStyles.noData}>טוען נתונים...</Text>
           ) : contractions.length === 0 ? (
-              <Text style={contractionTimerStyles.noData}>No contractions recorded yet.</Text>
+              <Text style={contractionTimerStyles.noData}>עדיין לא נרשמו צירים.</Text>
           ) : (
               contractions.map((c, idx) => (
                   <View key={idx} style={contractionTimerStyles.listRow}>

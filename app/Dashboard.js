@@ -89,7 +89,7 @@ export default function Dashboard() {
                                     { label: 'עדכונים שבועיים', route: 'weeklyUpdates', icon: <FontAwesome name="calendar" size={20} color="white" /> },
                                     { label: 'בדיקות צפויות', route: 'upcomingTests', icon: <Feather name="clipboard" size={20} color="white" /> },
                                     { label: 'שאלות נפוצות', route: 'faq', icon: <Feather name="help-circle" size={20} color="white" /> },
-                                    { label: 'רשימות קניות', route: 'shoppingList', icon: <Feather name="shopping-cart" size={20} color="white" /> },
+                                    { label: 'רשימת קניות לתינוק', route: 'babyChecklist', icon: <Feather name="shopping-cart" size={20} color="white" /> },
                                     { label: 'ציוד לחדר לידה', route: 'hospitalBag', icon: <MaterialCommunityIcons name="bag-suitcase" size={20} color="white" /> },
                                     { label: 'טיימר צירים', route: 'contractionTimer', icon: <Feather name="clock" size={20} color="white" /> },
                                 ].map(({ label, route, icon }) => (
