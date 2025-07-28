@@ -29,5 +29,6 @@ export function HomeButton() {
             </TouchableOpacity>
         </View>
     );
+
 }
 
