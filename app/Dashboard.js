@@ -62,7 +62,6 @@ export default function Dashboard() {
 
     return (
         <ProtectedRoute requireAuth={true}>
-            <View style={{ flex: 1, backgroundColor: '#f2f2f2' }}>
                 <ScrollView contentContainerStyle={dashboardStyles.scrollContainer}>
                     <View style={dashboardStyles.header}>
                         <TouchableOpacity onPress={handleLogout} style={dashboardStyles.logoutIconButton}>
@@ -112,7 +111,6 @@ export default function Dashboard() {
                         </View>
                     </View>
                 </ScrollView>
-            </View>
         </ProtectedRoute>
     );
 }

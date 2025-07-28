@@ -12,13 +12,15 @@ const dashboardStyles = StyleSheet.create({
         padding: 20,
         maxWidth: 600,
         marginRight: 20,
+        width: '100%',          // ✅ תמיכה ברוחב מלא
+
     },
     header: {
         width: wp(90),
         flexDirection: 'row',
         justifyContent: 'flex-end', // ✅ שם את התוכן בימין
         alignItems: 'center',
-        marginTop: 40,
+        // marginTop: 40,
     },
     logo: {
         fontSize: 25,

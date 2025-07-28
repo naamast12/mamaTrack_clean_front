@@ -5,11 +5,21 @@ const authStyles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 20,
+        // marginTop: 40,
+
     },
     header: {
         fontSize: 24,
         textAlign: 'center',
         marginBottom: 20,
+
+    },
+    gradientTitleWrapper: {
+        borderRadius: 20,
+        padding: 10,
+        alignSelf: 'center',
+        width: 500,
+        height: 55,
     },
     input: {
         height: 50,

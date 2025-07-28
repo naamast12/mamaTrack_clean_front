@@ -16,6 +16,7 @@ import { myProfileStyles } from '../styles/myProfileStyles';
 import sharedStyles from '../styles/sharedStyles';
 import { dashboardStyles } from '../styles/dashboardStyles';
 import { Colors } from '../constants/Colors';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import api from '../src/api/axiosConfig';
 
@@ -83,12 +84,10 @@ export default function MyProfile() {
     }
     return (
         <ProtectedRoute requireAuth={true}>
-            <View style={{ flex: 1, backgroundColor: '#f2f2f2' }}>
+
+            <HomeButton />
 
             <ScrollView contentContainerStyle={myProfileStyles.scrollContainer}>
-
-                <HomeButton />
-
 
                 <View style={{ flexDirection: "row-reverse", justifyContent: 'center', width: '100%' }}>
                     <View style={myProfileStyles.profileContainer}>
@@ -107,16 +106,19 @@ export default function MyProfile() {
                         <Text style={myProfileStyles.loadingText}>טוען נתוני משתמש...</Text>
                     ) : (
                         <>
-                            <Text style={myProfileStyles.name}>{name}</Text>
-
                             <View style={myProfileStyles.profileLabels}>
-                                <Text style={sharedStyles.text}>אימייל:     </Text>
+                                <FontAwesome name="user" size={22} color={Colors.primary} style={{ marginLeft: 5 }} />
+                                <Text style={sharedStyles.text}>  שם:  {name}</Text>
+                            </View>
+                            <View style={myProfileStyles.profileLabels}>
                                 <FontAwesome name="envelope" size={22} color={Colors.primary} style={{}} />
+                                <Text style={sharedStyles.text}>  אימייל:  </Text>
                                 <Text style={sharedStyles.text}>{email}</Text>
                             </View>
 
-                            <View style={{ flexDirection: 'row-reverse', alignItems: 'center', marginTop: 10 }}>
-                                <Text style={sharedStyles.text}>תאריך וסת אחרון: </Text>
+                            <View style={myProfileStyles.profileLabels}>
+                                <FontAwesome name="calendar" size={22} color={Colors.primary} style={{ marginLeft: 5 }} />
+                                <Text style={sharedStyles.text}> תאריך וסת אחרון: </Text>
 
                                 {isEditingPeriod ? (
                                     Platform.OS === 'web' ? (
@@ -206,23 +208,27 @@ export default function MyProfile() {
                             </View>
 
                             {dueDate && (
-                                <Text style={sharedStyles.text}>
-                                    תאריך לידה משוער: {dueDate}
-                                </Text>
+                                <View style={myProfileStyles.profileLabels}>
+                                    <MaterialCommunityIcons name="baby-face-outline" size={24} color={Colors.primary} style={{ marginLeft: 5 }} />
+                                    <Text style={sharedStyles.text}>תאריך לידה משוער: </Text>
+                                    <Text style={sharedStyles.text}>{dueDate}</Text>
+                                </View>
                             )}
                             {pregnancyWeek !== null && (
-                                <Text style={sharedStyles.text}>
-                                    שבוע הריון נוכחי: {pregnancyWeek}
-                                </Text>
+                                <View style={myProfileStyles.profileLabels}>
+                                    <FontAwesome name="heartbeat" size={22} color={Colors.primary} style={{ marginLeft: 5 }} />
+                                    <Text style={sharedStyles.text}>שבוע הריון נוכחי: </Text>
+                                    <Text style={sharedStyles.text}>{pregnancyWeek}</Text>
+                                </View>
                             )}
                         </>
                     )}
                     <View>
                         <Pressable onPress={() => { alert("מצטערים, כרגע אנחנו תומכים רק בעברית....") }}>
-                            <View style={{ flexDirection: "row-reverse" }} >
-                                <Text style={myProfileStyles.languageLabel}>שפת ממשק:</Text>
-                                <FontAwesome name="language" size={25} color={Colors.primary} style={{ paddingRight: 10 }} />
-                                <Text style={myProfileStyles.input} > עברית </Text>
+                            <View style={myProfileStyles.profileLabels}>
+                                <FontAwesome name="language" size={25} color={Colors.primary} style={{ marginLeft: 5 }} />
+                                <Text style={sharedStyles.text}>שפת ממשק:</Text>
+                                <Text style={sharedStyles.text} > עברית </Text>
                             </View>
                         </Pressable>
 
@@ -243,7 +249,6 @@ export default function MyProfile() {
                     </View>
                 </View>
             </ScrollView>
-            </View>
 
         </ProtectedRoute>
     );

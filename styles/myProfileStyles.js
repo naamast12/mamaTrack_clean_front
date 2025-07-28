@@ -4,23 +4,31 @@ import {Colors} from "../constants/Colors";
 const myProfileStyles = StyleSheet.create({
     scrollContainer: {
         paddingVertical: 24,
+        paddingHorizontal: 16,
+        flexGrow: 1,
+        justifyContent: 'flex-start', // ⬅️ במקום 'center'
     },
     profileContainer: {
         backgroundColor: Colors.white,
         borderRadius: 12,
         padding: 20,
-        maxWidth: 600,
-        marginRight: 20,
+        width: '100%',         // מתאים את עצמו למסך
+        maxWidth: 600,         // שומר על יופי במסכים רחבים
+        alignSelf: 'center',   // מרכז את התיבה
+        marginHorizontal: 20,  // במקום marginRight – ריווח דו צדדי גמיש
+        // marginTop: 40, // ✅ כדי להתחיל באותו גובה כמו בדשבורד
+
     },
+
     avatarWrapper: {
-        backgroundColor: Colors.triteWhite,
+        backgroundColor: '#f2f2f2',
         borderRadius: 100,
         padding: 20,
         alignItems: 'center',
         justifyContent: 'center',
-        margin: 10,
-        width: 170,
-        height: 170,
+        margin: 20,
+        width: 150,
+        height: 150,
         alignSelf: 'center',
     },
     profileSectionTitle: {
@@ -42,7 +50,7 @@ const myProfileStyles = StyleSheet.create({
     profileLabels: {
         flexDirection: 'row-reverse',
         textAlign: 'right',
-        margin: 10,
+        // margin: 10,
     },
     languageLabel: {
         fontSize: 16,

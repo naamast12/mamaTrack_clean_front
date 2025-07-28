@@ -85,19 +85,9 @@ export default function Login() {
     return (
         <ProtectedRoute requireAuth={false}>
             <ScrollView contentContainerStyle={authStyles.container}>
-                <View style={{ marginBottom: 40, marginTop: 30 }}>
-                    <LinearGradient
-                        colors={[Colors.primary, Colors.accent]}
-                        start={{ x: 1, y: 0 }}
-                        end={{ x: 0, y: 0 }}
-                        style={dashboardStyles.gradientTitleWrapper}
-                    >
-                        <Text style={dashboardStyles.gradientTitle}>MamaTrack</Text>
-                    </LinearGradient>
-                </View>
 
                 <View style={authStyles.cardContainer}>
-                    <Text style={sharedStyles.bigBoldText}>כניסה לאזור האישי</Text>
+                    <Text style={sharedStyles.bigBoldText}>כניסה לאזור האישי:</Text>
 
                     {!!errors.form && <Text style={sharedStyles.errorText}>{errors.form}</Text>}
 

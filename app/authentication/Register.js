@@ -163,17 +163,7 @@ export const Register = () => {
 
     return (
         <ProtectedRoute requireAuth={false}>
-            <View contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}>
-                <View style={{ marginBottom: 40, marginTop:30 }}>
-                    <LinearGradient
-                        colors={[Colors.primary, Colors.accent]}
-                        start={{ x: 1, y: 0 }}
-                        end={{ x: 0, y: 0 }}
-                        style={dashboardStyles.gradientTitleWrapper}
-                    >
-                        <Text style={dashboardStyles.gradientTitle}> MamaTrack!</Text>
-                    </LinearGradient>
-                </View>
+            <ScrollView contentContainerStyle={authStyles.container}>
 
                 <View style={authStyles.cardContainer}>
                     <Text style={sharedStyles.bigBoldText}>הרשמה:</Text>
@@ -329,7 +319,7 @@ export const Register = () => {
                         </Pressable>
                     </View>
                 </View>
-            </View>
+            </ScrollView>
         </ProtectedRoute>
     );
 };
