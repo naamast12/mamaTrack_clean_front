@@ -1,6 +1,10 @@
-import {StyleSheet} from "react-native";
+import {Dimensions, StyleSheet} from "react-native";
 import {Colors} from "../constants/Colors";
 import {widthPercentageToDP as wp} from "react-native-responsive-screen";
+
+const screenWidth = Dimensions.get('window').width;
+const screenHeight = Dimensions.get('window').height;
+const baseSize = Math.min(screenWidth, screenHeight);
 
 const dashboardStyles = StyleSheet.create({
     scrollContainer: {
@@ -75,7 +79,7 @@ const dashboardStyles = StyleSheet.create({
         right: undefined,
     },
     floatingText: {
-        fontSize: wp(7),  // גודל מותאם למסך – 25% מרוחב המסך
+        fontSize: baseSize * 0.11,  // 7% מהצד הקצר של המסך – עקבי יותר
     },
 });
 export { dashboardStyles}

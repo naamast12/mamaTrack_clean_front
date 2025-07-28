@@ -1,18 +1,21 @@
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 import { Colors } from '../constants/Colors';
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+
+const screenWidth = Dimensions.get('window').width;
+const screenHeight = Dimensions.get('window').height;
+const baseSize = Math.min(screenWidth, screenHeight); // להתאים לאורך הקצר
 
 const homeButtonStyles = StyleSheet.create({
     buttonWrapper: {
         position: 'absolute',
-        top: hp(2),    // קרוב יותר לקצה
-        right: wp(4),
+        top: baseSize * 0.02,    // למשל 2% מגובה/רוחב הקטן
+        right: baseSize * 0.02,
         zIndex: 10,
     },
     gradient: {
-        paddingVertical: hp(0.8),
-        paddingHorizontal: wp(2),
-        borderRadius: wp(6),
+        paddingVertical: baseSize * 0.01,
+        paddingHorizontal: baseSize * 0.03,
+        borderRadius: baseSize * 0.04,
         alignItems: 'center',
         justifyContent: 'center',
         shadowOffset: { width: 0, height: 3 },
@@ -22,7 +25,7 @@ const homeButtonStyles = StyleSheet.create({
     },
     buttonText: {
         color: Colors.danger,
-        fontSize: wp(1), // עדיין קריא, אבל קטן משמעותית
+        fontSize: baseSize * 0.02, // יותר עקבי
         fontWeight: 'bold',
     },
 });

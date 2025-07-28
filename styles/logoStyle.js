@@ -1,13 +1,16 @@
-import {StyleSheet} from "react-native";
-import {Colors} from "../constants/Colors";
-import {widthPercentageToDP as wp} from "react-native-responsive-screen";
+import { StyleSheet, Dimensions } from "react-native";
+import { Colors } from "../constants/Colors";
+
+const screenWidth = Dimensions.get('window').width;
+const screenHeight = Dimensions.get('window').height;
+const baseSize = Math.min(screenWidth, screenHeight); // הצד הקצר
 
 const logoStyle = StyleSheet.create({
     logo: {
-        fontSize: wp(3), // למשל במקום 25
+        fontSize: baseSize * 0.05, // גודל רספונסיבי – למשל 5% מהצד הקצר
         fontWeight: 'bold',
-        textAlign: 'left',       // מיושרים לשמאל
-        alignSelf: 'flex-start', // ממוקם בצד שמאל של הקונטיינר
+        textAlign: 'left',
+        alignSelf: 'flex-start',
     },
     mathColor: {
         color: Colors.primary,
@@ -16,4 +19,5 @@ const logoStyle = StyleSheet.create({
         color: Colors.accent,
     },
 });
-export { logoStyle}
+
+export { logoStyle };
