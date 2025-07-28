@@ -1,35 +1,30 @@
-import { StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 import { Colors } from '../constants/Colors';
-
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const homeButtonStyles = StyleSheet.create({
     buttonWrapper: {
         position: 'absolute',
-        top: 40,
-        right: 40, // ✅ מעביר את הכפתור לימין
+        top: hp(2),    // קרוב יותר לקצה
+        right: wp(4),
         zIndex: 10,
     },
     gradient: {
-        paddingVertical: 10,
-        paddingHorizontal: 20,
-        borderRadius: 50, // פינות מאוד עגולות
+        paddingVertical: hp(0.8),
+        paddingHorizontal: wp(2),
+        borderRadius: wp(6),
         alignItems: 'center',
         justifyContent: 'center',
-        minWidth: 180, // שומר על גודל מינימלי יפה
-        shadowColor: Colors.black,
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.2,
-        shadowRadius: 6,
-        elevation: 5,
+        shadowOffset: { width: 0, height: 3 },
+        shadowOpacity: 0.15,
+        shadowRadius: 4,
+        elevation: 3,
     },
     buttonText: {
         color: Colors.danger,
-        fontSize: 16,
+        fontSize: wp(1), // עדיין קריא, אבל קטן משמעותית
         fontWeight: 'bold',
     },
 });
 
-
-
-export { homeButtonStyles}
-
+export { homeButtonStyles };

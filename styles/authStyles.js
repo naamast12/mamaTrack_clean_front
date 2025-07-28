@@ -5,7 +5,7 @@ const authStyles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 20,
-        // marginTop: 40,
+        marginTop: 40,
 
     },
     header: {

@@ -4,7 +4,7 @@ import {widthPercentageToDP as wp} from "react-native-responsive-screen";
 
 const logoStyle = StyleSheet.create({
     logo: {
-        fontSize: 40,
+        fontSize: wp(3), // למשל במקום 25
         fontWeight: 'bold',
         textAlign: 'left',       // מיושרים לשמאל
         alignSelf: 'flex-start', // ממוקם בצד שמאל של הקונטיינר

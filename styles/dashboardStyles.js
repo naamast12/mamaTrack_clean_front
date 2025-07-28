@@ -64,18 +64,18 @@ const dashboardStyles = StyleSheet.create({
     },
     floatingSymbol: {
         position: 'absolute',
-        bottom: 40,       // ⬇️ במקום top
+        bottom: 10,       // ⬇️ במקום top
         right: 20,
         opacity: 0.45,
     },
     bottomLeft: {
         top: undefined,
-        bottom: 40,
+        bottom: 10,
         left: 20,
         right: undefined,
     },
     floatingText: {
-        fontSize: 100,
+        fontSize: wp(7),  // גודל מותאם למסך – 25% מרוחב המסך
     },
 });
 export { dashboardStyles}
