@@ -23,12 +23,14 @@ async function fetchPrenatalTestsByTrimester(trimester) {
 export default function UpcomingTests() {
     const [mode, setMode] = useState('week'); // 'week' | 'tri'
     const [week, setWeek] = useState(12);
-    const [tri, setTri] = useState(2);
+    const [tri, setTri] = useState(1);
     const [search, setSearch] = useState('');
     const [list, setList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [refreshing, setRefreshing] = useState(false);
     const [error, setError] = useState('');
+    const weekToTri = (w) => (w <= 13 ? 1 : w <= 27 ? 2 : 3);
+
 
     useEffect(() => {
         let mounted = true;
@@ -39,6 +41,10 @@ export default function UpcomingTests() {
                 try {
                     const userRes = await api.get('/api/user');
                     const serverWeek = userRes?.data?.pregnancyWeek;
+                    if (mounted && Number.isFinite(serverWeek)) {
+                        setWeek(serverWeek);
+                        setTri(weekToTri(serverWeek));
+                    }
                     if (mounted && Number.isFinite(serverWeek)) setWeek(serverWeek);
                     const data = await fetchPrenatalTestsByWeek(serverWeek ?? week);
                     if (mounted) setList(data);
@@ -131,20 +137,27 @@ export default function UpcomingTests() {
                     <TouchableOpacity
                         accessibilityRole="tab"
                         accessibilityState={{ selected: mode === 'week' }}
-                        onPress={() => setMode('week')}
+                     onPress={() => { setMode('week'); loadByWeek(week); }}
                         style={[styles.modeBtn, mode === 'week' && styles.modeActive]}
                     >
                         <Text style={[styles.modeTxt, mode === 'week' && styles.modeTxtActive]}>לפי שבוע</Text>
                     </TouchableOpacity>
+
                     <TouchableOpacity
                         accessibilityRole="tab"
                         accessibilityState={{ selected: mode === 'tri' }}
-                        onPress={() => setMode('tri')}
-                        style={[styles.modeBtn, mode === 'tri' && styles.modeActive]}
+                     onPress={() => {
+                      const t = weekToTri(Number(week) || 1);
+                       setTri(t);
+                       setMode('tri');
+                       loadByTri(t);
+                     }}
+                    style={[styles.modeBtn, mode === 'tri' && styles.modeActive]}
                     >
-                        <Text style={[styles.modeTxt, mode === 'tri' && styles.modeTxtActive]}>לפי טרימסטר</Text>
-                    </TouchableOpacity>
-                </View>
+                    <Text style={[styles.modeTxt, mode === 'tri' && styles.modeTxtActive]}>לפי טרימסטר</Text>
+                </TouchableOpacity>
+
+            </View>
 
                 {/* שליטת פילטר */}
                 {mode === 'week' ? (
