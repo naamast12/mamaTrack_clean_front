@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 const contractionTimerStyles = StyleSheet.create({
   container: {
     padding: 20,
-    backgroundColor: '#ffe6f0', // light pink
+    // backgroundColor: '#ffe6f0', // light pink
     flexGrow: 1,
   },
   title: {

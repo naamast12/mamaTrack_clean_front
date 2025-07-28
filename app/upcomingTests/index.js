@@ -128,9 +128,10 @@ export default function UpcomingTests() {
 
     return (
         <ProtectedRoute requireAuth>
+            <HomeButton />
+
             <View style={styles.container}>
                 <Text style={styles.screenTitle}>בדיקות צפויות</Text>
-                <HomeButton />
 
                 {/* טאבים */}
                 <View style={styles.modes}>

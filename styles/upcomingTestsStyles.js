@@ -7,7 +7,7 @@ const FONT_SCALE = 1.2;
 const m = n => Math.round(n * FONT_SCALE);
 
 export const screenStyles = StyleSheet.create({
-    container: { flex: 1, backgroundColor: '#F9FAFB', paddingHorizontal: 16, paddingTop: 12 },
+    container: { flex: 1, paddingHorizontal: 16, paddingTop: 12 },
     screenTitle: { fontSize: m(20), fontWeight: '800', color: Colors.primary, textAlign: 'center', marginBottom: 14 },
 
     modes: { flexDirection: 'row-reverse', alignSelf: 'center', backgroundColor: '#E5E7EB', borderRadius: 12, marginBottom: 12 },
