@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import babyChecklistStyles from '../../styles/babyChecklistStyles';
 import babyChecklistData from './babyChecklistData';
 import { HomeButton } from "../utils/HomeButton";
+import ProtectedRoute from "../../components/ProtectedRoute";
 
 const BabyChecklist = () => {
   const [items, setItems] = useState(babyChecklistData);
@@ -120,145 +121,149 @@ const BabyChecklist = () => {
   };
 
   return (
-    <>
-      <HomeButton />
-      <ScrollView 
-        style={babyChecklistStyles.container} 
-        showsVerticalScrollIndicator={true}
-        contentContainerStyle={{ paddingBottom: 20 }}
-      >
-        {/* Header */}
-        <View style={babyChecklistStyles.header}>
-          <Text style={babyChecklistStyles.title}>🛍️ רשימת קניות לתינוק</Text>
-          <View style={babyChecklistStyles.decorativeLine} />
-          <Text style={babyChecklistStyles.subtitle}>
-            📋 כל מה שצריך להכין לבואו של התינוק החדש
-          </Text>
-          
-          {/* Progress Section */}
-          <View style={babyChecklistStyles.progressContainer}>
-            <View style={babyChecklistStyles.progressBar}>
-              <View 
-                style={[
-                  babyChecklistStyles.progressFill, 
-                  { width: `${progressPercentage}%` }
-                ]} 
-              />
-            </View>
-            <Text style={babyChecklistStyles.progressText}>
-              📊 התקדמות: {checkedItems} מתוך {totalItems} פריטים ({Math.round(progressPercentage)}%)
-            </Text>
-          </View>
-        </View>
+      <ProtectedRoute requireAuth={true}>
+        <>
+          <HomeButton />
+          <ScrollView
+              style={babyChecklistStyles.container}
+              showsVerticalScrollIndicator={true}
+              contentContainerStyle={{ paddingBottom: 20 }}
+          >
+            {/* Header */}
+            <View style={babyChecklistStyles.header}>
+              <Text style={babyChecklistStyles.title}>🛍️ רשימת קניות לתינוק</Text>
+              <View style={babyChecklistStyles.decorativeLine} />
+              <Text style={babyChecklistStyles.subtitle}>
+                📋 כל מה שצריך להכין לבואו של התינוק החדש
+              </Text>
 
-        {/* Category Tabs */}
-        <View style={babyChecklistStyles.categoryTabsContainer}>
-          <View style={babyChecklistStyles.categoryTabs}>
-            {categories.map(category => {
-              const categoryItems = category === 'all' 
-                ? items 
-                : items.filter(item => item.category === category);
-              const categoryChecked = categoryItems.filter(item => item.checked).length;
-              
-              return (
-                <TouchableOpacity
-                  key={category}
-                  style={[
-                    babyChecklistStyles.categoryTab,
-                    getCategoryTabStyle(category)
-                  ]}
-                  onPress={() => setSelectedCategory(category)}
-                >
-                  <Text style={[
-                    babyChecklistStyles.categoryTabText,
-                    getCategoryTextStyle(category)
-                  ]}>
-                    {category === 'all' ? '📦 הכל' :
-                     category === 'clothing' ? '👕 בגדים' :
-                     category === 'feeding' ? '🍼 האכלה' :
-                     category === 'sleep' ? '😴 שינה' :
-                     category === 'hygiene' ? '🧴 היגיינה' :
-                     category === 'safety' ? '🛡️ בטיחות' :
-                     category === 'transport' ? '🚗 תחבורה' :
-                     category === 'toys' ? '🧸 צעצועים' :
-                     category === 'medical' ? '💊 רפואי' :
-                     category === 'other' ? '📝 אחר' : category}
-                  </Text>
-                  {categoryChecked > 0 && (
-                    <View style={babyChecklistStyles.itemCountBadge}>
-                      <Text style={babyChecklistStyles.itemCountText}>
-                        {categoryChecked}
-                      </Text>
-                    </View>
-                  )}
-                </TouchableOpacity>
-              );
-            })}
-          </View>
-        </View>
-
-        {/* Items List */}
-        <View style={babyChecklistStyles.itemsContainer}>
-          {filteredItems.length > 0 ? (
-            filteredItems.map((item, index) => (
-              <TouchableOpacity
-                key={item.id}
-                style={[
-                  babyChecklistStyles.itemRow,
-                  index === filteredItems.length - 1 && babyChecklistStyles.itemRowLast,
-                  item.checked && babyChecklistStyles.itemRowChecked
-                ]}
-                onPress={() => toggleItem(item.id)}
-                activeOpacity={0.7}
-              >
-                <View style={[
-                  babyChecklistStyles.checkbox,
-                  item.checked && babyChecklistStyles.checkboxChecked
-                ]}>
-                  {item.checked && (
-                    <Text style={babyChecklistStyles.checkboxIcon}>✓</Text>
-                  )}
+              {/* Progress Section */}
+              <View style={babyChecklistStyles.progressContainer}>
+                <View style={babyChecklistStyles.progressBar}>
+                  <View
+                      style={[
+                        babyChecklistStyles.progressFill,
+                        { width: `${progressPercentage}%` }
+                      ]}
+                  />
                 </View>
-                <Text style={[
-                  babyChecklistStyles.itemText,
-                  item.checked && babyChecklistStyles.itemTextChecked
-                ]}>
-                  {item.name}
+                <Text style={babyChecklistStyles.progressText}>
+                  📊 התקדמות: {checkedItems} מתוך {totalItems} פריטים ({Math.round(progressPercentage)}%)
+                </Text>
+              </View>
+            </View>
+
+            {/* Category Tabs */}
+            <View style={babyChecklistStyles.categoryTabsContainer}>
+              <View style={babyChecklistStyles.categoryTabs}>
+                {categories.map(category => {
+                  const categoryItems = category === 'all'
+                      ? items
+                      : items.filter(item => item.category === category);
+                  const categoryChecked = categoryItems.filter(item => item.checked).length;
+
+                  return (
+                      <TouchableOpacity
+                          key={category}
+                          style={[
+                            babyChecklistStyles.categoryTab,
+                            getCategoryTabStyle(category)
+                          ]}
+                          onPress={() => setSelectedCategory(category)}
+                      >
+                        <Text style={[
+                          babyChecklistStyles.categoryTabText,
+                          getCategoryTextStyle(category)
+                        ]}>
+                          {category === 'all' ? '📦 הכל' :
+                              category === 'clothing' ? '👕 בגדים' :
+                                  category === 'feeding' ? '🍼 האכלה' :
+                                      category === 'sleep' ? '😴 שינה' :
+                                          category === 'hygiene' ? '🧴 היגיינה' :
+                                              category === 'safety' ? '🛡️ בטיחות' :
+                                                  category === 'transport' ? '🚗 תחבורה' :
+                                                      category === 'toys' ? '🧸 צעצועים' :
+                                                          category === 'medical' ? '💊 רפואי' :
+                                                              category === 'other' ? '📝 אחר' : category}
+                        </Text>
+                        {categoryChecked > 0 && (
+                            <View style={babyChecklistStyles.itemCountBadge}>
+                              <Text style={babyChecklistStyles.itemCountText}>
+                                {categoryChecked}
+                              </Text>
+                            </View>
+                        )}
+                      </TouchableOpacity>
+                  );
+                })}
+              </View>
+            </View>
+
+            {/* Items List */}
+            <View style={babyChecklistStyles.itemsContainer}>
+              {filteredItems.length > 0 ? (
+                  filteredItems.map((item, index) => (
+                      <TouchableOpacity
+                          key={item.id}
+                          style={[
+                            babyChecklistStyles.itemRow,
+                            index === filteredItems.length - 1 && babyChecklistStyles.itemRowLast,
+                            item.checked && babyChecklistStyles.itemRowChecked
+                          ]}
+                          onPress={() => toggleItem(item.id)}
+                          activeOpacity={0.7}
+                      >
+                        <View style={[
+                          babyChecklistStyles.checkbox,
+                          item.checked && babyChecklistStyles.checkboxChecked
+                        ]}>
+                          {item.checked && (
+                              <Text style={babyChecklistStyles.checkboxIcon}>✓</Text>
+                          )}
+                        </View>
+                        <Text style={[
+                          babyChecklistStyles.itemText,
+                          item.checked && babyChecklistStyles.itemTextChecked
+                        ]}>
+                          {item.name}
+                        </Text>
+                      </TouchableOpacity>
+                  ))
+              ) : (
+                  <View style={babyChecklistStyles.emptyState}>
+                    <Text style={babyChecklistStyles.emptyStateIcon}>📭</Text>
+                    <Text style={babyChecklistStyles.emptyStateText}>
+                      אין פריטים בקטגוריה זו 🎯
+                    </Text>
+                  </View>
+              )}
+            </View>
+
+            {/* Action Buttons */}
+            <View style={babyChecklistStyles.buttonsContainer}>
+              <TouchableOpacity
+                  style={babyChecklistStyles.resetButton}
+                  onPress={resetChecklist}
+              >
+                <Text style={babyChecklistStyles.resetButtonText}>
+                  🔄 אפס הכל
                 </Text>
               </TouchableOpacity>
-            ))
-          ) : (
-            <View style={babyChecklistStyles.emptyState}>
-              <Text style={babyChecklistStyles.emptyStateIcon}>📭</Text>
-              <Text style={babyChecklistStyles.emptyStateText}>
-                אין פריטים בקטגוריה זו 🎯
-              </Text>
-            </View>
-          )}
-        </View>
 
-        {/* Action Buttons */}
-        <View style={babyChecklistStyles.buttonsContainer}>
-          <TouchableOpacity
-            style={babyChecklistStyles.resetButton}
-            onPress={resetChecklist}
-          >
-            <Text style={babyChecklistStyles.resetButtonText}>
-              🔄 אפס הכל
-            </Text>
-          </TouchableOpacity>
-          
-          <TouchableOpacity
-            style={babyChecklistStyles.saveButton}
-            onPress={saveChecklist}
-          >
-            <Text style={babyChecklistStyles.saveButtonText}>
-              💾 שמור רשימה
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
-    </>
+              <TouchableOpacity
+                  style={babyChecklistStyles.saveButton}
+                  onPress={saveChecklist}
+              >
+                <Text style={babyChecklistStyles.saveButtonText}>
+                  💾 שמור רשימה
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </ScrollView>
+        </>
+
+      </ProtectedRoute>
+
   );
 };
 
