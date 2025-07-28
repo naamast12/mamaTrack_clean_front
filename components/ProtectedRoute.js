@@ -7,15 +7,11 @@ import { AuthContext } from './ui/AuthProvider';
 import { dashboardStyles } from '../styles/dashboardStyles';
 import {Logo} from "../app/utils/Logo";
 import {HomeButton} from "../app/utils/HomeButton";
-import { Platform, StatusBar } from 'react-native';
-
 
 export default function ProtectedRoute({ children, requireAuth }) {
     const { user, isInit } = useContext(AuthContext);
     const floatAnim = useRef(new Animated.Value(0)).current;
     const [redirected, setRedirected] = useState(false); // ✅ מנגנון מניעת לולאה
-
-    const topOffset = Platform.OS === 'android' ? StatusBar.currentHeight + 80 : 80;
 
     useEffect(() => {
         Animated.loop(
@@ -46,9 +42,7 @@ export default function ProtectedRoute({ children, requireAuth }) {
                 <Logo />
             </View>
 
-            <View style={{ flex: 1, paddingTop: topOffset, paddingBottom: 120 }}>
-                {children}
-            </View>
+            {children}
             {/* הסימנים המרחפים */}
             <Animated.View
                 style={[dashboardStyles.floatingSymbol, { transform: [{ translateY: floatAnim }] }]}

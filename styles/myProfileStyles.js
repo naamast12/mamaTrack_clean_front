@@ -16,7 +16,7 @@ const myProfileStyles = StyleSheet.create({
         maxWidth: 600,         // שומר על יופי במסכים רחבים
         alignSelf: 'center',   // מרכז את התיבה
         marginHorizontal: 20,  // במקום marginRight – ריווח דו צדדי גמיש
-        // marginTop: 40, // ✅ כדי להתחיל באותו גובה כמו בדשבורד
+        marginTop: 40, // ✅ כדי להתחיל באותו גובה כמו בדשבורד
 
     },
 
