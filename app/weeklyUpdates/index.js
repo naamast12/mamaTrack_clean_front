@@ -153,26 +153,29 @@ export default function WeeklyUpdatesPage() {
         { title: 'פעילות גופנית',           value: normalized.exercise },
         { title: 'טיפים',                   value: normalized.tips },
         { title: 'מתי לפנות לרופא',         value: normalized.redFlags },
-        // {
-        //     title: 'גודל התינוק',
-        //     value: normalized.babySize
-        //         ? [
-        //             normalized.babySize.label,
-        //             normalized.babySize.lengthCm ? `אורך משוער: ${normalized.babySize.lengthCm} ס״מ` : null,
-        //             normalized.babySize.weightGr ? `משקל משוער: ${normalized.babySize.weightGr} גרם` : null,
-        //         ].filter(Boolean)
-        //         : null,
-        // },
+        {
+            title: 'גודל התינוק',
+            value: normalized.babySize
+                ? [
+                    normalized.babySize.label,
+                    normalized.babySize.lengthCm ? `אורך משוער: ${normalized.babySize.lengthCm} ס״מ` : null,
+                    normalized.babySize.weightGr ? `משקל משוער: ${normalized.babySize.weightGr} גרם` : null,
+                ].filter(Boolean)
+                : null,
+        },
     ].filter(s => (Array.isArray(s.value) ? s.value.length : !!s.value));
 
     return (
+
         <ProtectedRoute requireAuth>
             <HomeButton />
+
             <View style={styles.container}>
                 {/* גלילה על כל הדף */}
                 <ScrollView contentContainerStyle={styles.pageContent}>
                     <View style={styles.inner}>
                         <Text style={styles.screenTitle}>עדכונים שבועיים</Text>
+                        <HomeButton />
 
                         {/* בחירת שבוע */}
                         <View style={styles.weekRow}>
@@ -181,13 +184,13 @@ export default function WeeklyUpdatesPage() {
                             <TouchableOpacity onPress={onInc} style={styles.stepBtn}><Text style={styles.stepTxt}>+</Text></TouchableOpacity>
                         </View>
 
-                        {/* כרטיס גודל התינוק (אם יש) */}
-                        {normalized.babySize && (
-                            <View style={styles.heroCard}>
-                                <Text style={styles.heroTitle}>גודל התינוק</Text>
-                                <Text style={styles.heroText}>{normalized.babySize.label}</Text>
-                            </View>
-                        )}
+                        {/*/!* כרטיס גודל התינוק (אם יש) *!/*/}
+                        {/*{normalized.babySize && (*/}
+                        {/*    <View style={styles.heroCard}>*/}
+                        {/*        <Text style={styles.heroTitle}>גודל התינוק</Text>*/}
+                        {/*        <Text style={styles.heroText}>{normalized.babySize.label}</Text>*/}
+                        {/*    </View>*/}
+                        {/*)}*/}
 
                         {/* תוכן */}
                         {loading ? (
