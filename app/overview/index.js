@@ -82,7 +82,6 @@ export default function OverviewScreen() {
                 <ScrollView contentContainerStyle={styles.pageContent}>
                     <View style={styles.inner}>
                         <Text style={styles.screenTitle}>תצוגה כללית</Text>
-                        <HomeButton />
 
                         {loading ? (
                             <View style={styles.centerBox}><ActivityIndicator /><Text style={styles.centerNote}>טוען…</Text></View>
