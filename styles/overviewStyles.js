@@ -2,14 +2,14 @@
 import { StyleSheet } from 'react-native';
 
 export default function getOverviewStyles() {
-    const bg    = '#F9FAFB';
+    // const bg    = '#F9FAFB';
     const card  = '#FFFFFF';
     const text  = '#374151';
     const head  = '#111827';
     const shade = 2;
 
     return StyleSheet.create({
-        container: { flex: 1, backgroundColor: bg },
+        container: { flex: 1 },
         pageContent: { paddingBottom: 32 },
         inner: {
             width: '100%',

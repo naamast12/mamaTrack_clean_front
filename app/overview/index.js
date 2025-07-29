@@ -5,8 +5,8 @@ import { useRouter } from 'expo-router';
 
 import ProtectedRoute from '@/components/ProtectedRoute';
 import { HomeButton } from '@/app/utils/HomeButton';
-import getOverviewStyles from '@/styles/overviewStyles';
 import api from '@/src/api/axiosConfig';
+import getOverviewStyles from "../../styles/overviewStyles";
 
 /** API קטן מקומי להבאת עדכון שבועי */
 const useWeeklyApi = () => {
@@ -76,7 +76,7 @@ export default function OverviewScreen() {
     const previewTips     = Array.isArray(weekly?.tips)     ? weekly.tips.slice(0, 6)     : [];
 
     return (
-        <ProtectedRoute requireAuth>
+        <ProtectedRoute requireAuth={true}>
             <HomeButton />
             <View style={styles.container}>
                 <ScrollView contentContainerStyle={styles.pageContent}>
