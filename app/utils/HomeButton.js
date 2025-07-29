@@ -25,7 +25,7 @@ export function HomeButton() {
         // </Pressable>
         <View style={dashboardStyles.header}>
             <TouchableOpacity onPress={() => router.push('/Dashboard')} style={dashboardStyles.logoutIconButton}>
-                <FontAwesome name="home" size={50} color={Colors.danger} />
+                <FontAwesome name="home" size={50} color={Colors.primary} />
             </TouchableOpacity>
         </View>
     );

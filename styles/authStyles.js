@@ -12,13 +12,15 @@ const authStyles = StyleSheet.create({
         fontSize: 24,
         textAlign: 'center',
         marginBottom: 20,
+        marginTop: 40,
+
 
     },
     gradientTitleWrapper: {
         borderRadius: 20,
         padding: 10,
         alignSelf: 'center',
-        width: 500,
+        width: '100%',
         height: 55,
     },
     input: {
@@ -45,6 +47,9 @@ const authStyles = StyleSheet.create({
         width: '100%',
         maxWidth: 400,
         alignSelf: 'center',
+        marginTop: 80,
+
+
     },
     emojiText: {
         fontSize: 24,

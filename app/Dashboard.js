@@ -20,6 +20,8 @@ import api from '../src/api/axiosConfig';
 export default function Dashboard() {
     const router = useRouter();
     const [loading, setLoading] = useState(true);
+    const [name, setName] = useState('');
+
 
 
     useEffect(() => {
@@ -32,7 +34,8 @@ export default function Dashboard() {
                     if (isMounted) router.replace('/authentication/Login');
                     return;
                 }
-                await api.get('/api/user');
+                const response = await api.get('/api/user');
+                if (isMounted) setName(response.data.firstName);
             } catch (err) {
                 console.error("שגיאה באימות המשתמש:", err);
                 if (isMounted) router.replace('/authentication/Login');
@@ -78,8 +81,19 @@ export default function Dashboard() {
                                 end={{ x: 0, y: 0 }}
                                 style={dashboardStyles.gradientTitleWrapper}
                             >
-                                <Text style={dashboardStyles.gradientTitle}>ברוכים הבאים ל־MamaTrack!</Text>
+                                <Text
+                                    style={[
+                                        dashboardStyles.gradientTitle,
+                                        {
+                                            textAlign: 'center',        // ממרכז את הטקסט
+                                            writingDirection: 'rtl',    // מוודא שהכיוון מימין לשמאל
+                                        }
+                                    ]}
+                                >
+                                    {name ? `${name}, ברוכה הבאה (:` : 'ברוכה הבאה (: '}
+                                </Text>
                             </LinearGradient>
+
 
                             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                                 {[

@@ -9,6 +9,7 @@ const baseSize = Math.min(screenWidth, screenHeight);
 const dashboardStyles = StyleSheet.create({
     scrollContainer: {
         alignItems: 'center',
+
     },
     dashboardContainer: {
         backgroundColor: Colors.white,
@@ -24,7 +25,7 @@ const dashboardStyles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'flex-end', // ✅ שם את התוכן בימין
         alignItems: 'center',
-        // marginTop: 40,
+        marginTop: 40,
     },
     logo: {
         fontSize: 25,
@@ -57,8 +58,9 @@ const dashboardStyles = StyleSheet.create({
         borderRadius: 20,
         padding: 10,
         alignSelf: 'center',
-        width: 500,
+        width: '100%',
         height: 55,
+        marginBottom:15
     },
     gradientTitle: {
         fontSize: 24,

@@ -37,7 +37,7 @@ export default function ProtectedRoute({ children, requireAuth }) {
     }
 
     return (
-        <View style={{ flex: 1, backgroundColor: '#f2f2f2' }}>
+        <View style={{ flex: 1, backgroundColor: '#fef7f9' }}>
             <View style={{ position: 'absolute', top: 20, left: 20, zIndex: 10 }}>
                 <Logo />
             </View>

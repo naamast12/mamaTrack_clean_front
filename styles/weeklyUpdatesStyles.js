@@ -10,7 +10,7 @@ export default function getWeeklyStyles() {
     const shade = 2;
 
     return StyleSheet.create({
-        container: { flex: 1, backgroundColor: bg },
+        container: { flex: 1 },
 
         // לגלילה על כל הדף
         pageContent: { paddingBottom: 32 },

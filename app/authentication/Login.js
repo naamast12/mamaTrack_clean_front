@@ -115,13 +115,21 @@ const Login = () => {
     return (
         <ProtectedRoute requireAuth={false}>
             <ScrollView contentContainerStyle={authStyles.container}>
-                <View style={{ marginBottom: 40, marginTop: 30 }}>
-                    <LinearGradient colors={[Colors.primary, Colors.accent]} start={{ x: 1, y: 0 }} end={{ x: 0, y: 0 }} style={dashboardStyles.gradientTitleWrapper}>
-                        <Text style={dashboardStyles.gradientTitle}> MamaTrack!</Text>
-                    </LinearGradient>
-                </View>
+                {/*<View style={{ marginBottom: 40, marginTop: 30 }}>*/}
+                {/*    <LinearGradient colors={[Colors.primary, Colors.accent]} start={{ x: 1, y: 0 }} end={{ x: 0, y: 0 }} style={dashboardStyles.gradientTitleWrapper}>*/}
+                {/*        <Text style={dashboardStyles.gradientTitle}> MamaTrack!</Text>*/}
+                {/*    </LinearGradient>*/}
+                {/*</View>*/}
                 <View style={authStyles.cardContainer}>
-                    <Text style={sharedStyles.bigBoldText}>כניסה לאזור אישי:</Text>
+                    <LinearGradient
+                        colors={[Colors.primary, Colors.accent]}
+                        start={{ x: 1, y: 0 }}
+                        end={{ x: 0, y: 0 }}
+                        style={dashboardStyles.gradientTitleWrapper}
+                    >
+                        <Text style={dashboardStyles.gradientTitle}>כניסה לאזור אישי:</Text>
+                    </LinearGradient>
+                    {/*<Text style={sharedStyles.bigBoldText}>כניסה לאזור אישי:</Text>*/}
                     {errors.form ? <Text style={sharedStyles.errorText}>{errors.form}</Text> : null}
                     <TextInput style={sharedStyles.loginInput} placeholder="אימייל" value={mail} onChangeText={(text) => { setMail(text); validateField('mail', text); }} />
                     {errors.mail ? <Text style={sharedStyles.errorText}>{errors.mail}</Text> : null}
