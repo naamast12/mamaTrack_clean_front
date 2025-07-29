@@ -6,7 +6,7 @@ const faqListStyles = StyleSheet.create({
         padding: 20,
         borderRadius: 12,
         elevation: 4,
-        direction: 'rtl',
+        writingDirection: 'rtl',
         marginHorizontal: 16,
         marginTop: 16,
     },

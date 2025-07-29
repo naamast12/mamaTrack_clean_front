@@ -8,7 +8,7 @@ const faqScreenStyles = StyleSheet.create({
         backgroundColor: '#f2f4f7', // רקע כללי של המסך
         paddingVertical: 24,
         paddingHorizontal: 16,
-        direction: 'rtl',
+        writingDirection: 'rtl',
     },
     pinkBox: {
         backgroundColor: '#fff0f5',

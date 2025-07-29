@@ -5,7 +5,7 @@ export default StyleSheet.create({
         backgroundColor: '#fff',
         padding: 20,
         borderRadius: 12,
-        direction: 'rtl',
+        writingDirection: 'rtl',
         margin: 10,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },

@@ -13,7 +13,7 @@ export default StyleSheet.create({
         paddingHorizontal: 16,
         borderRadius: 6,
         backgroundColor: '#f0f0f0',
-        direction: 'rtl',
+        writingDirection: 'rtl',
         marginLeft: 10, // תחליף ל-gap
     },
     tabButtonActive: {

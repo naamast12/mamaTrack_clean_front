@@ -26,13 +26,16 @@ api.interceptors.request.use(async config => {
 
     // 2. מוסיפים כאן את הלוג כדי לראות מה הקונסול שולח
     console.log('sending token:', token);
+    console.log('token type:', typeof token);
+    console.log('token length:', token ? token.length : 0);
 
     // 3. אם יש טוקן, דואגים להוסיף אותו ל־Authorization header
-    if (token) {
+    if (token && token !== 'null' && token !== 'undefined') {
         config.headers.Authorization = `Bearer ${token}`;
+        console.log('Authorization header set:', config.headers.Authorization);
+    } else {
+        console.log('No valid token found, request will be sent without authorization');
     }
-    const saved = await storage.get('userToken');
-    console.log('saved token', saved);        // ← אמור להחזיר מחרוזת JWT
 
     return config;
 });
