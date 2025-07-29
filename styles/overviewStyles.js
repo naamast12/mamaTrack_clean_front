@@ -9,13 +9,13 @@ export default function getOverviewStyles() {
     const shade = 2;
 
     return StyleSheet.create({
-        container: { flex: 1 },
+        container: { flex: 1 },                  // בלי רקע — יירש מהכללי
         pageContent: { paddingBottom: 32 },
         inner: {
             width: '100%',
-            maxWidth: 700,          // קצת יותר רחב שיהיה מקום לשתי עמודות
+            maxWidth: 700,                       // מקום לשתי עמודות
             alignSelf: 'center',
-            paddingHorizontal: 24,   // שוליים זהים משני הצדדים
+            paddingHorizontal: 24,               // שוליים זהים
             paddingTop: 16,
         },
 
@@ -26,20 +26,20 @@ export default function getOverviewStyles() {
 
         /** ===== שורת כותרת עליונה (Hero+כפתורים) ===== */
         headerRow: {
-            flexDirection: 'row-reverse',     // RTL – ימין קודם
+            flexDirection: 'row-reverse',        // RTL – ימין קודם
             alignItems: 'flex-start',
-            justifyContent: 'space-between',  // מפזר שתי עמודות לקצוות
-            flexWrap: 'nowrap',               // לא לרדת שורה
+            justifyContent: 'space-between',
+            flexWrap: 'nowrap',
             marginBottom: 14,
         },
 
-        // שתי העמודות בעלי רוחב זהה
+        // שתי העמודות
         headerRight: {
-            width: 360,        // <<< Hero (אפשר לכוונן 340–380)
+            width: 360,                          // Hero (כוונני לפי צורך)
             flexShrink: 0,
         },
         headerNavCol: {
-            width: 280,        // <<< עמודת כפתורים (אותו רוחב)
+            width: 280,                          // עמודת כפתורים
             flexShrink: 0,
         },
 
@@ -54,8 +54,17 @@ export default function getOverviewStyles() {
         },
         heroMiniWeek: { fontSize: 26, fontWeight: '800', color: head, textAlign: 'right', marginBottom: 4 },
         heroMiniLine: { flexDirection: 'row-reverse', alignItems: 'center', marginBottom: 8 },
-        heroMiniEmoji:{ fontSize: 40, marginLeft: 8 },
+
+        // ✅ תיקון אימוג׳י: lineHeight תואם + ביטול padding באנדרואיד
+        heroMiniEmoji: {
+            fontSize: 40,
+            lineHeight: 44,                 // חשוב כדי שלא ייחתך
+            marginLeft: 8,
+            includeFontPadding: false,      // Android-only: מנקה רווחים מיותרים סביב הטקסט
+        },
+
         heroMiniSize: { fontSize: 15, color: head },
+
         progressMini:     { height: 6, borderRadius: 999, backgroundColor: '#E5E7EB' },
         progressMiniFill: { height: 6, borderRadius: 999, backgroundColor: '#A78BFA' },
         progressMiniText: { fontSize: 14, color: '#6B7280', textAlign: 'right', marginTop: 4 },

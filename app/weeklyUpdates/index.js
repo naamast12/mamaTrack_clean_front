@@ -9,16 +9,14 @@ import getWeeklyStyles from '../../styles/weeklyUpdatesStyles';
 import api from '../../src/api/axiosConfig';
 import { Colors } from '../../constants/Colors';
 
-/** ---- API פנימי לקובץ ---- */
 const useWeeklyApi = () => {
     const getWeeklyUpdate = useCallback(async (week) => {
         const { data } = await api.get(`/api/weekly/${week}`);
-        return data; // אובייקט של השבוע
+        return data;
     }, []);
     return { getWeeklyUpdate };
 };
 
-/** נורמליזציה של שדות */
 const normalizeWeekly = (u) => ({
     fetalDevelopment: u?.fetalDevelopment ?? u?.fetus ?? '',
     maternalChanges:  u?.maternalChanges  ?? u?.mother ?? '',
@@ -30,7 +28,6 @@ const normalizeWeekly = (u) => ({
     babySize:         u?.babySize ?? null,
 });
 
-/** אייקונים לפי כותרת */
 const ICONS = {
     'מידע על התפתחות העובר': 'baby-face-outline',
     'שינויים בגוף האישה':     'human-female',
@@ -43,7 +40,7 @@ const ICONS = {
 };
 
 export default function WeeklyUpdatesPage() {
-    const styles = getWeeklyStyles(); // בלי מצב לילה
+    const styles = getWeeklyStyles();
     const { getWeeklyUpdate } = useWeeklyApi();
 
     const [week, setWeek] = useState(12);
@@ -51,28 +48,24 @@ export default function WeeklyUpdatesPage() {
     const [loading, setLoading] = useState(true);
     const [err, setErr] = useState('');
 
-    // גווני מותג עדינים (רקע שקוף דק + צבע הדגשה)
-    // גוונים שקופים עדינים מהמותג — קל לשלוט מהם בכל הכרטיסיות
-    const ACCENT_TINT_DARK   = 'rgba(167,139,250,0.08)'; // accent כהה יותר
-    const ACCENT_TINT_LIGHT  = 'rgba(167,139,250,0.04)'; // accent בהיר יותר
-    const PRIMARY_TINT_DARK  = 'rgba(192,132,151,0.08)'; // primary כהה יותר
-    const PRIMARY_TINT_LIGHT = 'rgba(192,132,151,0.04)'; // primary בהיר יותר
-    const WARN_TINT          = 'rgba(220, 38, 38, 0.06)'; // אזהרה
+    // גווני רקע עדינים
+    const ACCENT_TINT_DARK   = 'rgba(167,139,250,0.08)';
+    const ACCENT_TINT_LIGHT  = 'rgba(167,139,250,0.04)';
+    const PRIMARY_TINT_DARK  = 'rgba(192,132,151,0.08)';
+    const PRIMARY_TINT_LIGHT = 'rgba(192,132,151,0.04)';
+    const WARN_TINT          = 'rgba(220, 38, 38, 0.06)';
 
-// מיפוי לפי כותרת — מסודר כך שסמוכות יקבלו גוונים שונים
     const themeByTitle = {
-        'מידע על התפתחות העובר': { bg: ACCENT_TINT_DARK,   accent: Colors.accent },  // סגלגל כהה עדין
-        'שינויים בגוף האישה':     { bg: PRIMARY_TINT_LIGHT, accent: Colors.primary }, // ורדרד בהיר
-        'תסמינים צפויים':         { bg: ACCENT_TINT_LIGHT,  accent: Colors.accent },  // סגלגל בהיר
-        'תזונה מומלצת':           { bg: PRIMARY_TINT_DARK,  accent: Colors.primary }, // ורדרד כהה עדין
-        'פעילות גופנית':           { bg: ACCENT_TINT_LIGHT,  accent: Colors.accent },  // סגלגל בהיר
-        'טיפים':                   { bg: PRIMARY_TINT_LIGHT, accent: Colors.primary }, // ורדרד בהיר
-        'מתי לפנות לרופא':         { bg: WARN_TINT,          accent: '#DC2626' },      // אדום עדין
-        'גודל התינוק':             { bg: ACCENT_TINT_LIGHT,  accent: Colors.accent },  // סגלגל בהיר
+        'מידע על התפתחות העובר': { bg: ACCENT_TINT_DARK,   accent: Colors.accent },
+        'שינויים בגוף האישה':     { bg: PRIMARY_TINT_LIGHT, accent: Colors.primary },
+        'תסמינים צפויים':         { bg: ACCENT_TINT_LIGHT,  accent: Colors.accent },
+        'תזונה מומלצת':           { bg: PRIMARY_TINT_DARK,  accent: Colors.primary },
+        'פעילות גופנית':           { bg: ACCENT_TINT_LIGHT,  accent: Colors.accent },
+        'טיפים':                   { bg: PRIMARY_TINT_LIGHT, accent: Colors.primary },
+        'מתי לפנות לרופא':         { bg: WARN_TINT,          accent: '#DC2626' },
+        'גודל התינוק':             { bg: ACCENT_TINT_LIGHT,  accent: Colors.accent },
     };
 
-
-    // רכיב סקשן בתוך הקומפוננטה (יש גישה ל-styles ול-themeByTitle)
     const Section = ({ title, value }) => {
         const isList = Array.isArray(value);
         const lines  = isList ? value : (value ? [value] : []);
@@ -107,7 +100,6 @@ export default function WeeklyUpdatesPage() {
         );
     };
 
-    // טעינה ראשונית
     useEffect(() => {
         let mounted = true;
         (async () => {
@@ -126,7 +118,6 @@ export default function WeeklyUpdatesPage() {
             }
         })();
         return () => { mounted = false; };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [getWeeklyUpdate]);
 
     const changeWeek = async (next) => {
@@ -143,7 +134,6 @@ export default function WeeklyUpdatesPage() {
     const onInc = () => changeWeek(Math.min(42, week + 1));
     const onDec = () => changeWeek(Math.max(1, week - 1));
 
-    // מכינים את הסקשנים
     const normalized = normalizeWeekly(data || {});
     const sections = [
         { title: 'מידע על התפתחות העובר', value: normalized.fetalDevelopment },
@@ -166,38 +156,53 @@ export default function WeeklyUpdatesPage() {
     ].filter(s => (Array.isArray(s.value) ? s.value.length : !!s.value));
 
     return (
-
         <ProtectedRoute requireAuth>
             <HomeButton />
 
             <View style={styles.container}>
-                {/* גלילה על כל הדף */}
-                <ScrollView contentContainerStyle={styles.pageContent}>
+
+                {/* ===== Header לא-גלול ===== */}
+                <View style={styles.pageHeader}>
                     <View style={styles.inner}>
-                        <Text style={styles.screenTitle}>עדכונים שבועיים</Text>
+                        <View style={styles.headerRow}>
+                            <Text style={styles.screenTitle}>עדכונים שבועיים</Text>
+                        </View>
 
                         {/* בחירת שבוע */}
                         <View style={styles.weekRow}>
-                            <TouchableOpacity onPress={onDec} style={styles.stepBtn}><Text style={styles.stepTxt}>−</Text></TouchableOpacity>
-                            <Text style={styles.weekLabel}>שבוע {week}</Text>
-                            <TouchableOpacity onPress={onInc} style={styles.stepBtn}><Text style={styles.stepTxt}>+</Text></TouchableOpacity>
+                            <TouchableOpacity onPress={onDec} style={[styles.stepBtn, styles.stepBtnMargin]}>
+                                <Text style={styles.stepTxt}>−</Text>
+                            </TouchableOpacity>
+
+                            <Text style={[styles.weekLabel, styles.stepBtnMargin]}>שבוע {week}</Text>
+
+                            <TouchableOpacity onPress={onInc} style={[styles.stepBtn, styles.stepBtnMargin]}>
+                                <Text style={styles.stepTxt}>+</Text>
+                            </TouchableOpacity>
                         </View>
+                    </View>
+                </View>
 
-                        {/*/!* כרטיס גודל התינוק (אם יש) *!/*/}
-                        {/*{normalized.babySize && (*/}
-                        {/*    <View style={styles.heroCard}>*/}
-                        {/*        <Text style={styles.heroTitle}>גודל התינוק</Text>*/}
-                        {/*        <Text style={styles.heroText}>{normalized.babySize.label}</Text>*/}
-                        {/*    </View>*/}
-                        {/*)}*/}
-
-                        {/* תוכן */}
+                {/* ===== אזור גלול – רק הכרטיסיות ===== */}
+                <ScrollView
+                    style={styles.cardsScroll}
+                    contentContainerStyle={styles.cardsContent}
+                    showsVerticalScrollIndicator
+                >
+                    <View style={styles.inner}>
                         {loading ? (
-                            <View style={styles.centerBox}><ActivityIndicator /><Text style={{ marginTop: 8 }}>טוען…</Text></View>
+                            <View style={styles.centerBox}>
+                                <ActivityIndicator />
+                                <Text style={{ marginTop: 8 }}>טוען…</Text>
+                            </View>
                         ) : err ? (
-                            <View style={styles.centerBox}><Text style={{ color: '#DC2626' }}>{err}</Text></View>
+                            <View style={styles.centerBox}>
+                                <Text style={{ color: '#DC2626' }}>{err}</Text>
+                            </View>
                         ) : !sections.length ? (
-                            <View style={styles.centerBox}><Text>אין מידע לשבוע זה.</Text></View>
+                            <View style={styles.centerBox}>
+                                <Text>אין מידע לשבוע זה.</Text>
+                            </View>
                         ) : (
                             sections.map((s, idx) => (
                                 <Section key={idx} title={s.title} value={s.value} />
@@ -205,6 +210,7 @@ export default function WeeklyUpdatesPage() {
                         )}
                     </View>
                 </ScrollView>
+
             </View>
         </ProtectedRoute>
     );

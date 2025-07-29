@@ -1,12 +1,12 @@
 // app/overview/index.js
 import React, { useEffect, useState, useCallback } from 'react';
-import { View, Text, TouchableOpacity, ActivityIndicator, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, ActivityIndicator, ScrollView, Platform } from 'react-native';
 import { useRouter } from 'expo-router';
 
 import ProtectedRoute from '@/components/ProtectedRoute';
 import { HomeButton } from '@/app/utils/HomeButton';
 import api from '@/src/api/axiosConfig';
-import getOverviewStyles from "../../styles/overviewStyles";
+import getOverviewStyles from '../../styles/overviewStyles';
 
 /** API קטן מקומי להבאת עדכון שבועי */
 const useWeeklyApi = () => {
@@ -16,26 +16,6 @@ const useWeeklyApi = () => {
     }, []);
     return { getWeeklyUpdate };
 };
-
-/** אימוג׳ים לגודל התינוק */
-const EMOJI_BY_LABEL = {
-    'גרגיר פרג': '·', 'גרעין שומשום': '·', 'גרעין תפוח': '·', 'גרעין אבטיח': '·',
-    'עדשה': '🫛', 'עדש': '🫛', 'עדש גדול': '🫛', 'גרגיר שעועית קטנה': '🫘',
-    'אוכמנית': '🫐', 'פטל': '🍓', 'תות': '🍓', 'ענב': '🍇',
-    'תמר קטן': '🌴', 'תאנה': '🟣',
-    'ליים זעיר': '🍋', 'לימון קטן': '🍋', 'קיווי': '🥝',
-    'תפוח': '🍎', 'תפוח קטן': '🍎',
-    'אבוקדו': '🥑', 'אגס': '🍐', 'אגס קטן': '🍐',
-    'גזר': '🥕', 'פלפל': '🫑', 'פלפל גדול': '🫑',
-    'מנגו': '🥭', 'מנגו קטן': '🥭', 'בננה': '🍌', 'קוקוס': '🥥',
-    'אשכולית': '🍊', 'תירס': '🌽', 'חציל': '🍆', 'קישוא': '🥒',
-    'כרובית': '🥦', 'חסה קטנה': '🥬', 'כרוב': '🥬', 'חסה רומאית': '🥬',
-    'דלעת': '🎃', 'דלעת בלוי': '🎃', 'דלעת ספגטי': '🎃', 'דלורית': '🎃',
-    'מלון קטן': '🍈', 'מלון': '🍈',
-    'אבטיח קטן': '🍉', 'אבטיח': '🍉',
-    'תינוק במידה מלאה': '👶',
-};
-const getEmojiForLabel = (label) => (label ? (EMOJI_BY_LABEL[label] || '') : '');
 
 export default function OverviewScreen() {
     const router = useRouter();
@@ -68,9 +48,20 @@ export default function OverviewScreen() {
     }, [getWeeklyUpdate]);
 
     // נגזרות לתצוגה
-    const progressPct     = Math.max(0, Math.min(100, Math.round((week / 40) * 100)));
-    const sizeLabel       = weekly?.babySize?.label || '';
-    const sizeEmoji       = getEmojiForLabel(sizeLabel);
+    const progressPct = Math.max(0, Math.min(100, Math.round((week / 40) * 100)));
+
+    const babySize   = weekly?.babySize ?? {};
+    const sizeLabel  = babySize.label || '';
+    const sizeEmoji  = babySize.emoji || ''; // ← נמשך ישירות מה‑JSON/API
+    const lengthCm   = Number.isFinite(+babySize.lengthCm) ? +babySize.lengthCm : null;
+    const weightGr   = Number.isFinite(+babySize.weightGr) ? +babySize.weightGr : null;
+
+    // דיבוג: לראות מה הגיע מה‑API
+    if (__DEV__) {
+        // זה יופיע בקונסול של Metro
+        console.log('Overview babySize from API =>', weekly?.babySize);
+    }
+
     const whatsHappening  = weekly?.fetalDevelopment || '';
     const previewSymptoms = Array.isArray(weekly?.symptoms) ? weekly.symptoms.slice(0, 6) : [];
     const previewTips     = Array.isArray(weekly?.tips)     ? weekly.tips.slice(0, 6)     : [];
@@ -78,35 +69,71 @@ export default function OverviewScreen() {
     return (
         <ProtectedRoute requireAuth={true}>
             <HomeButton />
+
             <View style={styles.container}>
                 <ScrollView contentContainerStyle={styles.pageContent}>
                     <View style={styles.inner}>
                         <Text style={styles.screenTitle}>תצוגה כללית</Text>
+                        <HomeButton />
 
                         {loading ? (
-                            <View style={styles.centerBox}><ActivityIndicator /><Text style={styles.centerNote}>טוען…</Text></View>
+                            <View style={styles.centerBox}>
+                                <ActivityIndicator />
+                                <Text style={styles.centerNote}>טוען…</Text>
+                            </View>
                         ) : err ? (
-                            <View style={styles.centerBox}><Text style={[styles.centerNote, { color: '#DC2626' }]}>{err}</Text></View>
+                            <View style={styles.centerBox}>
+                                <Text style={[styles.centerNote, { color: '#DC2626' }]}>{err}</Text>
+                            </View>
                         ) : (
                             <>
-                                {/* ===== HEADER: ימין – כרטיס שבוע; שמאל – שני כפתורים אנכיים ===== */}
+                                {/* ===== HEADER: ימין – כרטיס שבוע; משמאל – שני כפתורים אנכיים ===== */}
                                 <View style={styles.headerRow}>
                                     {/* ימין: Hero קטן */}
                                     <View style={styles.headerRight}>
                                         <View style={styles.heroMini}>
                                             <Text style={styles.heroMiniWeek}>שבוע {week}</Text>
 
-                                            {!!sizeLabel && (
+                                            {(sizeEmoji || sizeLabel) ? (
                                                 <View style={styles.heroMiniLine}>
-                                                    {!!sizeEmoji && <Text style={styles.heroMiniEmoji}>{sizeEmoji}</Text>}
-                                                    <Text style={styles.heroMiniSize}>{sizeLabel}</Text>
+                                                    {sizeEmoji ? (
+                                                        <Text
+                                                            style={[
+                                                                styles.heroMiniEmoji,
+                                                                // איפוס פונט לאימוג׳י כדי לאפשר פונט אימוג׳י של המערכת
+                                                                Platform.OS === 'android'
+                                                                    ? { fontFamily: 'sans-serif', lineHeight: 44, includeFontPadding: false }
+                                                                    : { fontFamily: undefined, lineHeight: 44 }
+                                                            ]}
+                                                        >
+                                                            {sizeEmoji}
+                                                        </Text>
+                                                    ) : null}
+                                                    {sizeLabel ? <Text style={styles.heroMiniSize}>{sizeLabel}</Text> : null}
                                                 </View>
-                                            )}
+                                            ) : null}
 
                                             <View style={styles.progressMini} accessibilityLabel={`התפתחות ${progressPct}%`}>
                                                 <View style={[styles.progressMiniFill, { width: `${progressPct}%` }]} />
                                             </View>
                                             <Text style={styles.progressMiniText}>{progressPct}% מהדרך</Text>
+
+                                            {/* אם תרצי להציג גם את האורך/משקל מתחת לשורה:
+                          השאירי את הקטע הבא, או מחקי אם לא צריך */}
+                                            {(lengthCm || weightGr === 0 || weightGr) ? (
+                                                <View style={{ marginTop: 6 }}>
+                                                    {Number.isFinite(lengthCm) ? (
+                                                        <Text style={[styles.sectionText, { textAlign: 'right', fontSize: 14 }]}>
+                                                            אורך משוער: {lengthCm} ס״מ
+                                                        </Text>
+                                                    ) : null}
+                                                    {Number.isFinite(weightGr) ? (
+                                                        <Text style={[styles.sectionText, { textAlign: 'right', fontSize: 14 }]}>
+                                                            משקל משוער: {weightGr} גרם
+                                                        </Text>
+                                                    ) : null}
+                                                </View>
+                                            ) : null}
                                         </View>
                                     </View>
 

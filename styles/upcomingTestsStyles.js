@@ -6,6 +6,11 @@ import { Colors } from '../constants/Colors';
 const FONT_SCALE = 1.2;
 const m = n => Math.round(n * FONT_SCALE);
 
+// רוחב הכרטיסיות: 75% = הקטנה של 25% וריכוז באמצע
+const CARD_WIDTH_PERCENT = '75%';
+const CARD_MIN_WIDTH = 320;  // להבטיח קריאות במסכים צרים
+const CARD_MAX_WIDTH = 900;  // מגבלת רוחב הגיונית במסכים רחבים
+
 export const screenStyles = StyleSheet.create({
     container: { flex: 1, paddingHorizontal: 16, paddingTop: 12 },
     screenTitle: { fontSize: m(20), fontWeight: '800', color: Colors.primary, textAlign: 'center', marginBottom: 14 },
@@ -27,12 +32,29 @@ export const screenStyles = StyleSheet.create({
     triTxt: { fontWeight: '700', fontSize: m(14) },
     triTxtActive: { color: '#fff' },
 
+    // אם תרצי שגם שורת החיפוש תהיה באותו רוחב ממורכז – הוסיפי width/min/max/alignSelf כמו בכרטיסים
     search: { backgroundColor: '#fff', borderRadius: 12, paddingHorizontal: 14, paddingVertical: 12, marginBottom: 14, elevation: 1, fontSize: m(14) },
     centerBox: { alignItems: 'center', justifyContent: 'center', paddingVertical: 26 },
 });
 
 export const testCardStyles = StyleSheet.create({
-    card: { backgroundColor: '#fff', borderRadius: 16, padding: 18, marginBottom: 14, elevation: 2, shadowColor: '#000', shadowOpacity: 0.06, shadowRadius: 6, shadowOffset: { width: 0, height: 3 } },
+    card: {
+        backgroundColor: '#fff',
+        borderRadius: 16,
+        padding: 18,
+        marginBottom: 14,
+        elevation: 2,
+        shadowColor: '#000',
+        shadowOpacity: 0.06,
+        shadowRadius: 6,
+        shadowOffset: { width: 0, height: 3 },
+        // ↓↓↓ הקטנת רוחב ב-25% ומרכוז הכרטיס
+        alignSelf: 'center',
+        width: CARD_WIDTH_PERCENT,
+        minWidth: CARD_MIN_WIDTH,
+        maxWidth: CARD_MAX_WIDTH,
+    },
+
     headerRow: { flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center' },
 
     title: { fontSize: m(18), fontWeight: '800', color: Colors.primary, textAlign: 'right', flex: 1, marginStart: 12 },
