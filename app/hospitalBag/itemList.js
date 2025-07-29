@@ -1,36 +1,51 @@
-import React, { useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity } from 'react-native';
-
+import React from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
 import styles from '../../styles/itemList';
 import checklistItems from './checklistItems';
 
-export default function ItemList({ category }) {
-    const filtered = checklistItems.filter(item => item.category === category);
-    const [checked, setChecked] = useState([]);
+export default function ItemList({ category, checkedItems, onToggleItem }) {
+    const filteredItems = checklistItems.filter(item => item.category === category);
 
-    const toggle = (id) => {
-        setChecked(prev =>
-            prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]
-        );
-    };
-
-    const renderItem = ({ item }) => (
-        <TouchableOpacity onPress={() => toggle(item.id)} style={styles.itemRow}>
-            <View style={styles.checkbox}>
-                {checked.includes(item.id) && <View style={styles.checked} />}
+    if (filteredItems.length === 0) {
+        return (
+            <View style={styles.emptyState}>
+                <Text style={styles.emptyStateIcon}>📭</Text>
+                <Text style={styles.emptyStateText}>
+                    אין פריטים בקטגוריה זו 🎯
+                </Text>
             </View>
-            <Text style={styles.itemText}>{item.name}</Text>
-        </TouchableOpacity>
-    );
+        );
+    }
 
     return (
-        <View style={styles.card}>
-            <Text style={styles.categoryTitle}>{category}</Text>
-            <FlatList
-                data={filtered}
-                renderItem={renderItem}
-                keyExtractor={(item) => item.id.toString()}
-            />
+        <View style={{ flex: 1 }}>
+            {filteredItems.map((item, index) => (
+                <TouchableOpacity
+                    key={item.id}
+                    style={[
+                        styles.itemRow,
+                        index === filteredItems.length - 1 && { marginBottom: 0 },
+                        checkedItems.includes(item.id) && styles.itemRowChecked
+                    ]}
+                    onPress={() => onToggleItem(item.id)}
+                    activeOpacity={0.7}
+                >
+                    <View style={[
+                        styles.checkbox,
+                        checkedItems.includes(item.id) && styles.checkboxChecked
+                    ]}>
+                        {checkedItems.includes(item.id) && (
+                            <Text style={styles.checkboxIcon}>✓</Text>
+                        )}
+                    </View>
+                    <Text style={[
+                        styles.itemText,
+                        checkedItems.includes(item.id) && styles.itemTextChecked
+                    ]}>
+                        {item.name}
+                    </Text>
+                </TouchableOpacity>
+            ))}
         </View>
     );
 }
