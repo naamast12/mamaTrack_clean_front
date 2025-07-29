@@ -9,6 +9,11 @@ import api from '../../src/api/axiosConfig';
 
 const BabyChecklist = () => {
   const [items, setItems] = useState(babyChecklistData);
+  
+  // Debug: log whenever items state changes
+  useEffect(() => {
+    console.log('🔄 Items state changed:', items);
+  }, [items]);
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [isLoading, setIsLoading] = useState(true);
   const [userId, setUserId] = useState(null);
@@ -34,7 +39,16 @@ const BabyChecklist = () => {
 
   // Load userId and checklist data on mount
   useEffect(() => {
+
     const init = async () => {
+      const token = await storage.get('userToken');
+      console.log('📦 Loaded token:', token);
+
+      if (!token) {
+        setUserError('User is not authenticated. Please log in.');
+        return;
+      }
+
       try {
         const storedUserId = await storage.get('userId');
         console.log('Stored userId:', storedUserId);
@@ -108,6 +122,7 @@ const BabyChecklist = () => {
     try {
       console.log('Saving checklist for user:', currentUserId);
       console.log('Items to save:', updatedItems);
+      console.log('📤 Sending itemsStatus:', JSON.stringify(updatedItems));
       
       const response = await api.post('/api/baby-checklist', {
         itemsStatus: JSON.stringify(updatedItems)
@@ -150,48 +165,42 @@ const BabyChecklist = () => {
 
   // Reset all items
   const resetChecklist = async () => {
-    Alert.alert(
-        'איפוס רשימה 🗑️',
-        'האם אתה בטוח שברצונך לאפס את כל הרשימה?',
-        [
-          { text: 'ביטול', style: 'cancel' },
-          {
-            text: 'אפס',
-            style: 'destructive',
-            onPress: async () => {
-              console.log('Reset button pressed');
-              console.log('Current items before reset:', items);
-              
-              const resetItems = items.map(item => ({ ...item, checked: false }));
-              console.log('Reset items:', resetItems);
-              
-              setItems(resetItems);
-              console.log('Items state updated');
+    console.log('🔴 resetChecklist function called!');
+    
+    // Use window.confirm for web
+    if (typeof window !== 'undefined' && window.confirm('האם אתה בטוח שברצונך לאפס את כל הרשימה?')) {
+      console.log('Reset confirmed by user');
+      console.log('Current items before reset:', items);
+      
+      const resetItems = items.map(item => ({ ...item, checked: false }));
+      console.log('Reset items:', resetItems);
+      
+      setItems(resetItems);
+      console.log('Items state updated');
 
-              // Save to local storage
-              try {
-                await storage.set('babyChecklistData', JSON.stringify(resetItems));
-                console.log('Reset saved to local storage');
-              } catch (error) {
-                console.error('Error saving reset to local storage:', error);
-              }
+      // Save to local storage
+      try {
+        await storage.set('babyChecklistData', JSON.stringify(resetItems));
+        console.log('Reset saved to local storage');
+      } catch (error) {
+        console.error('Error saving reset to local storage:', error);
+      }
 
-              // Save reset to server using reset endpoint
-              try {
-                console.log('Calling reset endpoint...');
-                const response = await api.post('/api/baby-checklist/reset');
-                if (response.data?.success) {
-                  console.log('Reset completed successfully on server');
-                }
-              } catch (error) {
-                console.error('Error calling reset endpoint:', error);
-                console.log('Reset completed locally only');
-              }
-              console.log('Reset completed');
-            }
-          }
-        ]
-    );
+      // Save reset to server using reset endpoint
+      try {
+        console.log('Calling reset endpoint...');
+        const response = await api.post('/api/baby-checklist/reset');
+        if (response.data?.success) {
+          console.log('Reset completed successfully on server');
+        }
+      } catch (error) {
+        console.error('Error calling reset endpoint:', error);
+        console.log('Reset completed locally only');
+      }
+      console.log('Reset completed');
+    } else {
+      console.log('Reset cancelled by user');
+    }
   };
 
   // Get category tab style based on category
