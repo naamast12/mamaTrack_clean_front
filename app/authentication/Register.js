@@ -5,7 +5,7 @@ import { View, Text, TextInput, Pressable, ScrollView, Alert, TouchableOpacity }
 import { useRouter } from 'expo-router';
 import { authStyles } from '../../styles/authStyles';
 import { dashboardStyles } from '../../styles/dashboardStyles'; // רק אם באמת צריךimport { Spacing } from "../../constants/Sizes";
-import axios from "axios";
+// import axios from "axios";
 import ProtectedRoute from '../../components/ProtectedRoute';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Colors } from '../../constants/Colors';
@@ -16,6 +16,7 @@ import sharedStyles from '../../styles/sharedStyles';
 import { Platform } from 'react-native';
 import DatePicker from 'react-datepicker'; // רק לווב
 import 'react-datepicker/dist/react-datepicker.css';
+import api from '../../src/api/axiosConfig';
 
 export const Register = () => {
     const router = useRouter();
@@ -124,9 +125,7 @@ export const Register = () => {
 
         try {
             const userData = { firstName, lastName, mail, password ,lastPeriodDate};
-            const response = await axios.post('http://localhost:3030/api/register', userData, {
-                withCredentials: true
-              });
+            const response = await api.post('/api/register', userData);
 
             if (response.data.success) {
                 alert( "ההרשמה הצליחה!");
@@ -164,17 +163,7 @@ export const Register = () => {
 
     return (
         <ProtectedRoute requireAuth={false}>
-            <View contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}>
-                {/*<View style={{ marginBottom: 40, marginTop:30 }}>*/}
-                {/*    <LinearGradient*/}
-                {/*        colors={[Colors.primary, Colors.accent]}*/}
-                {/*        start={{ x: 1, y: 0 }}*/}
-                {/*        end={{ x: 0, y: 0 }}*/}
-                {/*        style={dashboardStyles.gradientTitleWrapper}*/}
-                {/*    >*/}
-                {/*        <Text style={dashboardStyles.gradientTitle}> MamaTrack!</Text>*/}
-                {/*    </LinearGradient>*/}
-                {/*</View>*/}
+            <ScrollView contentContainerStyle={authStyles.container}>
 
                 <View style={authStyles.cardContainer}>
                     <LinearGradient
@@ -185,8 +174,6 @@ export const Register = () => {
                     >
                         <Text style={dashboardStyles.gradientTitle}>הרשמה:</Text>
                     </LinearGradient>
-                    {/*<Text style={sharedStyles.bigBoldText}>הרשמה:</Text>*/}
-
                     <TextInput
                         style={sharedStyles.loginInput}
                         placeholder="שם פרטי"
@@ -338,7 +325,7 @@ export const Register = () => {
                         </Pressable>
                     </View>
                 </View>
-            </View>
+            </ScrollView>
         </ProtectedRoute>
     );
 };
