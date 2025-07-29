@@ -46,7 +46,6 @@ const dashboardStyles = StyleSheet.create({
         borderRadius: 24,
         paddingHorizontal: 12,
         paddingVertical: 6,
-        marginTop:30
     },
     logoutLabel: {
         color: Colors.primary,
