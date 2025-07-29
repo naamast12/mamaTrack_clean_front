@@ -175,7 +175,6 @@ export default function WeeklyUpdatesPage() {
                 <ScrollView contentContainerStyle={styles.pageContent}>
                     <View style={styles.inner}>
                         <Text style={styles.screenTitle}>עדכונים שבועיים</Text>
-                        <HomeButton />
 
                         {/* בחירת שבוע */}
                         <View style={styles.weekRow}>
