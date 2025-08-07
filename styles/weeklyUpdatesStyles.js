@@ -1,6 +1,5 @@
-// styles/weeklyUpdatesStyles.js
+import { Colors } from '../constants/Colors';   // ודאי שהנתיב נכון
 import { StyleSheet } from 'react-native';
-import { Colors } from '../constants/Colors';
 
 export default function getWeeklyStyles() {
     const card  = '#FFFFFF';
@@ -11,14 +10,73 @@ export default function getWeeklyStyles() {
     return StyleSheet.create({
         container: { flex: 1 },
 
-        // אזור ה‑Header הלא-גלול
-        pageHeader: {
-            // אפשר לשים רקע/צל קל אם תרצי
-            paddingBottom: 8,
+        /* ───────── Header ───────── */
+        pageHeader: { paddingBottom: 8 },
+
+        headerCard: {
+            backgroundColor: '#FFFFFF',
+            borderRadius: 16,
+            paddingVertical: 16,
+            paddingHorizontal: 20,
+            shadowColor: '#000',
+            shadowOpacity: 0.05,
+            shadowRadius: 6,
+            shadowOffset: { width: 0, height: 3 },
+            elevation: 2,
+            marginBottom: 8,
         },
 
-        // אזור גלול – תופס את כל השטח שנותר
-        cardsScroll: { flex: 1 },
+        /* -----  Dropdown  ----- */
+        weekRow: {
+            flexDirection: 'row-reverse',   // RTL: כפתור חץ בצד שמאל
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginTop: 8,
+            marginBottom: 10,
+        },
+
+        weekLabel: {
+            fontSize: 20,
+            fontWeight: '800',
+            color: head,
+            marginHorizontal: 4,            // רווח קטן לפני החץ
+            textAlign: 'center',
+        },
+
+        arrowBtn: {
+            padding: 8,                     // שטח לחיצה נוח
+        },
+
+        backdrop: {
+            flex: 1,
+            backgroundColor: 'rgba(0,0,0,0.3)',
+        },
+        listContainer: {
+            maxHeight: '60%',
+            backgroundColor: '#fff',
+            borderTopLeftRadius: 24,
+            borderTopRightRadius: 24,
+            paddingVertical: 12,
+            paddingHorizontal: 16,
+        },
+        option: {
+            paddingVertical: 12,
+            borderBottomWidth: 1,
+            borderBottomColor: '#eee',
+        },
+        selectedOption: {
+            backgroundColor: 'rgba(167,139,250,0.08)',
+        },
+        optionTxt: {
+            fontSize: 16,
+            textAlign: 'center',
+        },
+        selectedOptionTxt: {
+            fontWeight: 'bold',
+        },
+
+        /* ───────── Scroll cards ───────── */
+        cardsScroll:  { flex: 1 },
         cardsContent: { paddingBottom: 32 },
 
         inner: {
@@ -45,33 +103,17 @@ export default function getWeeklyStyles() {
             flex: 1,
         },
 
-        weekRow: {
-            flexDirection: 'row-reverse',
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginBottom: 10,
-        },
-        stepBtnMargin: { marginHorizontal: 8 }, // במקום gap
-        weekLabel: {
-            fontSize: 20,
-            fontWeight: '800',
-            color: head,
-            minWidth: 120,
-            textAlign: 'center',
-        },
-        stepBtn: {
-            width: 44, height: 40, borderRadius: 12, backgroundColor: card,
-            alignItems: 'center', justifyContent: 'center',
-            shadowColor: '#000', shadowOpacity: 0.06, shadowRadius: 6,
-            shadowOffset: { width: 0, height: 3 }, elevation: shade,
-        },
-        stepTxt: { fontSize: 22, fontWeight: '800', color: head },
-
-        // סקשנים
+        /* ───────── Sections ───────── */
         section: {
-            backgroundColor: card, borderRadius: 16, padding: 16, marginBottom: 12,
-            shadowColor: '#000', shadowOpacity: 0.05, shadowRadius: 6,
-            shadowOffset: { width: 0, height: 3 }, elevation: shade,
+            backgroundColor: card,
+            borderRadius: 16,
+            padding: 16,
+            marginBottom: 12,
+            shadowColor: '#000',
+            shadowOpacity: 0.05,
+            shadowRadius: 6,
+            shadowOffset: { width: 0, height: 3 },
+            elevation: shade,
         },
         sectionHeader: { flexDirection: 'row-reverse', alignItems: 'center', marginBottom: 8 },
         sectionIcon:   { marginLeft: 8 },

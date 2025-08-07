@@ -131,6 +131,8 @@ export default function UpcomingTests() {
             <HomeButton />
 
             <View style={styles.container}>
+                <View style={styles.pageHeader}>
+
                 <Text style={styles.screenTitle}>בדיקות צפויות</Text>
 
                 {/* טאבים */}
@@ -157,6 +159,7 @@ export default function UpcomingTests() {
                     >
                     <Text style={[styles.modeTxt, mode === 'tri' && styles.modeTxtActive]}>לפי טרימסטר</Text>
                 </TouchableOpacity>
+                </View>
 
             </View>
 

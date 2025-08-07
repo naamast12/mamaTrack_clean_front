@@ -13,6 +13,23 @@ const CARD_MAX_WIDTH = 900;  // מגבלת רוחב הגיונית במסכים 
 
 export const screenStyles = StyleSheet.create({
     container: { flex: 1, paddingHorizontal: 16, paddingTop: 12 },
+    pageHeader: {
+        backgroundColor: '#FFFFFF',
+        borderRadius: 16,
+        paddingVertical: 16,
+        paddingHorizontal: 16,
+        marginBottom: 12,
+        /* צל עדין */
+        elevation: 2,
+        shadowColor: '#000',
+        shadowOpacity: 0.05,
+        shadowRadius: 6,
+        shadowOffset: { width: 0, height: 3 },
+        // ↓ הוספה כדי לצמצם רוחב
+        width: '60%', // או ערך קבוע כמו 300
+        alignSelf: 'center',
+
+    },
     screenTitle: { fontSize: m(20), fontWeight: '800', color: Colors.primary, textAlign: 'center', marginBottom: 14 },
 
     modes: { flexDirection: 'row-reverse', alignSelf: 'center', backgroundColor: '#E5E7EB', borderRadius: 12, marginBottom: 12 },

@@ -1,7 +1,7 @@
 // app/weeklyUpdates/index.js
 import React, { useEffect, useState, useCallback } from 'react';
-import { View, Text, TouchableOpacity, ActivityIndicator, ScrollView } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+ import { View, Text, TouchableOpacity, ActivityIndicator, ScrollView,
+          Modal, FlatList } from 'react-native';import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import ProtectedRoute from '@/components/ProtectedRoute';
 import { HomeButton } from '../utils/HomeButton';
@@ -39,8 +39,69 @@ const ICONS = {
     'גודל התינוק':             'ruler',
 };
 
+
+
 export default function WeeklyUpdatesPage() {
     const styles = getWeeklyStyles();
+
+    const WeekSelector = ({ week, onSelect }) => {
+          const [open, setOpen] = useState(false);
+          const options = Array.from({ length: 42 }, (_, i) => i + 1);
+        return (
+            <>
+                  {/* כפתור פתיחה – רק חץ */}
+                  <TouchableOpacity
+                    style={styles.arrowBtn}
+                    onPress={() => setOpen(true)}
+                    accessibilityLabel="פתח רשימת שבועות"
+                  >
+                    <MaterialCommunityIcons
+                      name="chevron-down"
+                      size={24}
+                      color="#333"
+                    />
+                  </TouchableOpacity>
+
+                {/* Modal עם הרשימה */}
+                <Modal
+                    visible={open}
+                    transparent
+                    animationType="slide"
+                    onRequestClose={() => setOpen(false)}
+                >
+                    <View style={styles.backdrop} onTouchEnd={() => setOpen(false)} />
+
+                    <View style={styles.listContainer}>
+                        <FlatList
+                            data={options}
+                            keyExtractor={(item) => String(item)}
+                            renderItem={({ item }) => (
+                                <TouchableOpacity
+                                    style={[
+                                        styles.option,
+                                        item === week && styles.selectedOption,
+                                    ]}
+                                    onPress={() => {
+                                        onSelect(item);   //  מפעיל את changeWeek
+                                        setOpen(false);
+                                    }}
+                                >
+                                    <Text
+                                        style={[
+                                            styles.optionTxt,
+                                            item === week && styles.selectedOptionTxt,
+                                        ]}
+                                    >
+                                        שבוע {item}
+                                    </Text>
+                                </TouchableOpacity>
+                            )}
+                        />
+                    </View>
+                </Modal>
+            </>
+        );
+    };
     const { getWeeklyUpdate } = useWeeklyApi();
 
     const [week, setWeek] = useState(12);
@@ -130,9 +191,9 @@ export default function WeeklyUpdatesPage() {
             setLoading(false);
         }
     };
-
-    const onInc = () => changeWeek(Math.min(42, week + 1));
-    const onDec = () => changeWeek(Math.max(1, week - 1));
+    //
+    // const onInc = () => changeWeek(Math.min(42, week + 1));
+    // const onDec = () => changeWeek(Math.max(1, week - 1));
 
     const normalized = normalizeWeekly(data || {});
     const sections = [
@@ -164,22 +225,30 @@ export default function WeeklyUpdatesPage() {
                 {/* ===== Header לא-גלול ===== */}
                 <View style={styles.pageHeader}>
                     <View style={styles.inner}>
-                        <View style={styles.headerRow}>
+                        <View style={styles.headerCard}>      {/* ← הוספנו */}
+
+                            <View style={styles.headerRow}>
                             <Text style={styles.screenTitle}>עדכונים שבועיים</Text>
                         </View>
 
                         {/* בחירת שבוע */}
-                        <View style={styles.weekRow}>
-                            <TouchableOpacity onPress={onDec} style={[styles.stepBtn, styles.stepBtnMargin]}>
-                                <Text style={styles.stepTxt}>−</Text>
-                            </TouchableOpacity>
+                        {/*<View style={styles.weekRow}>*/}
+                        {/*    <TouchableOpacity onPress={onDec} style={[styles.stepBtn, styles.stepBtnMargin]}>*/}
+                        {/*        <Text style={styles.stepTxt}>−</Text>*/}
+                        {/*    </TouchableOpacity>*/}
 
-                            <Text style={[styles.weekLabel, styles.stepBtnMargin]}>שבוע {week}</Text>
+                        {/*    <Text style={[styles.weekLabel, styles.stepBtnMargin]}>שבוע {week}</Text>*/}
 
-                            <TouchableOpacity onPress={onInc} style={[styles.stepBtn, styles.stepBtnMargin]}>
-                                <Text style={styles.stepTxt}>+</Text>
-                            </TouchableOpacity>
+                        {/*    <TouchableOpacity onPress={onInc} style={[styles.stepBtn, styles.stepBtnMargin]}>*/}
+                        {/*        <Text style={styles.stepTxt}>+</Text>*/}
+                        {/*    </TouchableOpacity>*/}
+                        {/*</View>*/}
+                            <View style={styles.weekRow}>
+                                  <Text style={styles.weekLabel}>שבוע {week}</Text>
+                                  <WeekSelector week={week} onSelect={changeWeek} />
+                                </View>
                         </View>
+
                     </View>
                 </View>
 
