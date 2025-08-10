@@ -1,9 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity ,FlatList,Alert} from 'react-native';
 import contractionTimerStyles from '../../styles/contractionTimerStyles';
 import api from '../../src/api/axiosConfig';
 import ProtectedRoute from "../../components/ProtectedRoute";
 import { HomeButton } from "../utils/HomeButton";
+
 
 const HOSPITAL_MESSAGE = "הצירים שלך סדירים וחזקים – הגיע הזמן ללכת לבית החולים!";
 
@@ -15,6 +16,8 @@ const ContractionTimer = () => {
   const [showHospitalMessage, setShowHospitalMessage] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const timerRef = useRef(null);
+  const listRef = useRef(null);
+
 
   const formatInterval = (seconds) => {
     if (!seconds || seconds < 0) return '-';
@@ -102,6 +105,12 @@ const ContractionTimer = () => {
               }
             ];
           });
+
+// גלילה לראש הרשימה אחרי שהסטייט התעדכן
+          setTimeout(() => {
+            listRef.current?.scrollTo({ y: 0, animated: true });
+          }, 0);
+
           setShowHospitalMessage(res.data.shouldGoToHospital);
         }
       } catch (err) {
@@ -131,6 +140,25 @@ const ContractionTimer = () => {
     }
   };
 
+  const confirmResetContractions = () => {
+    if (typeof window !== 'undefined' && window.confirm) {
+      // מצב Web
+      if (window.confirm('למחוק את כל הצירים? הפעולה בלתי הפיכה.')) {
+        handleResetContractions();
+      }
+    } else {
+      // מצב Mobile
+      Alert.alert(
+          'מחיקת כל הצירים',
+          'למחוק את כל הצירים? הפעולה בלתי הפיכה.',
+          [
+            { text: 'בטל', style: 'cancel' },
+            { text: 'מחק', style: 'destructive', onPress: handleResetContractions },
+          ]
+      );
+    }
+  };
+
   useEffect(() => {
     if (isTiming) {
       timerRef.current = setInterval(() => {
@@ -150,32 +178,49 @@ const ContractionTimer = () => {
     return date.toLocaleTimeString();
   };
 
+
+  const ordered = [...contractions]
+      .sort((a, b) => b.startTime - a.startTime) // חדש -> ישן
+      .map((c, idx, arr) => {
+        // הפריט הישן יותר נמצא "מתחת" (idx + 1)
+        const olderBelow = idx < arr.length - 1 ? arr[idx + 1].startTime : null;
+        const displayInterval =
+            olderBelow != null ? Math.round((c.startTime - olderBelow) / 1000) : null;
+
+        return { ...c, displayInterval };
+      });
   return (
+      // בתוך ה-return, מחליף כמה עטיפות/מחלקות:
       <ProtectedRoute requireAuth={true}>
         <HomeButton />
-        <ScrollView contentContainerStyle={contractionTimerStyles.container}>
-          <Text style={contractionTimerStyles.title}>⏱️ טיימר צירים</Text>
+        <View style={contractionTimerStyles.page}>
+          <View style={contractionTimerStyles.content}>
 
-          <View style={contractionTimerStyles.timerContainer}>
+          <View style={contractionTimerStyles.card}>
+
+        <Text style={contractionTimerStyles.title}>⏱️ טיימר צירים</Text>
+          <Text style={contractionTimerStyles.subtitle}>עקבי אחרי משך הציר והמרווחים ביניהם</Text>
             <Text style={contractionTimerStyles.timerText}>
-              {isTiming ? `משך: ${duration} שניות` : 'לחצי התחל כדי להתחיל לתזמן'}
+              {isTiming ? `משך: ${duration} שניות` : 'לחצי "התחל ציר" כדי להתחיל לתזמן'}
             </Text>
 
-            <TouchableOpacity
-                style={isTiming ? contractionTimerStyles.buttonRed : contractionTimerStyles.buttonBlue}
-                onPress={handleButtonPress}
-            >
-              <Text style={contractionTimerStyles.buttonText}>
-                {isTiming ? 'עצור ציר' : 'התחל ציר'}
-              </Text>
-            </TouchableOpacity>
+            <View style={contractionTimerStyles.buttonsRow}>
+              <TouchableOpacity
+                  style={[contractionTimerStyles.primaryButton, isTiming && contractionTimerStyles.dangerButton]}
+                  onPress={handleButtonPress}
+              >
+                <Text style={contractionTimerStyles.primaryButtonText}>
+                  {isTiming ? 'עצור ציר' : 'התחל ציר'}
+                </Text>
+              </TouchableOpacity>
 
-            <TouchableOpacity
-                style={contractionTimerStyles.buttonGray}
-                onPress={handleResetContractions}
-            >
-              <Text style={contractionTimerStyles.buttonText}>נקה הכל</Text>
-            </TouchableOpacity>
+              <TouchableOpacity
+                  style={contractionTimerStyles.ghostButton}
+                  onPress={confirmResetContractions}
+              >
+                <Text style={contractionTimerStyles.ghostButtonText}>נקה הכל</Text>
+              </TouchableOpacity>
+            </View>
           </View>
 
           {showHospitalMessage && (
@@ -184,31 +229,56 @@ const ContractionTimer = () => {
               </View>
           )}
 
-          <Text style={contractionTimerStyles.listTitle}>📋 רשימת צירים</Text>
-          <View style={contractionTimerStyles.listHeader}>
-            <Text style={contractionTimerStyles.headerCell}>#</Text>
-            <Text style={contractionTimerStyles.headerCell}>שעת התחלה</Text>
-            <Text style={contractionTimerStyles.headerCell}>משך (שניות)</Text>
-            <Text style={contractionTimerStyles.headerCell}>מרווח (שניות)</Text>
+          <View style={contractionTimerStyles.sectionHeader}>
+            <Text style={contractionTimerStyles.listTitle}>📋 רשימת צירים</Text>
+            <View style={contractionTimerStyles.decorativeLine} />
           </View>
 
           {isLoading ? (
-              <Text style={contractionTimerStyles.noData}>טוען נתונים...</Text>
-          ) : contractions.length === 0 ? (
-              <Text style={contractionTimerStyles.noData}>עדיין לא נרשמו צירים.</Text>
+              <Text style={contractionTimerStyles.emptyStateText}>טוען נתונים…</Text>
+          ) : ordered.length === 0 ? (   // ← בדיקת ריקוּת לפי ordered
+              <View style={contractionTimerStyles.emptyState}>
+                <Text style={contractionTimerStyles.emptyStateIcon}>🤰</Text>
+                <Text style={contractionTimerStyles.emptyStateText}>עדיין לא נרשמו צירים.</Text>
+              </View>
           ) : (
-              contractions.map((c, idx) => (
-                  <View key={idx} style={contractionTimerStyles.listRow}>
-                    <Text style={contractionTimerStyles.cell}>{idx + 1}</Text>
-                    <Text style={contractionTimerStyles.cell}>{formatTime(c.startTime)}</Text>
-                    <Text style={contractionTimerStyles.cell}>{c.duration}</Text>
-                    <Text style={contractionTimerStyles.cell}>
-                      {c.interval !== null ? formatInterval(c.interval) : '-'}
-                    </Text>
-                  </View>
-              ))
+              <ScrollView
+                  ref={listRef}
+                  style={contractionTimerStyles.list}
+                  contentContainerStyle={contractionTimerStyles.listContent}
+              >
+              <View style={contractionTimerStyles.itemsContainer}>
+                {ordered.map((c, idx) => (
+                    <View key={idx} style={contractionTimerStyles.itemRow}>
+                      <View style={contractionTimerStyles.itemLeft}>
+                        <Text style={contractionTimerStyles.itemIndexBadge}>
+                          {ordered.length - idx}
+                        </Text>
+                      </View>
+
+                      <View style={contractionTimerStyles.itemMiddle}>
+                        <Text style={contractionTimerStyles.itemTitle}>התחלה: {formatTime(c.startTime)}</Text>
+                        <Text style={contractionTimerStyles.itemSubtitle}> מרווח מהציר הקודם:
+                          {c.displayInterval !== null ? formatInterval(c.displayInterval) : ' -'}
+                          </Text>
+                      </View>
+
+                      <View style={contractionTimerStyles.itemRight}>
+                        <View style={contractionTimerStyles.badge}>
+                          <Text style={contractionTimerStyles.badgeText}>
+                            {c.duration} שניות
+                          </Text>
+                          <Text style={contractionTimerStyles.badgeSubText}>משך ציר</Text>
+                        </View>
+                      </View>
+                    </View>
+                ))}
+              </View>
+              </ScrollView>
+
           )}
-        </ScrollView>
+          </View>
+        </View>
       </ProtectedRoute>
   );
 };

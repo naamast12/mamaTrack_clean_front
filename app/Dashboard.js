@@ -90,7 +90,8 @@ export default function Dashboard() {
                                         }
                                     ]}
                                 >
-                                    {name ? `${name}, ברוכה הבאה (:` : 'ברוכה הבאה (: '}
+                                    {/*{name ? `${name}, ברוכה הבאה (:` : 'ברוכה הבאה (: '}*/}
+                                    {'ברוכה הבאה!'}
                                 </Text>
                             </LinearGradient>
 
