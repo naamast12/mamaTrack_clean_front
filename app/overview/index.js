@@ -1,12 +1,15 @@
 // app/overview/index.js
 import React, { useEffect, useState, useCallback } from 'react';
 import { View, Text, TouchableOpacity, ActivityIndicator, ScrollView, Platform } from 'react-native';
-import { useRouter } from 'expo-router';
+import {Feather, MaterialCommunityIcons} from '@expo/vector-icons';import { useRouter } from 'expo-router';
 
 import ProtectedRoute from '@/components/ProtectedRoute';
 import { HomeButton } from '@/app/utils/HomeButton';
 import api from '@/src/api/axiosConfig';
 import getOverviewStyles from '../../styles/overviewStyles';
+import {dashboardStyles} from "../../styles/dashboardStyles";
+import {Colors} from "../../constants/Colors";
+import {LinearGradient} from "expo-linear-gradient";
 
 /** API קטן מקומי להבאת עדכון שבועי */
 const useWeeklyApi = () => {
@@ -26,6 +29,25 @@ export default function OverviewScreen() {
     const [weekly, setWeekly] = useState(null);
     const [loading, setLoading] = useState(true);
     const [err, setErr] = useState('');
+      /* ── כפתור פרופיל צף ── */
+          const ProfileButton = () => (
+            <TouchableOpacity
+      style={styles.fabProfile}
+          onPress={() => router.push('/MyProfile')}
+          accessibilityLabel="עמוד פרופיל"
+            >
+              <MaterialCommunityIcons name="account-circle-outline" size={26} color="#FFF" />
+            </TouchableOpacity>
+      );
+    const handleLogout = async () => {
+        try {
+            await storage.remove('userToken');
+        } catch (e) {
+            console.log('Logout error:', e);
+        }
+        router.replace('/authentication/Login');
+    };
+
 
     useEffect(() => {
         let mounted = true;
@@ -68,14 +90,36 @@ export default function OverviewScreen() {
 
     return (
         <ProtectedRoute requireAuth={true}>
-            <HomeButton />
-
+            <ProfileButton />
             <View style={styles.container}>
+                <View style={dashboardStyles.header}>
+                    <TouchableOpacity onPress={handleLogout} style={dashboardStyles.logoutIconButton}>
+                        <Feather name="log-out" size={18} color={Colors.primary} />
+                        <Text style={dashboardStyles.logoutLabel}>התנתקות</Text>
+                    </TouchableOpacity>
+                </View>
+                <ProfileButton />
+
                 <ScrollView contentContainerStyle={styles.pageContent}>
                     <View style={styles.inner}>
-                        <Text style={styles.screenTitle}>תצוגה כללית</Text>
-                        <HomeButton />
-
+                        <LinearGradient
+                            colors={[Colors.primary, Colors.accent]}
+                            start={{ x: 1, y: 0 }}
+                            end={{ x: 0, y: 0 }}
+                            style={dashboardStyles.gradientTitleWrapper}
+                        >
+                            <Text
+                                style={[
+                                    dashboardStyles.gradientTitle,
+                                    {
+                                        textAlign: 'center',        // ממרכז את הטקסט
+                                        writingDirection: 'rtl',    // מוודא שהכיוון מימין לשמאל
+                                    }
+                                ]}
+                            >
+                                {'ברוכה הבאה!'}
+                            </Text>
+                        </LinearGradient>
                         {loading ? (
                             <View style={styles.centerBox}>
                                 <ActivityIndicator />
@@ -87,9 +131,7 @@ export default function OverviewScreen() {
                             </View>
                         ) : (
                             <>
-                                {/* ===== HEADER: ימין – כרטיס שבוע; משמאל – שני כפתורים אנכיים ===== */}
                                 <View style={styles.headerRow}>
-                                    {/* ימין: Hero קטן */}
                                     <View style={styles.headerRight}>
                                         <View style={styles.heroMini}>
                                             <Text style={styles.heroMiniWeek}>שבוע {week}</Text>
@@ -100,7 +142,6 @@ export default function OverviewScreen() {
                                                         <Text
                                                             style={[
                                                                 styles.heroMiniEmoji,
-                                                                // איפוס פונט לאימוג׳י כדי לאפשר פונט אימוג׳י של המערכת
                                                                 Platform.OS === 'android'
                                                                     ? { fontFamily: 'sans-serif', lineHeight: 44, includeFontPadding: false }
                                                                     : { fontFamily: undefined, lineHeight: 44 }
@@ -118,8 +159,7 @@ export default function OverviewScreen() {
                                             </View>
                                             <Text style={styles.progressMiniText}>{progressPct}% מהדרך</Text>
 
-                                            {/* אם תרצי להציג גם את האורך/משקל מתחת לשורה:
-                          השאירי את הקטע הבא, או מחקי אם לא צריך */}
+
                                             {(lengthCm || weightGr === 0 || weightGr) ? (
                                                 <View style={{ marginTop: 6 }}>
                                                     {Number.isFinite(lengthCm) ? (
@@ -137,25 +177,31 @@ export default function OverviewScreen() {
                                         </View>
                                     </View>
 
-                                    {/* שמאל: כפתורים אחד מתחת לשני */}
                                     <View style={styles.headerNavCol}>
                                         <TouchableOpacity
                                             onPress={() => router.push('/weeklyUpdates')}
-                                            style={[styles.navBtn, styles.navBtnPrimary, styles.navBtnFull, { marginBottom: 8 }]}
+                                            style={[styles.navBtn, styles.navBtnPrimary, styles.navBtnFull, styles.navBtnGap]}
                                         >
                                             <Text style={styles.navBtnText}>עדכונים שבועיים</Text>
                                         </TouchableOpacity>
 
                                         <TouchableOpacity
                                             onPress={() => router.push('/upcomingTests')}
-                                            style={[styles.navBtn, styles.navBtnGhost, styles.navBtnFull]}
+                                            style={[styles.navBtn, styles.navBtnGhost,   styles.navBtnFull, styles.navBtnGap]}
                                         >
                                             <Text style={[styles.navBtnText, styles.navBtnGhostText]}>בדיקות צפויות</Text>
                                         </TouchableOpacity>
+
+                                        <TouchableOpacity
+                                            onPress={() => router.push('/faq')}
+                                            style={[styles.navBtn, styles.navBtnAccent, styles.navBtnFull]}
+                                        >
+                                            <Text style={[styles.navBtnText, styles.navBtnGhostText]}>שאלות נפוצות</Text>
+                                        </TouchableOpacity>
                                     </View>
+
                                 </View>
 
-                                {/* ===== CONTENT: מתחת ל‑Header – כרטיס גדול + שני חצאים ===== */}
                                 {!!whatsHappening && (
                                     <View style={[styles.section, styles.sectionLg, styles.cardSpace]}>
                                         <Text style={styles.sectionTitle}>מה קורה השבוע</Text>
@@ -192,6 +238,42 @@ export default function OverviewScreen() {
                                 </View>
                             </>
                         )}
+                        <View style={styles.actionRow}>
+                            {/* 1. רשימת קניות לתינוק – לילך-בינוני */}
+                            <TouchableOpacity
+                                onPress={() => router.push('/babyChecklist')}
+                                style={[styles.actionBtn, styles.actionLilac]}
+                            >
+                                <Text style={styles.actionText}>רשימת קניות לתינוק</Text>
+                            </TouchableOpacity>
+
+                            {/* 2. טיימר צירים – תכלת-בינוני */}
+                            <TouchableOpacity
+                                onPress={() => router.push('/contractionTimer')}
+                                style={[styles.actionBtn, styles.actionBlue]}
+                            >
+                                <Text style={styles.actionText}>טיימר צירים</Text>
+                            </TouchableOpacity>
+
+                            {/* 3. ציוד לחדר לידה – אפרסק-בינוני */}
+                            <TouchableOpacity
+                                onPress={() => router.push('/hospitalBag')}
+                                style={[styles.actionBtn, styles.actionPeach]}
+                            >
+                                <Text style={styles.actionText}>רשימת ציוד לחדר לידה</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                onPress={() => router.push('/chats')}
+                                style={styles.chatBtnWide}
+                            >
+                                <Text style={styles.chatBtnText}>צ'אט</Text>
+                            </TouchableOpacity>
+
+
+
+                        </View>
+
+
                     </View>
                 </ScrollView>
             </View>

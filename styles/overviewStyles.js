@@ -21,7 +21,7 @@ export default function getOverviewStyles() {
 
         screenTitle: {
             fontSize: 30, fontWeight: '800', color: '#C08497',
-            textAlign: 'center', marginBottom: 12, letterSpacing: 0.3,
+            textAlign: 'center', marginBottom: 4, letterSpacing: 0.3,
         },
 
         /** ===== שורת כותרת עליונה (Hero+כפתורים) ===== */
@@ -30,7 +30,23 @@ export default function getOverviewStyles() {
             alignItems: 'flex-start',
             justifyContent: 'space-between',
             flexWrap: 'nowrap',
-            marginBottom: 14,
+            marginBottom: 4,
+        },
+        chatBtnWide: {
+            backgroundColor: '#E7F8F4',   // מנטה פסטלי עדין; אפשר לשנות לגוון אחר מהפלטה
+            paddingVertical: 16,
+            borderRadius: 16,
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '100%',                 // רחב – כל רוחב ה-inner
+            alignSelf: 'center',
+            marginTop: 12,
+            marginBottom: 24,
+        },
+        chatBtnText: {
+            fontSize: 18,
+            fontWeight: '700',
+            color: '#111827',
         },
 
         // שתי העמודות
@@ -69,12 +85,69 @@ export default function getOverviewStyles() {
         progressMiniFill: { height: 6, borderRadius: 999, backgroundColor: '#A78BFA' },
         progressMiniText: { fontSize: 14, color: '#6B7280', textAlign: 'right', marginTop: 4 },
 
-        navBtn:         { paddingVertical: 14, paddingHorizontal: 18, borderRadius: 12 },
-        navBtnFull:     { width: '100%', alignItems: 'center', justifyContent: 'center' },
         navBtnPrimary:  { backgroundColor: '#EDE7FF' },
         navBtnGhost:    { backgroundColor: '#EFF4F9' },
         navBtnText:     { fontSize: 18, fontWeight: '700', color: head },
         navBtnGhostText:{ opacity: 0.8 },
+        navBtn: {
+            paddingVertical: 16,
+            paddingHorizontal: 20,
+            borderRadius: 16,
+        },
+        navBtnFull: {
+            width: '90%',
+            alignItems: 'center',
+            justifyContent: 'center',
+        },
+        navBtnGap: {               // ← מרווח אחיד בין הכפתורים
+            marginBottom: 5,
+        },
+        navBtnAccent: { backgroundColor: '#FFEFE7' }, // כתום-בהיר לדוגמה
+        /* כפתורי פעולה תחתית */
+        actionRow: {
+            flexDirection: 'row-reverse',
+            justifyContent: 'space-between',
+            flexWrap: 'wrap',
+            marginTop: 12,
+            marginBottom: 24,
+        },
+
+        actionBtn: {
+            flexBasis: '32%',
+            paddingVertical: 16,
+            borderRadius: 16,
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginBottom: 8,
+        },
+
+        /* שלושת הגוונים החדשים */
+        actionLilac: { backgroundColor: '#E4DCFF' }, // לילך-בהיר
+        actionBlue:  { backgroundColor: '#F2F8FF' }, // תכלת-בהיר
+        actionPeach: { backgroundColor: '#FFEFF7' }, // אפרסק-בהיר
+
+        actionText: { fontSize: 16, fontWeight: '700', color: '#111827' },
+
+        fabProfile: {
+            position: 'absolute',
+            top: 40,
+            left: 400,    // RTL – פינה ימנית
+            width: 48,
+            height: 48,
+            borderRadius: 24,
+            backgroundColor: '#A78BFA',   // סגול מותג
+            alignItems: 'center',
+            justifyContent: 'center',
+
+            // צל קל
+            shadowColor: '#000',
+            shadowOpacity: 0.12,
+            shadowRadius: 6,
+            shadowOffset: { width: 0, height: 3 },
+            elevation: 6,
+        },
+
+
 
         /** ===== קלפים מתחת ל‑Header ===== */
         section: {

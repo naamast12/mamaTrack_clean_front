@@ -27,6 +27,7 @@ const dashboardStyles = StyleSheet.create({
         alignItems: 'center',
         marginTop: 40,
     },
+
     logo: {
         fontSize: 25,
         fontWeight: 'bold',
