@@ -106,6 +106,7 @@ export default function Dashboard() {
                                     { label: 'רשימת קניות לתינוק', route: 'babyChecklist', icon: <Feather name="shopping-cart" size={20} color="white" /> },
                                     { label: 'ציוד לחדר לידה', route: 'hospitalBag', icon: <MaterialCommunityIcons name="bag-suitcase" size={20} color="white" /> },
                                     { label: 'טיימר צירים', route: 'contractionTimer', icon: <Feather name="clock" size={20} color="white" /> },
+                                    { label: 'פורום', route: 'chats', icon: <Feather name="message-circle" size={20} color="white" /> },
                                 ].map(({ label, route, icon }) => (
                                     <TouchableOpacity
                                         key={route}
