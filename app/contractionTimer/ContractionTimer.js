@@ -197,6 +197,7 @@ const ContractionTimer = () => {
           contentContainerStyle={contractionTimerStyles.scrollContent}
           showsVerticalScrollIndicator={true}
           bounces={true}
+          nestedScrollEnabled={true}
         >
           <View style={contractionTimerStyles.content}>
             <View style={contractionTimerStyles.card}>
@@ -244,33 +245,40 @@ const ContractionTimer = () => {
                   <Text style={contractionTimerStyles.emptyStateText}>עדיין לא נרשמו צירים.</Text>
                 </View>
             ) : (
-                <View style={contractionTimerStyles.itemsContainer}>
-                  {ordered.map((c, idx) => (
-                      <View key={idx} style={contractionTimerStyles.itemRow}>
-                        <View style={contractionTimerStyles.itemLeft}>
-                          <Text style={contractionTimerStyles.itemIndexBadge}>
-                            {ordered.length - idx}
-                          </Text>
-                        </View>
-
-                        <View style={contractionTimerStyles.itemMiddle}>
-                          <Text style={contractionTimerStyles.itemTitle}>התחלה: {formatTime(c.startTime)}</Text>
-                          <Text style={contractionTimerStyles.itemSubtitle}> מרווח מהציר הקודם:
-                            {c.displayInterval !== null ? formatInterval(c.displayInterval) : ' -'}
+                <ScrollView
+                    style={contractionTimerStyles.list}
+                    contentContainerStyle={contractionTimerStyles.listContent}
+                    showsVerticalScrollIndicator={true}
+                    bounces={true}
+                >
+                  <View style={contractionTimerStyles.itemsContainer}>
+                    {ordered.map((c, idx) => (
+                        <View key={idx} style={contractionTimerStyles.itemRow}>
+                          <View style={contractionTimerStyles.itemLeft}>
+                            <Text style={contractionTimerStyles.itemIndexBadge}>
+                              {ordered.length - idx}
                             </Text>
-                        </View>
+                          </View>
 
-                        <View style={contractionTimerStyles.itemRight}>
-                          <View style={contractionTimerStyles.badge}>
-                            <Text style={contractionTimerStyles.badgeText}>
-                              {c.duration} שניות
-                            </Text>
-                            <Text style={contractionTimerStyles.badgeSubText}>משך ציר</Text>
+                          <View style={contractionTimerStyles.itemMiddle}>
+                            <Text style={contractionTimerStyles.itemTitle}>התחלה: {formatTime(c.startTime)}</Text>
+                            <Text style={contractionTimerStyles.itemSubtitle}> מרווח מהציר הקודם:
+                              {c.displayInterval !== null ? formatInterval(c.displayInterval) : ' -'}
+                              </Text>
+                          </View>
+
+                          <View style={contractionTimerStyles.itemRight}>
+                            <View style={contractionTimerStyles.badge}>
+                              <Text style={contractionTimerStyles.badgeText}>
+                                {c.duration} שניות
+                              </Text>
+                              <Text style={contractionTimerStyles.badgeSubText}>משך ציר</Text>
+                            </View>
                           </View>
                         </View>
-                      </View>
-                  ))}
-                </View>
+                    ))}
+                  </View>
+                </ScrollView>
             )}
           </View>
         </ScrollView>
