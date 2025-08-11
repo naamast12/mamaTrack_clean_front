@@ -27,13 +27,13 @@ export default function ThreadScreen() {
     const listRef = useRef<FlatList<Msg>>(null);
     const lastId = useMemo(() => (messages.length ? messages[messages.length - 1].id : 0), [messages]);
 
-    // טוען את כל הודעות החדר (פשוט ומהיר לשלב ראשון)
+    // טעינת ההודעות
     useEffect(() => {
         let cancelled = false;
         (async () => {
             try {
                 setLoading(true);
-                const data = await getMessages(rid, { limit: 100 }); // אפשר להגדיל/להקטין
+                const data = await getMessages(rid, { limit: 100 });
                 if (!cancelled) setMessages(data);
             } catch {
                 if (!cancelled) setErr("שגיאה בטעינת הודעות");
@@ -44,7 +44,6 @@ export default function ThreadScreen() {
         return () => { cancelled = true; };
     }, [rid]);
 
-    // פילוח: הודעת-אם + תגובות
     const parentMsg = useMemo(
         () => messages.find(m => m.id === pid) || null,
         [messages, pid]
@@ -75,37 +74,62 @@ export default function ThreadScreen() {
     const onSend = async () => {
         const body = text.trim();
         if (!body || sending) return;
+        setSending(true);
+        setText("");
+
+        const tempId = Date.now() + Math.random(); // מזהה זמני יציב
+        const optimistic: Msg = {
+            id: tempId as any,
+            senderId: -1,
+            body,
+            createdAt: new Date().toISOString(),
+            parentId: pid,
+        };
+        setMessages(prev => [...prev, optimistic]);
+        setTimeout(() => listRef.current?.scrollToEnd({ animated: true }), 50);
+
         try {
-            setSending(true);
-            setText("");
-
-            // אופטימית: מוסיפים מיד
-            const optimistic: Msg = {
-                id: (lastId || 0) + 0.1,
-                senderId: -1,
-                body,
-                createdAt: new Date().toISOString(),
-                parentId: pid,
-            };
-            setMessages(prev => [...prev, optimistic]);
-            setTimeout(() => listRef.current?.scrollToEnd({ animated: true }), 50);
-
-            // שליחה עם parentId!
             const saved = await sendMessage(rid, body, pid);
-            setMessages(prev => prev.map(m => (m === optimistic ? saved : m)));
+            setMessages(prev => prev.map(m => (m.id === tempId ? saved : m)));
         } catch {
             setErr("שגיאה בשליחת תגובה");
-            setMessages(prev => prev.filter(m => m.id !== (lastId || 0) + 0.1));
+            setMessages(prev => prev.filter(m => m.id !== tempId));
             setText(body);
         } finally {
             setSending(false);
         }
     };
 
+    const openThread = (msgId: number, preview: string) => {
+        router.push({
+            pathname: "/chats/thread",
+            params: {
+                roomId: String(rid),
+                parentId: String(msgId),
+                title: preview.slice(0, 30),
+            },
+        });
+    };
+
     const renderReply = ({ item }: { item: Msg }) => (
         <View style={styles.msg}>
             <Text style={styles.msgTxt}>{item.body}</Text>
             <Text style={styles.meta}>{new Date(item.createdAt).toLocaleString()}</Text>
+
+            {/* כפתור לפתיחת שרשור גם על תגובה */}
+            <TouchableOpacity
+                style={{
+                    alignSelf: 'flex-start',
+                    marginTop: 6,
+                    paddingVertical: 6,
+                    paddingHorizontal: 10,
+                    borderRadius: 10,
+                    backgroundColor: '#eee'
+                }}
+                onPress={() => openThread(item.id, item.body)}
+            >
+                <Text style={{ color: '#d81b60', fontWeight: '700' }}>פתחי שרשור</Text>
+            </TouchableOpacity>
         </View>
     );
 
@@ -122,7 +146,9 @@ export default function ThreadScreen() {
                     behavior={Platform.OS === "ios" ? "padding" : undefined}
                     keyboardVerticalOffset={80}
                 >
-                    <Text style={styles.roomTitle}>שרשור</Text>
+                    <Text style={styles.roomTitle}>
+                        {parentMsg?.body?.slice(0, 30) || title || "שרשור"}
+                    </Text>
 
                     {err ? (
                         <Text style={styles.err}>{err}</Text>
@@ -133,7 +159,7 @@ export default function ThreadScreen() {
                         </View>
                     ) : (
                         <>
-                            {/* הודעת האם בחלק עליון */}
+                            {/* הודעת האם */}
                             <View style={[styles.msg, { backgroundColor: "#fff7fb", borderWidth: 1, borderColor: "#f8c1d8" }]}>
                                 <Text style={[styles.msgTxt, { fontWeight: "700" }]}>
                                     {parentMsg?.body ?? title ?? "פוסט"}
