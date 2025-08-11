@@ -131,7 +131,7 @@ export default function getOverviewStyles() {
         fabProfile: {
             position: 'absolute',
             top: 40,
-            left: 400,    // RTL – פינה ימנית
+            left: 400,
             width: 48,
             height: 48,
             borderRadius: 24,
@@ -160,7 +160,6 @@ export default function getOverviewStyles() {
         sectionTitle: { fontSize: 16, fontWeight: '800', color: head, textAlign: 'right', marginBottom: 8 },
         sectionText:  { fontSize: 16, lineHeight: 24, color: text, textAlign: 'right' },
 
-        // הקלף הגדול קצת פחות גבוה כדי למנוע "שטיח" ריק
         sectionLg: { minHeight: 84,  marginBottom: 12 },
         sectionMd: { minHeight: 96 },
         sectionSm: { minHeight: 84 },

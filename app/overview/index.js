@@ -11,7 +11,6 @@ import {dashboardStyles} from "../../styles/dashboardStyles";
 import {Colors} from "../../constants/Colors";
 import {LinearGradient} from "expo-linear-gradient";
 
-/** API קטן מקומי להבאת עדכון שבועי */
 const useWeeklyApi = () => {
     const getWeeklyUpdate = useCallback(async (week) => {
         const { data } = await api.get(`/api/weekly/${week}`);
