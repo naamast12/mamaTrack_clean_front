@@ -1,7 +1,16 @@
-import api from "../../src/api/axiosConfig"; // משתמש ב-axios המוכן שלך
+// app/chats/chatApi.ts
+import api from "../../src/api/axiosConfig";
 
 export type Room = { id: number; code: "general" | "t1" | "t2" | "t3"; name: string };
-export type Message = { id: number; senderId: number; body: string; createdAt: string };
+export type Message = {
+    id: number;
+    senderId: number;
+    body: string;
+    createdAt: string;
+    parentId?: number | null; // ← חדש
+};
+
+
 
 export async function listRooms(): Promise<Room[]> {
     const { data } = await api.get("/api/chat/rooms");
@@ -22,7 +31,14 @@ export async function getMessages(
     return data;
 }
 
-export async function sendMessage(roomId: number, body: string): Promise<Message> {
-    const { data } = await api.post(`/api/chat/rooms/${roomId}/messages`, { body });
+// ← שימי לב: parentId אופציונלי
+export async function sendMessage(
+    roomId: number,
+    body: string,
+    parentId?: number | null
+): Promise<Message> {
+    const payload: any = { body };
+    if (parentId) payload.parentId = parentId; // ישלח רק אם קיים
+    const { data } = await api.post(`/api/chat/rooms/${roomId}/messages`, payload);
     return data;
 }

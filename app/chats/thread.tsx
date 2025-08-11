@@ -1,29 +1,22 @@
-// app/chats/[roomId].tsx
+// app/chats/thread.tsx
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
-    View,
-    Text,
-    ActivityIndicator,
-    FlatList,
-    TextInput,
-    TouchableOpacity,
-    KeyboardAvoidingView,
-    Platform,
+    View, Text, ActivityIndicator, FlatList,
+    TextInput, TouchableOpacity, KeyboardAvoidingView, Platform
 } from "react-native";
-import { useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import ProtectedRoute from "../../components/ProtectedRoute";
 import { HomeButton } from "../utils/HomeButton";
 import styles from "../../styles/chatStyles";
 import { getMessages, sendMessage } from "./chatApi";
-import { useRouter } from "expo-router"; // הוספה
 
+type Msg = { id: number; senderId: number; body: string; createdAt: string; parentId?: number | null };
 
-type Msg = { id: number; senderId: number; body: string; createdAt: string ; parentId?: number | null};
-
-export default function ChatRoomScreen() {
-    const router = useRouter(); // הוספה
-    const { roomId, name } = useLocalSearchParams<{ roomId: string; name?: string }>();
-    const id = Number(roomId);
+export default function ThreadScreen() {
+    const router = useRouter();
+    const { roomId, parentId, title } = useLocalSearchParams<{ roomId: string; parentId: string; title?: string }>();
+    const rid = Number(roomId);
+    const pid = Number(parentId);
 
     const [loading, setLoading] = useState(true);
     const [err, setErr] = useState<string>("");
@@ -34,13 +27,13 @@ export default function ChatRoomScreen() {
     const listRef = useRef<FlatList<Msg>>(null);
     const lastId = useMemo(() => (messages.length ? messages[messages.length - 1].id : 0), [messages]);
 
-    // initial load
+    // טוען את כל הודעות החדר (פשוט ומהיר לשלב ראשון)
     useEffect(() => {
         let cancelled = false;
         (async () => {
             try {
                 setLoading(true);
-                const data = await getMessages(id, { limit: 30 });
+                const data = await getMessages(rid, { limit: 100 }); // אפשר להגדיל/להקטין
                 if (!cancelled) setMessages(data);
             } catch {
                 if (!cancelled) setErr("שגיאה בטעינת הודעות");
@@ -48,46 +41,36 @@ export default function ChatRoomScreen() {
                 if (!cancelled) setLoading(false);
             }
         })();
-        return () => {
-            cancelled = true;
-        };
-    }, [id]);
+        return () => { cancelled = true; };
+    }, [rid]);
 
-    const repliesMap = useMemo(() => {
-        const map = new Map<number, number>();
-        for (const m of messages) {
-            if (m.parentId) {
-                map.set(m.parentId, (map.get(m.parentId) || 0) + 1);
-            }
-        }
-        return map;
-    }, [messages]);
-
-    const topLevelMessages = useMemo(
+    // פילוח: הודעת-אם + תגובות
+    const parentMsg = useMemo(
+        () => messages.find(m => m.id === pid) || null,
+        [messages, pid]
+    );
+    const replies = useMemo(
         () =>
             messages
-                .filter(m => !m.parentId)
+                .filter(m => m.parentId === pid)
                 .sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()),
-        [messages]
+        [messages, pid]
     );
 
-    // polling for new messages
+    // פולינג לתגובות חדשות
     useEffect(() => {
         const t = setInterval(async () => {
             try {
                 if (!lastId) return;
-                const fresh = await getMessages(id, { afterId: lastId, limit: 30 });
+                const fresh = await getMessages(rid, { afterId: lastId, limit: 100 });
                 if (fresh?.length) {
                     setMessages(prev => [...prev, ...fresh]);
-                    // גלילה לסוף
                     setTimeout(() => listRef.current?.scrollToEnd({ animated: true }), 50);
                 }
-            } catch {
-                /* שקט */
-            }
+            } catch {}
         }, 3000);
         return () => clearInterval(t);
-    }, [id, lastId]);
+    }, [rid, lastId]);
 
     const onSend = async () => {
         const body = text.trim();
@@ -96,64 +79,33 @@ export default function ChatRoomScreen() {
             setSending(true);
             setText("");
 
-            // אופטימיות: מציגים מיד, ואז מאשרים מהשרת
+            // אופטימית: מוסיפים מיד
             const optimistic: Msg = {
-                id: lastId + 0.1, // מזהה זמני כדי ש־FlatList ירנדר
+                id: (lastId || 0) + 0.1,
                 senderId: -1,
                 body,
                 createdAt: new Date().toISOString(),
-                parentId: null, // ← חשוב
-
+                parentId: pid,
             };
             setMessages(prev => [...prev, optimistic]);
             setTimeout(() => listRef.current?.scrollToEnd({ animated: true }), 50);
 
-            const saved = await sendMessage(id, body);
-            // מחליפים את ההודעה האופטימית בהודעה שחזרה מהשרת
-            setMessages(prev =>
-                prev.map(m => (m === optimistic ? saved : m))
-            );
+            // שליחה עם parentId!
+            const saved = await sendMessage(rid, body, pid);
+            setMessages(prev => prev.map(m => (m === optimistic ? saved : m)));
         } catch {
-            setErr("שגיאה בשליחת הודעה");
-            // אם כשל — מסירים את האופטימית ומחזירים את הטקסט לשדה
-            setMessages(prev => prev.filter(m => m.id !== lastId + 0.1));
+            setErr("שגיאה בשליחת תגובה");
+            setMessages(prev => prev.filter(m => m.id !== (lastId || 0) + 0.1));
             setText(body);
         } finally {
             setSending(false);
         }
     };
 
-    const renderItem = ({ item }: { item: Msg }) => (
+    const renderReply = ({ item }: { item: Msg }) => (
         <View style={styles.msg}>
             <Text style={styles.msgTxt}>{item.body}</Text>
             <Text style={styles.meta}>{new Date(item.createdAt).toLocaleString()}</Text>
-            <Text style={styles.meta}>
-                {(repliesMap.get(item.id) || 0)} תגובות
-            </Text>
-
-            {/* כפתור פתיחת שרשור */}
-            <TouchableOpacity
-                style={{
-                    alignSelf: 'flex-start',
-                    marginTop: 6,
-                    paddingVertical: 6,
-                    paddingHorizontal: 10,
-                    borderRadius: 10,
-                    backgroundColor: '#eee'
-                }}
-                onPress={() =>
-                    router.push({
-                        pathname: '/chats/thread',
-                        params: {
-                            roomId: String(id),
-                            parentId: String(item.id),
-                            title: item.body.slice(0, 30)
-                        }
-                    })
-                }
-            >
-                <Text style={{ color: '#d81b60', fontWeight: '700' }}>פתחי שרשור</Text>
-            </TouchableOpacity>
         </View>
     );
 
@@ -161,21 +113,16 @@ export default function ChatRoomScreen() {
         <ProtectedRoute requireAuth={true}>
             <>
                 <HomeButton />
-
-
-                {/* כפתור חזרה */}
-                <TouchableOpacity
-                    style={{ padding: 10, alignSelf: "flex-start" }}
-                    onPress={() => router.back()}
-                >
+                <TouchableOpacity style={{ padding: 10, alignSelf: "flex-start" }} onPress={() => router.back()}>
                     <Text style={{ color: "#d81b60", fontSize: 16 }}>← חזרה</Text>
                 </TouchableOpacity>
+
                 <KeyboardAvoidingView
                     style={styles.roomContainer}
                     behavior={Platform.OS === "ios" ? "padding" : undefined}
                     keyboardVerticalOffset={80}
                 >
-                    <Text style={styles.roomTitle}>{name || "צ׳אט"}</Text>
+                    <Text style={styles.roomTitle}>שרשור</Text>
 
                     {err ? (
                         <Text style={styles.err}>{err}</Text>
@@ -186,21 +133,33 @@ export default function ChatRoomScreen() {
                         </View>
                     ) : (
                         <>
+                            {/* הודעת האם בחלק עליון */}
+                            <View style={[styles.msg, { backgroundColor: "#fff7fb", borderWidth: 1, borderColor: "#f8c1d8" }]}>
+                                <Text style={[styles.msgTxt, { fontWeight: "700" }]}>
+                                    {parentMsg?.body ?? title ?? "פוסט"}
+                                </Text>
+                                {parentMsg && (
+                                    <Text style={styles.meta}>{new Date(parentMsg.createdAt).toLocaleString()}</Text>
+                                )}
+                                <Text style={styles.meta}>{replies.length} תגובות</Text>
+                            </View>
+
+                            {/* תגובות */}
                             <FlatList
                                 ref={listRef}
-                                data={topLevelMessages}
+                                data={replies}
                                 keyExtractor={(m) => String(m.id)}
                                 contentContainerStyle={styles.list}
-                                renderItem={renderItem}
+                                renderItem={renderReply}
                                 onContentSizeChange={() => listRef.current?.scrollToEnd({ animated: true })}
                                 onLayout={() => listRef.current?.scrollToEnd({ animated: false })}
                             />
 
-                            {/* input + send */}
+                            {/* קלט תגובה */}
                             <View style={styles.inputBar}>
                                 <TextInput
                                     style={styles.input}
-                                    placeholder="כתבי הודעה…"
+                                    placeholder="כתבי תגובה…"
                                     value={text}
                                     onChangeText={setText}
                                     multiline
