@@ -190,95 +190,90 @@ const ContractionTimer = () => {
         return { ...c, displayInterval };
       });
   return (
-      // בתוך ה-return, מחליף כמה עטיפות/מחלקות:
       <ProtectedRoute requireAuth={true}>
         <HomeButton />
-        <View style={contractionTimerStyles.page}>
+        <ScrollView 
+          style={contractionTimerStyles.page}
+          contentContainerStyle={contractionTimerStyles.scrollContent}
+          showsVerticalScrollIndicator={true}
+          bounces={true}
+        >
           <View style={contractionTimerStyles.content}>
+            <View style={contractionTimerStyles.card}>
+              <Text style={contractionTimerStyles.title}>⏱️ טיימר צירים</Text>
+              <Text style={contractionTimerStyles.subtitle}>עקבי אחרי משך הציר והמרווחים ביניהם</Text>
+              <Text style={contractionTimerStyles.timerText}>
+                {isTiming ? `משך: ${duration} שניות` : 'לחצי "התחל ציר" כדי להתחיל לתזמן'}
+              </Text>
 
-          <View style={contractionTimerStyles.card}>
+              <View style={contractionTimerStyles.buttonsRow}>
+                <TouchableOpacity
+                    style={[contractionTimerStyles.primaryButton, isTiming && contractionTimerStyles.dangerButton]}
+                    onPress={handleButtonPress}
+                >
+                  <Text style={contractionTimerStyles.primaryButtonText}>
+                    {isTiming ? 'עצור ציר' : 'התחל ציר'}
+                  </Text>
+                </TouchableOpacity>
 
-        <Text style={contractionTimerStyles.title}>⏱️ טיימר צירים</Text>
-          <Text style={contractionTimerStyles.subtitle}>עקבי אחרי משך הציר והמרווחים ביניהם</Text>
-            <Text style={contractionTimerStyles.timerText}>
-              {isTiming ? `משך: ${duration} שניות` : 'לחצי "התחל ציר" כדי להתחיל לתזמן'}
-            </Text>
-
-            <View style={contractionTimerStyles.buttonsRow}>
-              <TouchableOpacity
-                  style={[contractionTimerStyles.primaryButton, isTiming && contractionTimerStyles.dangerButton]}
-                  onPress={handleButtonPress}
-              >
-                <Text style={contractionTimerStyles.primaryButtonText}>
-                  {isTiming ? 'עצור ציר' : 'התחל ציר'}
-                </Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                  style={contractionTimerStyles.ghostButton}
-                  onPress={confirmResetContractions}
-              >
-                <Text style={contractionTimerStyles.ghostButtonText}>נקה הכל</Text>
-              </TouchableOpacity>
+                <TouchableOpacity
+                    style={contractionTimerStyles.ghostButton}
+                    onPress={confirmResetContractions}
+                >
+                  <Text style={contractionTimerStyles.ghostButtonText}>נקה הכל</Text>
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
 
-          {showHospitalMessage && (
-              <View style={contractionTimerStyles.hospitalMessageBox}>
-                <Text style={contractionTimerStyles.hospitalMessageText}>{HOSPITAL_MESSAGE}</Text>
-              </View>
-          )}
+            {showHospitalMessage && (
+                <View style={contractionTimerStyles.hospitalMessageBox}>
+                  <Text style={contractionTimerStyles.hospitalMessageText}>{HOSPITAL_MESSAGE}</Text>
+                </View>
+            )}
 
-          <View style={contractionTimerStyles.sectionHeader}>
-            <Text style={contractionTimerStyles.listTitle}>📋 רשימת צירים</Text>
-            <View style={contractionTimerStyles.decorativeLine} />
-          </View>
+            <View style={contractionTimerStyles.sectionHeader}>
+              <Text style={contractionTimerStyles.listTitle}>📋 רשימת צירים</Text>
+              <View style={contractionTimerStyles.decorativeLine} />
+            </View>
 
-          {isLoading ? (
-              <Text style={contractionTimerStyles.emptyStateText}>טוען נתונים…</Text>
-          ) : ordered.length === 0 ? (   // ← בדיקת ריקוּת לפי ordered
-              <View style={contractionTimerStyles.emptyState}>
-                <Text style={contractionTimerStyles.emptyStateIcon}>🤰</Text>
-                <Text style={contractionTimerStyles.emptyStateText}>עדיין לא נרשמו צירים.</Text>
-              </View>
-          ) : (
-              <ScrollView
-                  ref={listRef}
-                  style={contractionTimerStyles.list}
-                  contentContainerStyle={contractionTimerStyles.listContent}
-              >
-              <View style={contractionTimerStyles.itemsContainer}>
-                {ordered.map((c, idx) => (
-                    <View key={idx} style={contractionTimerStyles.itemRow}>
-                      <View style={contractionTimerStyles.itemLeft}>
-                        <Text style={contractionTimerStyles.itemIndexBadge}>
-                          {ordered.length - idx}
-                        </Text>
-                      </View>
-
-                      <View style={contractionTimerStyles.itemMiddle}>
-                        <Text style={contractionTimerStyles.itemTitle}>התחלה: {formatTime(c.startTime)}</Text>
-                        <Text style={contractionTimerStyles.itemSubtitle}> מרווח מהציר הקודם:
-                          {c.displayInterval !== null ? formatInterval(c.displayInterval) : ' -'}
+            {isLoading ? (
+                <Text style={contractionTimerStyles.emptyStateText}>טוען נתונים…</Text>
+            ) : ordered.length === 0 ? (
+                <View style={contractionTimerStyles.emptyState}>
+                  <Text style={contractionTimerStyles.emptyStateIcon}>🤰</Text>
+                  <Text style={contractionTimerStyles.emptyStateText}>עדיין לא נרשמו צירים.</Text>
+                </View>
+            ) : (
+                <View style={contractionTimerStyles.itemsContainer}>
+                  {ordered.map((c, idx) => (
+                      <View key={idx} style={contractionTimerStyles.itemRow}>
+                        <View style={contractionTimerStyles.itemLeft}>
+                          <Text style={contractionTimerStyles.itemIndexBadge}>
+                            {ordered.length - idx}
                           </Text>
-                      </View>
+                        </View>
 
-                      <View style={contractionTimerStyles.itemRight}>
-                        <View style={contractionTimerStyles.badge}>
-                          <Text style={contractionTimerStyles.badgeText}>
-                            {c.duration} שניות
-                          </Text>
-                          <Text style={contractionTimerStyles.badgeSubText}>משך ציר</Text>
+                        <View style={contractionTimerStyles.itemMiddle}>
+                          <Text style={contractionTimerStyles.itemTitle}>התחלה: {formatTime(c.startTime)}</Text>
+                          <Text style={contractionTimerStyles.itemSubtitle}> מרווח מהציר הקודם:
+                            {c.displayInterval !== null ? formatInterval(c.displayInterval) : ' -'}
+                            </Text>
+                        </View>
+
+                        <View style={contractionTimerStyles.itemRight}>
+                          <View style={contractionTimerStyles.badge}>
+                            <Text style={contractionTimerStyles.badgeText}>
+                              {c.duration} שניות
+                            </Text>
+                            <Text style={contractionTimerStyles.badgeSubText}>משך ציר</Text>
+                          </View>
                         </View>
                       </View>
-                    </View>
-                ))}
-              </View>
-              </ScrollView>
-
-          )}
+                  ))}
+                </View>
+            )}
           </View>
-        </View>
+        </ScrollView>
       </ProtectedRoute>
   );
 };

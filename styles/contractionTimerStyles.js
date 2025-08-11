@@ -160,12 +160,15 @@ export default StyleSheet.create({
     marginTop: 2,
   },
   listContent: { paddingBottom: 16 },
-  page: {
-    flex: 1,
-    backgroundColor: PINK_BG,
-    paddingVertical: 24,
-    width: '100%', // תמיד מלא
-  },
+     page: {
+     flex: 1,
+     backgroundColor: PINK_BG,
+     width: '100%', // תמיד מלא
+   },
+   scrollContent: {
+     paddingVertical: 24,
+     flexGrow: 1,
+   },
 
   // עוטף פנימי ששולט על הרוחב בפועל של כל התוכן
   content: {
