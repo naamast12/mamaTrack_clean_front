@@ -2,12 +2,13 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
     View, Text, ActivityIndicator, FlatList,
-    TextInput, TouchableOpacity, KeyboardAvoidingView, Platform
+    TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, Alert
 } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import ProtectedRoute from "../../components/ProtectedRoute";
 import { HomeButton } from "../utils/HomeButton";
 import styles from "../../styles/chatStyles";
+import chatStyles from "@/styles/chatStyles";
 import { getMessages, sendMessage } from "./chatApi";
 
 type Msg = { id: number; senderId: number; body: string; createdAt: string; parentId?: number | null };
@@ -27,16 +28,16 @@ export default function ThreadScreen() {
     const listRef = useRef<FlatList<Msg>>(null);
     const lastId = useMemo(() => (messages.length ? messages[messages.length - 1].id : 0), [messages]);
 
-    // טעינת ההודעות
+    // טעינה ראשונית
     useEffect(() => {
         let cancelled = false;
         (async () => {
             try {
                 setLoading(true);
-                const data = await getMessages(rid, { limit: 100 });
+                const data = await getMessages(rid, { limit: 200 });
                 if (!cancelled) setMessages(data);
             } catch {
-                if (!cancelled) setErr("שגיאה בטעינת הודעות");
+                if (!cancelled) setErr("שגיאה בטעינת תגובות");
             } finally {
                 if (!cancelled) setLoading(false);
             }
@@ -44,10 +45,8 @@ export default function ThreadScreen() {
         return () => { cancelled = true; };
     }, [rid]);
 
-    const parentMsg = useMemo(
-        () => messages.find(m => m.id === pid) || null,
-        [messages, pid]
-    );
+    // הודעת האם + תגובות של אותה הודעה
+    const parentMsg = useMemo(() => messages.find(m => m.id === pid) || null, [messages, pid]);
     const replies = useMemo(
         () =>
             messages
@@ -56,15 +55,15 @@ export default function ThreadScreen() {
         [messages, pid]
     );
 
-    // פולינג לתגובות חדשות
+    // פולינג לעדכונים
     useEffect(() => {
         const t = setInterval(async () => {
             try {
                 if (!lastId) return;
-                const fresh = await getMessages(rid, { afterId: lastId, limit: 100 });
+                const fresh = await getMessages(rid, { afterId: lastId, limit: 200 });
                 if (fresh?.length) {
                     setMessages(prev => [...prev, ...fresh]);
-                    setTimeout(() => listRef.current?.scrollToEnd({ animated: true }), 50);
+                    requestAnimationFrame(() => listRef.current?.scrollToEnd({ animated: true }));
                 }
             } catch {}
         }, 3000);
@@ -74,10 +73,11 @@ export default function ThreadScreen() {
     const onSend = async () => {
         const body = text.trim();
         if (!body || sending) return;
+
         setSending(true);
         setText("");
 
-        const tempId = Date.now() + Math.random(); // מזהה זמני יציב
+        const tempId = Date.now() + Math.random();
         const optimistic: Msg = {
             id: tempId as any,
             senderId: -1,
@@ -85,16 +85,19 @@ export default function ThreadScreen() {
             createdAt: new Date().toISOString(),
             parentId: pid,
         };
+
         setMessages(prev => [...prev, optimistic]);
-        setTimeout(() => listRef.current?.scrollToEnd({ animated: true }), 50);
+        requestAnimationFrame(() => listRef.current?.scrollToEnd({ animated: true }));
 
         try {
             const saved = await sendMessage(rid, body, pid);
             setMessages(prev => prev.map(m => (m.id === tempId ? saved : m)));
+            Alert.alert("נוספה תגובה", "התגובה פורסמה בהצלחה 😊");
         } catch {
             setErr("שגיאה בשליחת תגובה");
             setMessages(prev => prev.filter(m => m.id !== tempId));
             setText(body);
+            Alert.alert("שגיאה", "לא הצלחנו לפרסם את התגובה. נסי שוב.");
         } finally {
             setSending(false);
         }
@@ -111,91 +114,135 @@ export default function ThreadScreen() {
         });
     };
 
+    // כרטיס תגובה בודדת – מותאם לעיצוב הראשי
     const renderReply = ({ item }: { item: Msg }) => (
-        <View style={styles.msg}>
-            <Text style={styles.msgTxt}>{item.body}</Text>
-            <Text style={styles.meta}>{new Date(item.createdAt).toLocaleString()}</Text>
+        <View style={styles.postCard}>
+            <View style={{ flexDirection: "row-reverse", alignItems: "center", marginBottom: 6 }}>
+                <Text style={[styles.meta, { marginLeft: 8 }]}>{new Date(item.createdAt).toLocaleString()}</Text>
+            </View>
 
-            {/* כפתור לפתיחת שרשור גם על תגובה */}
-            <TouchableOpacity
-                style={{
-                    alignSelf: 'flex-start',
-                    marginTop: 6,
-                    paddingVertical: 6,
-                    paddingHorizontal: 10,
-                    borderRadius: 10,
-                    backgroundColor: '#eee'
-                }}
-                onPress={() => openThread(item.id, item.body)}
-            >
-                <Text style={{ color: '#d81b60', fontWeight: '700' }}>פתחי שרשור</Text>
-            </TouchableOpacity>
+            <Text style={styles.postText}>{item.body}</Text>
+
+            <View style={[styles.postMetaRow, { marginTop: 10 }]}>
+                <View style={styles.rightMeta}>
+                    <TouchableOpacity
+                        style={styles.secondaryButton}
+                        onPress={() => openThread(item.id, item.body)}
+                    >
+                        <Text style={styles.secondaryButtonText}>פתחי שרשור מתגובה</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
         </View>
     );
+
+    const maxLen = 1000;
+    const isDisabled = sending || text.trim().length === 0;
 
     return (
         <ProtectedRoute requireAuth={true}>
             <>
                 <HomeButton />
-                <TouchableOpacity style={{ padding: 10, alignSelf: "flex-start" }} onPress={() => router.back()}>
-                    <Text style={{ color: "#d81b60", fontSize: 16 }}>← חזרה</Text>
-                </TouchableOpacity>
 
                 <KeyboardAvoidingView
-                    style={styles.roomContainer}
+                    style={styles.page}
                     behavior={Platform.OS === "ios" ? "padding" : undefined}
                     keyboardVerticalOffset={80}
                 >
-                    <Text style={styles.roomTitle}>
-                        {parentMsg?.body?.slice(0, 30) || title || "שרשור"}
-                    </Text>
-
-                    {err ? (
-                        <Text style={styles.err}>{err}</Text>
-                    ) : loading ? (
-                        <View style={styles.center}>
-                            <ActivityIndicator />
-                            <Text>טוען…</Text>
+                    <View style={[styles.content, { flex: 1 }]}>
+                        {/* כותרת עמוד */}
+                        <View style={styles.card}>
+                            <TouchableOpacity style={chatStyles.backCircleSmall} onPress={() => router.back()}>
+                                <Text style={chatStyles.backCircleIcon}>←</Text>
+                            </TouchableOpacity>
+                            <Text
+                                style={[
+                                    styles.title,
+                                    (parentMsg?.body?.length ?? 0) > 80 && { fontSize: 20 }
+                                ]}
+                            >
+                                {parentMsg?.body ?? title ?? "פוסט"}
+                            </Text>
+                            <Text style={styles.subtitle}>
+                                {replies.length} תגובות • {parentMsg ? new Date(parentMsg.createdAt).toLocaleString() : ""}
+                            </Text>
                         </View>
-                    ) : (
-                        <>
-                            {/* הודעת האם */}
-                            <View style={[styles.msg, { backgroundColor: "#fff7fb", borderWidth: 1, borderColor: "#f8c1d8" }]}>
-                                <Text style={[styles.msgTxt, { fontWeight: "700" }]}>
-                                    {parentMsg?.body ?? title ?? "פוסט"}
+
+
+                        {/* קומפוזר: כתבי תגובה */}
+                        <View style={[styles.card, { paddingBottom: 12 }]}>
+                            <View
+                                style={{
+                                    flexDirection: "row-reverse",
+                                    justifyContent: "space-between",
+                                    alignItems: "center",
+                                    marginBottom: 6,
+                                }}
+                            >
+                                <Text style={chatStyles.listTitle}>כתבי תגובה</Text>
+                                <Text style={{ color: "#666", fontSize: 12 }}>
+                                    {text.length}/{maxLen}
                                 </Text>
-                                {parentMsg && (
-                                    <Text style={styles.meta}>{new Date(parentMsg.createdAt).toLocaleString()}</Text>
-                                )}
-                                <Text style={styles.meta}>{replies.length} תגובות</Text>
                             </View>
 
-                            {/* תגובות */}
-                            <FlatList
-                                ref={listRef}
-                                data={replies}
-                                keyExtractor={(m) => String(m.id)}
-                                contentContainerStyle={styles.list}
-                                renderItem={renderReply}
-                                onContentSizeChange={() => listRef.current?.scrollToEnd({ animated: true })}
-                                onLayout={() => listRef.current?.scrollToEnd({ animated: false })}
-                            />
-
-                            {/* קלט תגובה */}
-                            <View style={styles.inputBar}>
+                            <View style={[styles.inputBar, { marginTop: 6 }]}>
                                 <TextInput
-                                    style={styles.input}
+                                    style={[styles.input, { textAlignVertical: "top", minHeight: 70, maxHeight: 200 }]}
                                     placeholder="כתבי תגובה…"
                                     value={text}
                                     onChangeText={setText}
                                     multiline
+                                    maxLength={maxLen}
+                                    blurOnSubmit={false}
                                 />
-                                <TouchableOpacity style={styles.sendBtn} onPress={onSend} disabled={sending}>
+                                <TouchableOpacity
+                                    style={[styles.sendBtn, isDisabled && { opacity: 0.5 }]}
+                                    onPress={onSend}
+                                    disabled={isDisabled}
+                                >
                                     <Text style={styles.sendTxt}>{sending ? "שולחת…" : "שלחי"}</Text>
                                 </TouchableOpacity>
                             </View>
-                        </>
-                    )}
+                        </View>
+
+                        {/* כותרת "תגובות" + מונה */}
+                        <View style={chatStyles.feedHeaderRow}>
+                            <Text style={chatStyles.listTitle}>  תגובות</Text>
+                            <View style={chatStyles.feedHeaderCount}>
+                                <Text style={chatStyles.feedHeaderCountText}>{replies.length}</Text>
+                            </View>
+                        </View>
+                        <View style={chatStyles.sectionHeader}>
+                            <View style={chatStyles.decorativeLine} />
+                        </View>
+
+                        {/* תוכן השרשור */}
+                        {err ? (
+                            <View style={styles.card}>
+                                <Text style={styles.err}>{err}</Text>
+                            </View>
+                        ) : loading ? (
+                            <View style={styles.card}>
+                                <View style={styles.center}>
+                                    <ActivityIndicator />
+                                    <Text style={styles.emptyStateText}>טוען…</Text>
+                                </View>
+                            </View>
+                        ) : (
+                            <>
+                                <FlatList
+                                    ref={listRef}
+                                    data={replies}
+                                    keyExtractor={(m) => String(m.id)}
+                                    contentContainerStyle={styles.listWithInput}
+                                    renderItem={renderReply}
+                                    onContentSizeChange={() => listRef.current?.scrollToEnd({ animated: true })}
+                                    onLayout={() => listRef.current?.scrollToEnd({ animated: false })}
+                                />
+
+                            </>
+                        )}
+                    </View>
                 </KeyboardAvoidingView>
             </>
         </ProtectedRoute>

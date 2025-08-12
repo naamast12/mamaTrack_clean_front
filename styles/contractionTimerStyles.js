@@ -163,7 +163,9 @@ export default StyleSheet.create({
      page: {
      flex: 1,
      backgroundColor: PINK_BG,
-     width: '100%', // תמיד מלא
+       width: '70%',     // כאן שולט על ה־80% שרצית
+
+       alignSelf: 'center',
    },
    scrollContent: {
      paddingVertical: 24,

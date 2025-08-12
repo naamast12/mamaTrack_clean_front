@@ -1,6 +1,6 @@
 // app/chats/index.tsx
 import React, { useEffect, useState } from "react";
-import { View, Text, ActivityIndicator, TouchableOpacity, Alert } from "react-native";
+import { View, Text, ActivityIndicator, TouchableOpacity, Alert, ScrollView } from "react-native";
 import { useRouter } from "expo-router";
 import ProtectedRoute from "../../components/ProtectedRoute";
 import { HomeButton } from "../utils/HomeButton";
@@ -17,7 +17,6 @@ export default function ChatsHome() {
 
     useEffect(() => {
         let cancelled = false;
-
         const weekToTrimester = (w: number | null | undefined) => {
             if (!w || w < 1) return null;
             if (w <= 12) return 1;
@@ -27,13 +26,9 @@ export default function ChatsHome() {
 
         (async () => {
             try {
-                // 1) חדרים
-                const roomsRes = await api.get("/api/chat/rooms", {
-                    timeout: 8000,
-                    validateStatus: () => true,
-                });
+                // חדרים
+                const roomsRes = await api.get("/api/chat/rooms", { timeout: 8000, validateStatus: () => true });
                 if (cancelled) return;
-
                 if (roomsRes.status >= 200 && roomsRes.status < 300) {
                     setRooms(roomsRes.data);
                 } else {
@@ -41,18 +36,13 @@ export default function ChatsHome() {
                     setRooms(null);
                 }
 
-                // 2) פרטי משתמש → חישוב טרימסטר
+                // פרטי משתמש → טרימסטר
                 const userRes = await api.get("/api/user", { validateStatus: () => true });
                 if (cancelled) return;
-
                 if (userRes.status >= 200 && userRes.status < 300) {
-                    const u = userRes.data;
-                    // מעדיף שדה week אם קיים, אחרת חישוב מקורב מ־estimatedDueDate/lastPeriodDate בצד שרת,
-                    // אבל כאן נלך פשוט: אם יש pregnancyWeek – נשתמש בו
-                    const trimester = weekToTrimester(u?.pregnancyWeek);
+                    const trimester = weekToTrimester(userRes.data?.pregnancyWeek);
                     setUserTrimester(trimester);
                 } else {
-                    // אם לא הצלחנו להביא משתמש, נשאיר רק את הכללי לחיץ
                     setUserTrimester(null);
                 }
             } catch (e: any) {
@@ -78,53 +68,82 @@ export default function ChatsHome() {
         <ProtectedRoute requireAuth={true}>
             <>
                 <HomeButton />
-                <View style={chatStyles.container}>
-                    <Text style={chatStyles.title}>פורום</Text>
-
-                    {err ? (
-                        <Text style={chatStyles.err}>{err}</Text>
-                    ) : !rooms ? (
-                        <View style={chatStyles.center}>
-                            <ActivityIndicator />
-                            <Text>טוען…</Text>
+                <ScrollView
+                    style={chatStyles.page}
+                    contentContainerStyle={chatStyles.scrollContent}
+                    showsVerticalScrollIndicator
+                    bounces
+                >
+                    <View style={chatStyles.content}>
+                        {/* כרטיס כותרת */}
+                        <View style={chatStyles.card}>
+                            <Text style={chatStyles.title}>💬 פורום</Text>
+                            <Text style={chatStyles.subtitle}>שאלות, תמיכה ושיתוף לפי שלבי ההריון</Text>
                         </View>
-                    ) : (
-                        rooms.map((room) => {
-                            const canEnter = canEnterRoom(room);
-                            return (
-                                <View
-                                    key={room.id}
-                                    style={[chatStyles.tile, !canEnter && { backgroundColor: "#eee" }]}
-                                >
-                                    <View style={{ flex: 1 }}>
-                                        <Text style={chatStyles.tileTitle}>{room.name}</Text>
-                                        <Text style={chatStyles.tileSub}>
-                                            {room.code === "general" ? "פתוח לכולן" : "הטרימסטר"}
-                                        </Text>
-                                    </View>
 
-                                    {canEnter ? (
-                                        <TouchableOpacity
-                                            style={chatStyles.enterBtn}
-                                            onPress={() =>
-                                                router.push({
-                                                    pathname: "/chats/[roomId]",
-                                                    params: { roomId: String(room.id), name: room.name },
-                                                })
-                                            }
-                                        >
-                                            <Text style={chatStyles.enterText}>היכנסי</Text>
-                                        </TouchableOpacity>
-                                    ) : (
-                                        <Text style={{ color: "red", marginTop: 4, textAlign: "left" }}>
-                                            לא זמין — רק למשתמשות ב{room.name}
-                                        </Text>
-                                    )}
+                        {/* הודעת שגיאה / טעינה / רשימת חדרים */}
+                        {err ? (
+                            <View style={chatStyles.card}>
+                                <Text style={chatStyles.err}>{err}</Text>
+                            </View>
+                        ) : !rooms ? (
+                            <View style={chatStyles.card}>
+                                <View style={chatStyles.center}>
+                                    <ActivityIndicator />
+                                    <Text style={chatStyles.emptyStateText}>טוען…</Text>
                                 </View>
-                            );
-                        })
-                    )}
-                </View>
+                            </View>
+                        ) : (
+                            <>
+                                <View style={chatStyles.sectionHeader}>
+                                    <Text style={chatStyles.listTitle}>📋 חדרים זמינים</Text>
+                                    <View style={chatStyles.decorativeLine} />
+                                </View>
+
+                                <View style={chatStyles.itemsContainer}>
+                                    {rooms.map((room, idx) => {
+                                        const canEnter = canEnterRoom(room);
+                                        return (
+                                            <View key={room.id} style={chatStyles.itemRow}>
+                                                <View style={chatStyles.itemLeft}>
+                                                    <Text style={chatStyles.itemIndexBadge}>{idx + 1}</Text>
+                                                </View>
+
+                                                <View style={chatStyles.itemMiddle}>
+                                                    <Text style={chatStyles.itemTitle}>{room.name}</Text>
+                                                    <Text style={chatStyles.itemSubtitle}>
+                                                        {room.code === "general" ? "פתוח לכולן" : "חדר לפי טרימסטר"}
+                                                    </Text>
+                                                </View>
+
+                                                <View style={chatStyles.itemRight}>
+                                                    {canEnter ? (
+                                                        <TouchableOpacity
+                                                            style={chatStyles.primaryButton}
+                                                            onPress={() =>
+                                                                router.push({
+                                                                    pathname: "/chats/[roomId]",
+                                                                    params: { roomId: String(room.id), name: room.name },
+                                                                })
+                                                            }
+                                                        >
+                                                            <Text style={chatStyles.primaryButtonText}>היכנסי</Text>
+                                                        </TouchableOpacity>
+                                                    ) : (
+                                                        <View style={chatStyles.badge}>
+                                                            <Text style={chatStyles.badgeText}>לא זמין</Text>
+                                                            <Text style={chatStyles.badgeSubText}>לא תואם טרימסטר</Text>
+                                                        </View>
+                                                    )}
+                                                </View>
+                                            </View>
+                                        );
+                                    })}
+                                </View>
+                            </>
+                        )}
+                    </View>
+                </ScrollView>
             </>
         </ProtectedRoute>
     );
