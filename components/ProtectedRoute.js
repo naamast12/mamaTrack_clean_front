@@ -1,17 +1,20 @@
-
 // /components/ProtectedRoute.js
 import React, { useEffect, useRef, useContext, useState } from 'react';
-import { Redirect } from 'expo-router';
-import { View, Animated, Text } from 'react-native';
+import { View, Animated, Text, ActivityIndicator } from 'react-native';
+import { useRouter, useSegments } from 'expo-router';
 import { AuthContext } from './ui/AuthProvider';
 import { dashboardStyles } from '../styles/dashboardStyles';
-import {Logo} from "../app/utils/Logo";
-import {HomeButton} from "../app/utils/HomeButton";
+import { Logo } from '../app/utils/Logo';
+import storage from '../app/utils/storage';
 
-export default function ProtectedRoute({ children, requireAuth }) {
+export default function ProtectedRoute({ children, requireAuth = false }) {
     const { user, isInit } = useContext(AuthContext);
+    const router = useRouter();
+    const segments = useSegments();
     const floatAnim = useRef(new Animated.Value(0)).current;
-    const [redirected, setRedirected] = useState(false); // ✅ מנגנון מניעת לולאה
+
+    const [redirecting, setRedirecting] = useState(false);
+    const [hasToken, setHasToken] = useState(null); // null=עוד בודק, true/false=תוצאה
 
     useEffect(() => {
         Animated.loop(
@@ -20,21 +23,51 @@ export default function ProtectedRoute({ children, requireAuth }) {
                 Animated.timing(floatAnim, { toValue: 0, duration: 2000, useNativeDriver: true }),
             ])
         ).start();
+    }, [floatAnim]);
+
+    // בדיקת טוקן מקומית (גיבוי ל-AuthContext)
+    useEffect(() => {
+        let alive = true;
+        (async () => {
+            const token = await storage.get('userToken');
+            if (!alive) return;
+            setHasToken(!!token);
+        })();
+        return () => { alive = false; };
     }, []);
 
-    // ✅ אם עדיין בטעינה, לא מציגים כלום
-    if (!isInit) return null;
+    // לוגיקת ניתוב מרוכזת
+    useEffect(() => {
+        if (redirecting) return;
+        if (hasToken === null || !isInit) return;
 
-    // ✅ מנגנון מניעת לולאה: רק פעם אחת נבצע הפניה
-    if (requireAuth && !user && !redirected) {
-        setRedirected(true);
-        return <Redirect href="/authentication/Login" />;
+        const inAuth = segments?.[0] === 'authentication';
+
+        // עמוד מוגן: אין user ואין טוקן → ללוגין
+        if (requireAuth && !user && !hasToken && !inAuth) {
+            setRedirecting(true);
+            router.replace('/authentication/Login');
+            return;
+        }
+
+        // עמודי אימות: יש user → לדאשבורד/אוברוויו
+        if (!requireAuth && user && inAuth) {
+            setRedirecting(true);
+            router.replace('/overview'); // אם היעד שלך הוא /overview – החליפי כאן
+            return;
+        }
+    }, [requireAuth, user, isInit, hasToken, segments, router, redirecting]);
+
+    // בזמן טעינה/בדיקה/רידיירקט – לא מציגים את הילדים
+    if (redirecting || hasToken === null || !isInit) {
+        return (
+            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                <ActivityIndicator />
+            </View>
+        );
     }
 
-    if (!requireAuth && user && !redirected) {
-        setRedirected(true);
-        return <Redirect href="/Dashboard" />;
-    }
+    const inAuth = segments?.[0] === 'authentication';
 
     return (
         <View style={{ flex: 1, backgroundColor: '#fef7f9' }}>
