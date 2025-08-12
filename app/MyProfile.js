@@ -100,7 +100,7 @@ export default function MyProfile() {
                             <Text style={dashboardStyles.gradientTitle}>פרופיל אישי</Text>
                         </LinearGradient>
                     <View style={myProfileStyles.avatarWrapper}>
-                        <FontAwesome name="user" size={100} color= {Colors.primary} />
+                        <MaterialCommunityIcons name="human-pregnant" size={100} color={Colors.primary} />
                     </View>
                     {isLoading ? (
                         <Text style={myProfileStyles.loadingText}>טוען נתוני משתמש...</Text>
