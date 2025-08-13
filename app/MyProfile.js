@@ -164,12 +164,21 @@ export default function MyProfile() {
                                                         maxDate={new Date()}
                                                         portalId="root-portal"
                                                         popperPlacement="bottom"
-                                                        onBlur={() => setIsEditingPeriod(false)}
+                                                        popperClassName="datepicker-popper"
+                                                        onBlur={() => setIsEditingPeriod(false)} // סוגר אם יוצאים
                                                         customInput={
                                                             <input
                                                                 autoFocus
-                                                                style={myProfileStyles.webDateInput}
-                                                                readOnly
+                                                                style={{
+                                                                    width: 110,
+                                                                    textAlign: 'center',
+                                                                    fontSize: 16,
+                                                                    padding: 8,
+                                                                    border: 'none',
+                                                                    borderRadius: 10,
+                                                                    backgroundColor: '#f2f2f2',
+                                                                    cursor: 'pointer',
+                                                                }}
                                                             />
                                                         }
                                                     />
