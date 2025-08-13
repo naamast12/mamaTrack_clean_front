@@ -163,7 +163,7 @@ export default StyleSheet.create({
      page: {
      flex: 1,
      backgroundColor: PINK_BG,
-       width: '70%',     // כאן שולט על ה־80% שרצית
+       width: '100%',     // כאן שולט על ה־80% שרצית
 
        alignSelf: 'center',
    },
