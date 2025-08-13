@@ -4,7 +4,6 @@ import { View, Text, TouchableOpacity, ActivityIndicator, ScrollView, Platform }
 import {Feather, MaterialCommunityIcons} from '@expo/vector-icons';import { useRouter } from 'expo-router';
 
 import ProtectedRoute from '@/components/ProtectedRoute';
-import { HomeButton } from '@/app/utils/HomeButton';
 import api from '@/src/api/axiosConfig';
 import getOverviewStyles from '../../styles/overviewStyles';
 import {dashboardStyles} from "../../styles/dashboardStyles";
@@ -89,15 +88,15 @@ export default function OverviewScreen() {
 
     return (
         <ProtectedRoute requireAuth={true}>
-            <ProfileButton />
             <View style={styles.container}>
                 <View style={dashboardStyles.header}>
+                    <ProfileButton />
+
                     <TouchableOpacity onPress={handleLogout} style={dashboardStyles.logoutIconButton}>
                         <Feather name="log-out" size={18} color={Colors.primary} />
                         <Text style={dashboardStyles.logoutLabel}>התנתקות</Text>
                     </TouchableOpacity>
                 </View>
-                <ProfileButton />
 
                 <ScrollView contentContainerStyle={styles.pageContent}>
                     <View style={styles.inner}>
@@ -130,26 +129,22 @@ export default function OverviewScreen() {
                             </View>
                         ) : (
                             <>
-                                <View style={styles.headerRow}>
+                                <View style={styles.headerColumn}>
+                                    {/* מלבן סקירה כללית */}
                                     <View style={styles.headerRight}>
                                         <View style={styles.heroMini}>
-                                            <Text style={styles.heroMiniWeek}>שבוע {week}</Text>
+                                            <Text style={styles.heroMiniWeek}>את בשבוע {week}</Text>
 
                                             {(sizeEmoji || sizeLabel) ? (
                                                 <View style={styles.heroMiniLine}>
-                                                    {sizeEmoji ? (
-                                                        <Text
-                                                            style={[
-                                                                styles.heroMiniEmoji,
-                                                                Platform.OS === 'android'
-                                                                    ? { fontFamily: 'sans-serif', lineHeight: 44, includeFontPadding: false }
-                                                                    : { fontFamily: undefined, lineHeight: 44 }
-                                                            ]}
-                                                        >
-                                                            {sizeEmoji}
+                                                    {sizeLabel ? (
+                                                        <Text style={styles.heroMiniSize}>
+                                                             השבוע העובר בגודל של {sizeLabel}
                                                         </Text>
                                                     ) : null}
-                                                    {sizeLabel ? <Text style={styles.heroMiniSize}>{sizeLabel}</Text> : null}
+                                                    {sizeEmoji ? (
+                                                        <Text style={styles.heroMiniEmoji}>{sizeEmoji}</Text>
+                                                    ) : null}
                                                 </View>
                                             ) : null}
 
@@ -175,30 +170,29 @@ export default function OverviewScreen() {
                                             ) : null}
                                         </View>
                                     </View>
+                                </View>
+                                {/* שלישיית הכפתורים */}
+                                <View style={styles.navGrid}>
+                                    <TouchableOpacity
+                                        onPress={() => router.push('/weeklyUpdates')}
+                                        style={[styles.navBtn, styles.navBtnPrimary, styles.navItem]}
+                                    >
+                                        <Text style={styles.navBtnText}>עדכונים שבועיים</Text>
+                                    </TouchableOpacity>
 
-                                    <View style={styles.headerNavCol}>
-                                        <TouchableOpacity
-                                            onPress={() => router.push('/weeklyUpdates')}
-                                            style={[styles.navBtn, styles.navBtnPrimary, styles.navBtnFull, styles.navBtnGap]}
-                                        >
-                                            <Text style={styles.navBtnText}>עדכונים שבועיים</Text>
-                                        </TouchableOpacity>
+                                    <TouchableOpacity
+                                        onPress={() => router.push('/upcomingTests')}
+                                        style={[styles.navBtn, styles.navBtnGhost, styles.navItem]}
+                                    >
+                                        <Text style={[styles.navBtnText, styles.navBtnGhostText]}>בדיקות צפויות</Text>
+                                    </TouchableOpacity>
 
-                                        <TouchableOpacity
-                                            onPress={() => router.push('/upcomingTests')}
-                                            style={[styles.navBtn, styles.navBtnGhost,   styles.navBtnFull, styles.navBtnGap]}
-                                        >
-                                            <Text style={[styles.navBtnText, styles.navBtnGhostText]}>בדיקות צפויות</Text>
-                                        </TouchableOpacity>
-
-                                        <TouchableOpacity
-                                            onPress={() => router.push('/faq')}
-                                            style={[styles.navBtn, styles.navBtnAccent, styles.navBtnFull]}
-                                        >
-                                            <Text style={[styles.navBtnText, styles.navBtnGhostText]}>שאלות נפוצות</Text>
-                                        </TouchableOpacity>
-                                    </View>
-
+                                    <TouchableOpacity
+                                        onPress={() => router.push('/faq')}
+                                        style={[styles.navBtn, styles.navItem]}
+                                    >
+                                        <Text style={[styles.navBtnText, styles.navBtnGhostText]}>שאלות נפוצות</Text>
+                                    </TouchableOpacity>
                                 </View>
 
                                 {!!whatsHappening && (
@@ -261,13 +255,13 @@ export default function OverviewScreen() {
                             >
                                 <Text style={styles.actionText}>רשימת ציוד לחדר לידה</Text>
                             </TouchableOpacity>
+
                             <TouchableOpacity
                                 onPress={() => router.push('/chats')}
                                 style={styles.chatBtnWide}
                             >
-                                <Text style={styles.chatBtnText}>צ'אט</Text>
+                                <Text style={styles.chatBtnText}>הצטרפי לקהילה שלנו</Text>
                             </TouchableOpacity>
-
 
 
                         </View>
