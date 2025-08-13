@@ -19,6 +19,7 @@ export const Colors = {
   brandShadow: 'rgba(216,27,96,0.15)', // לשקיפות צל
   surface: '#ffffff',        // כרטיס/לבנים
   muted: '#666666',
+
   // אפקטים
   shadow: '#00000020',
   inputBackground: '#fafafa',
