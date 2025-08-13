@@ -1,79 +1,85 @@
-import {StyleSheet} from "react-native";
-import {Colors} from "../constants/Colors";
+// styles/myProfileStyles.js
+import { StyleSheet } from 'react-native';
+import { Colors } from '../constants/Colors';
 
-const myProfileStyles = StyleSheet.create({
-    scrollContainer: {
-        paddingVertical: 24,
-        paddingHorizontal: 16,
-        flexGrow: 1,
-        justifyContent: 'flex-start', // ⬅️ במקום 'center'
-    },
-    profileContainer: {
-        backgroundColor: Colors.white,
-        borderRadius: 12,
-        padding: 20,
-        width: '100%',         // מתאים את עצמו למסך
-        maxWidth: 600,         // שומר על יופי במסכים רחבים
-        alignSelf: 'center',   // מרכז את התיבה
-        marginHorizontal: 20,  // במקום marginRight – ריווח דו צדדי גמיש
-        marginTop: 40, // ✅ כדי להתחיל באותו גובה כמו בדשבורד
-
+export const myProfileStyles = StyleSheet.create({
+    topCardRow: {
+        flexDirection: 'row-reverse',
+        alignItems: 'center',
+        gap: 16,
     },
 
     avatarWrapper: {
-        backgroundColor: '#f2f2f2',
-        borderRadius: 100,
-        padding: 20,
+        width: 120,
+        height: 120,
+        borderRadius: 60,
+        overflow: 'hidden',
+        backgroundColor: Colors.softGray, // במקום '#f2f2f2'
         alignItems: 'center',
         justifyContent: 'center',
-        margin: 20,
-        width: 150,
-        height: 150,
-        alignSelf: 'center',
-    },
-    profileSectionTitle: {
-        fontSize: 20,
-        fontWeight: '600',
-        marginBottom: 50,
-        color: Colors.majorelleBlue,
-        textAlign: 'center',
-    },
-    loadingText: {
-        textAlign: 'center',
-        marginTop: 20,
-    },
-    name: {
-        fontSize: 22,
-        fontWeight: 'bold',
-        marginTop: 20,
-    },
-    profileLabels: {
-        flexDirection: 'row-reverse',
-        textAlign: 'right',
-        // margin: 10,
-    },
-    languageLabel: {
-        fontSize: 16,
-        padding: 5,
-    },
-    input: {
-        fontSize: 18,
-        paddingTop: 2,
-    },
-    saveButtonGradient: {
-        paddingVertical: 14,
-        paddingHorizontal: 25,
-        borderRadius: 8,
-        alignSelf: 'center',
-        marginVertical: 16,
-        width: 350,
-    },
-    buttonText: {
-        color: Colors.white,
-        fontSize: 16,
-        fontWeight: 'bold',
-        textAlign: 'center',
+        marginLeft: 8,
     },
 
+    infoRow: {
+        flexDirection: 'row-reverse',
+        alignItems: 'center',
+        marginBottom: 6,
+    },
+
+    infoIcon: {
+        marginLeft: 6,
+    },
+
+    inlineRow: {
+        flexDirection: 'row-reverse',
+        alignItems: 'center',
+        marginTop: 6,
+    },
+
+    rowBetween: {
+        flexDirection: 'row-reverse',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginTop: 6,
+    },
+
+    // ווב: קלט תאריך מדומה שמדבר באותה שפה עיצובית
+    webDateInput: {
+        width: 120,
+        textAlign: 'center',
+        fontSize: 16,
+        padding: 8,
+        border: '1px solid ' + Colors.brandBorder,
+        borderRadius: 10,
+        backgroundColor: Colors.white, // במקום '#fff'
+        cursor: 'pointer',
+    },
+
+    // מובייל: תיבה לקריאה בלבד לפתיחת ה‑picker
+    nativeDateBox: {
+        backgroundColor: Colors.white,   // במקום '#fff'
+        paddingVertical: 8,
+        paddingHorizontal: 12,
+        borderRadius: 10,
+        textAlign: 'center',
+        width: 130,
+        fontSize: 16,
+        color: Colors.darkText,          // במקום '#000'
+        borderWidth: 1,
+        borderColor: Colors.brandBorder,
+    },
+
+    // כפתור שמירה פרוס לרוחב כמו הכרטיסים
+    saveBtn: {
+        flexBasis: '100%',
+        width: '100%',
+        alignSelf: 'center',
+        marginTop: 8,
+    },
+
+    saveBtnText: {
+        color: Colors.primary,
+        fontWeight: '700',
+        textAlign: 'center',
+    },
 });
-export { myProfileStyles}
