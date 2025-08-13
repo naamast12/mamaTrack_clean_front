@@ -31,6 +31,8 @@ export default function ChatRoomScreen() {
     const [text, setText] = useState("");
     const [sending, setSending] = useState(false);
 
+    const [showTips, setShowTips] = useState(false);
+
     const listRef = useRef<FlatList<Msg>>(null);
 
     const topLevelMessages = useMemo(
@@ -174,46 +176,54 @@ export default function ChatRoomScreen() {
                                 <Text style={chatStyles.backCircleIcon}>←</Text>
                             </TouchableOpacity>
                             <Text style={styles.title}>{name}</Text>
-                        </View>
-
-
-                        {/* קופסת הנחייה */}
-                        <View style={chatStyles.guidanceCard}>
-                            <View style={chatStyles.guidanceHeader}>
-                                <Text style={chatStyles.guidanceEmoji}>💡</Text>
-                                <Text style={chatStyles.guidanceTitle}>איך כותבים פוסט טוב?</Text>
-                            </View>
-
-                            <Text style={chatStyles.guidanceText}>
-                                כאן המקום לשתף, לשאול ולהתייעץ עם הריוניות אחרות. שמרו על שפה נעימה ומכבדת 💗
+                            <Text style={[chatStyles.guidanceText, { marginTop: 4 }]}>
+                                כאן המקום לשתף, לשאול ולהתייעץ. שמרו על שפה נעימה 🌷
                             </Text>
-
-                            <View style={chatStyles.guidanceList}>
-                                <Text style={chatStyles.guidanceItem}>• הציגי בקצרה: שבוע ההריון/תחושה</Text>
-                                <Text style={chatStyles.guidanceItem}>• שאלי שאלה אחת ברורה</Text>
-                                <Text style={chatStyles.guidanceItem}>• אפשר להוסיף כותרת קצרה לפוסט</Text>
-                            </View>
                         </View>
-                        {/* קומפוזר: כתבי פוסט חדש */}
-                        <View style={[styles.card, { paddingBottom: 12 }]}>
-                            <View
-                                style={{
-                                    flexDirection: "row-reverse",
-                                    justifyContent: "space-between",
-                                    alignItems: "center",
-                                    marginBottom: 6,
-                                }}
-                            >
-                                <Text style={chatStyles.listTitle}>העלאת פוסט חדש:</Text>
-                                <Text style={{ color: "#666", fontSize: 12 }}>
-                                    {text.length}/{maxLen}
-                                </Text>
+
+
+                        {/*/!* קופסת הנחייה – אקורדיון קומפקטי *!/*/}
+                        {/*<View style={[chatStyles.guidanceCard, { paddingVertical: 10 }]}>*/}
+                        {/*    <TouchableOpacity*/}
+                        {/*        onPress={() => setShowTips(v => !v)}*/}
+                        {/*        style={[chatStyles.guidanceHeader, { paddingVertical: 4 }]}*/}
+                        {/*    >*/}
+                        {/*        <Text style={chatStyles.guidanceEmoji}>💡</Text>*/}
+                        {/*        <Text style={chatStyles.guidanceTitle}>*/}
+                        {/*            איך כותבים פוסט טוב? {showTips ? "▲" : "▼"}*/}
+                        {/*        </Text>*/}
+                        {/*    </TouchableOpacity>*/}
+
+                        {/*    {showTips && (*/}
+                        {/*        <>*/}
+
+                        {/*            <View style={[chatStyles.guidanceList, { marginTop: 6 }]}>*/}
+                        {/*                <Text style={chatStyles.guidanceItem}>• צייני שבוע/תחושה</Text>*/}
+                        {/*                <Text style={chatStyles.guidanceItem}>• שאלי שאלה אחת ברורה</Text>*/}
+                        {/*                <Text style={chatStyles.guidanceItem}>• אפשר כותרת קצרה</Text>*/}
+                        {/*            </View>*/}
+                        {/*        </>*/}
+                        {/*    )}*/}
+                        {/*</View>*/}
+
+                        {/* קומפוזר קומפקטי */}
+                        <View style={[styles.card, { paddingVertical: 10 }]}>
+                            <View style={{
+                                flexDirection: "row-reverse",
+                                justifyContent: "space-between",
+                                alignItems: "center",
+                                marginBottom: 4,
+                            }}>
+                                <Text style={chatStyles.listTitle}>העלאת פוסט חדש ✨</Text>
+                                <Text style={{ color: "#666", fontSize: 12 }}>{text.length}/{maxLen}</Text>
                             </View>
 
-                            {/* שורת הקלט למעלה */}
-                            <View style={[styles.inputBar, { marginTop: 6 }]}>
+                            <View style={[styles.inputBar, { marginTop: 4 }]}>
                                 <TextInput
-                                    style={[styles.input, { textAlignVertical: "top", minHeight: 90, maxHeight: 200 }]}
+                                    style={[
+                                        styles.input,
+                                        { textAlignVertical: "top", minHeight: 64, maxHeight: 160, paddingVertical: 8 }
+                                    ]}
                                     placeholder="כתבי כאן את הפוסט…"
                                     value={text}
                                     onChangeText={setText}
@@ -230,7 +240,6 @@ export default function ChatRoomScreen() {
                                 </TouchableOpacity>
                             </View>
                         </View>
-
 
                         {/* כותרת לפיד + מונה פוסטים */}
                         <View style={chatStyles.feedHeaderRow}>

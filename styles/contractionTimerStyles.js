@@ -200,7 +200,7 @@ export default StyleSheet.create({
     width: '100%',
   },
 
-  list: { flex: 1, width: '100%' },
+  list: { flex: 1, width: '100%', minHeight: 200 },
   itemsContainer: { flex: 1, marginTop: 6, width: '100%' },
 
   decorativeLine: {

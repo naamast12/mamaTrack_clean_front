@@ -237,7 +237,7 @@ export default function MyProfile() {
                             style={myProfileStyles.saveButtonGradient}
                         >
                             <Pressable onPress={saveChanges}>
-                                <Text style={sharedStyles.buttonText}>שמור שינויים</Text>
+                                <Text style={sharedStyles.buttonText}>שמור תאריך וסת חדש</Text>
                             </Pressable>
                         </LinearGradient>
 
