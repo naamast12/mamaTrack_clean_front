@@ -1,50 +1,50 @@
 import { StyleSheet } from 'react-native';
+import { Colors } from '@/constants/Colors';
 
 const babyChecklistStyles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fef7f9', // רקע ורוד מאוד עדין
+    backgroundColor: Colors.pinkBg,
     padding: 16,
   },
   header: {
-    backgroundColor: '#fff',
+    backgroundColor: Colors.white,
     padding: 24,
     borderRadius: 20,
     marginBottom: 20,
-    shadowColor: '#ff69b4',
+    shadowColor: Colors.pinkDeep,
     shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.1,
     shadowRadius: 12,
     elevation: 8,
     borderWidth: 1,
-    borderColor: '#ffeef2',
+    borderColor: Colors.pinkBorder,
   },
   title: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: '#e91e63', // ורוד כהה יותר לכותרת
+    color: Colors.pink,
     textAlign: 'center',
     marginBottom: 8,
-    textShadowColor: 'rgba(233, 30, 99, 0.1)',
+    textShadowColor: Colors.pinkShadowSoft,
     textShadowOffset: { width: 0, height: 1 },
     textShadowRadius: 2,
   },
   subtitle: {
     fontSize: 16,
-    color: '#9c27b0', // סגול עדין
+    color: Colors.purple,
     textAlign: 'center',
     marginBottom: 20,
     lineHeight: 22,
   },
-  progressContainer: {
-    marginBottom: 20,
-  },
+
+  progressContainer: { marginBottom: 20 },
   progressBar: {
     height: 12,
-    backgroundColor: '#f3e5f5', // רקע סגול עדין
+    backgroundColor: Colors.purpleLight,
     borderRadius: 10,
     overflow: 'hidden',
-    shadowColor: '#9c27b0',
+    shadowColor: Colors.purple,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
@@ -52,9 +52,9 @@ const babyChecklistStyles = StyleSheet.create({
   },
   progressFill: {
     height: '100%',
-    backgroundColor: '#e91e63', // ורוד כהה
+    backgroundColor: Colors.pink,
     borderRadius: 10,
-    shadowColor: '#e91e63',
+    shadowColor: Colors.pink,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 4,
@@ -62,22 +62,23 @@ const babyChecklistStyles = StyleSheet.create({
   },
   progressText: {
     fontSize: 14,
-    color: '#9c27b0',
+    color: Colors.purple,
     textAlign: 'center',
     marginTop: 12,
     fontWeight: '600',
   },
+
   categoryTabsContainer: {
-    backgroundColor: '#fff',
+    backgroundColor: Colors.white,
     borderRadius: 20,
     marginBottom: 20,
-    shadowColor: '#ff69b4',
+    shadowColor: Colors.pinkDeep,
     shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.1,
     shadowRadius: 12,
     elevation: 8,
     borderWidth: 1,
-    borderColor: '#ffeef2',
+    borderColor: Colors.pinkBorder,
   },
   categoryTabs: {
     flexDirection: 'row',
@@ -89,115 +90,66 @@ const babyChecklistStyles = StyleSheet.create({
     paddingVertical: 10,
     margin: 4,
     borderRadius: 25,
-    backgroundColor: '#fef7f9',
+    backgroundColor: Colors.pinkBg,
     borderWidth: 2,
-    borderColor: '#fce4ec',
-    shadowColor: '#ff69b4',
+    borderColor: Colors.pinkLight,
+    shadowColor: Colors.pinkDeep,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 3,
     elevation: 2,
   },
   categoryTabActive: {
-    backgroundColor: '#e91e63',
-    borderColor: '#e91e63',
-    shadowColor: '#e91e63',
+    backgroundColor: Colors.pink,
+    borderColor: Colors.pink,
+    shadowColor: Colors.pink,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 6,
     elevation: 4,
   },
-  // צבעים לקטגוריות שונות
-  categoryTabAll: {
-    backgroundColor: '#e3f2fd',
-    borderColor: '#2196f3',
-  },
-  categoryTabClothing: {
-    backgroundColor: '#fce4ec',
-    borderColor: '#e91e63',
-  },
-  categoryTabFeeding: {
-    backgroundColor: '#fff3e0',
-    borderColor: '#ff9800',
-  },
-  categoryTabSleep: {
-    backgroundColor: '#e8f5e8',
-    borderColor: '#4caf50',
-  },
-  categoryTabHygiene: {
-    backgroundColor: '#f3e5f5',
-    borderColor: '#9c27b0',
-  },
-  categoryTabSafety: {
-    backgroundColor: '#ffebee',
-    borderColor: '#f44336',
-  },
-  categoryTabTransport: {
-    backgroundColor: '#e0f2f1',
-    borderColor: '#009688',
-  },
-  categoryTabToys: {
-    backgroundColor: '#fff8e1',
-    borderColor: '#ffc107',
-  },
-  categoryTabMedical: {
-    backgroundColor: '#f1f8e9',
-    borderColor: '#8bc34a',
-  },
-  categoryTabOther: {
-    backgroundColor: '#fafafa',
-    borderColor: '#9e9e9e',
-  },
+
+  // רקע/מסגרת לפי קטגוריות
+  categoryTabAll:       { backgroundColor: Colors.blueBg,   borderColor: Colors.blue },
+  categoryTabClothing:  { backgroundColor: Colors.pinkLight, borderColor: Colors.pink },
+  categoryTabFeeding:   { backgroundColor: Colors.orangeBg, borderColor: Colors.orange },
+  categoryTabSleep:     { backgroundColor: Colors.greenBg,  borderColor: Colors.green },
+  categoryTabHygiene:   { backgroundColor: Colors.purpleLight, borderColor: Colors.purple },
+  categoryTabSafety:    { backgroundColor: Colors.redBg,    borderColor: Colors.red },
+  categoryTabTransport: { backgroundColor: Colors.tealBg,   borderColor: Colors.teal },
+  categoryTabToys:      { backgroundColor: Colors.amberBg,  borderColor: Colors.amber },
+  categoryTabMedical:   { backgroundColor: Colors.limeBg,   borderColor: Colors.lime },
+  categoryTabOther:     { backgroundColor: Colors.grayBg,   borderColor: Colors.gray },
+
   categoryTabText: {
     fontSize: 14,
-    color: '#9c27b0',
+    color: Colors.purple,
     fontWeight: '600',
   },
-  categoryTabTextActive: {
-    color: '#fff',
-    fontWeight: 'bold',
-  },
-  // צבעי טקסט לקטגוריות שונות
-  categoryTabTextAll: {
-    color: '#1976d2',
-  },
-  categoryTabTextClothing: {
-    color: '#c2185b',
-  },
-  categoryTabTextFeeding: {
-    color: '#e65100',
-  },
-  categoryTabTextSleep: {
-    color: '#2e7d32',
-  },
-  categoryTabTextHygiene: {
-    color: '#7b1fa2',
-  },
-  categoryTabTextSafety: {
-    color: '#c62828',
-  },
-  categoryTabTextTransport: {
-    color: '#00695c',
-  },
-  categoryTabTextToys: {
-    color: '#f57f17',
-  },
-  categoryTabTextMedical: {
-    color: '#558b2f',
-  },
-  categoryTabTextOther: {
-    color: '#424242',
-  },
+  categoryTabTextActive: { color: Colors.white, fontWeight: 'bold' },
+
+  // צבעי טקסט לקטגוריות
+  categoryTabTextAll:       { color: Colors.blue },
+  categoryTabTextClothing:  { color: Colors.pink },
+  categoryTabTextFeeding:   { color: Colors.orange },
+  categoryTabTextSleep:     { color: Colors.green },
+  categoryTabTextHygiene:   { color: Colors.purple },
+  categoryTabTextSafety:    { color: Colors.red },
+  categoryTabTextTransport: { color: Colors.teal },
+  categoryTabTextToys:      { color: Colors.amber },
+  categoryTabTextMedical:   { color: Colors.lime },
+  categoryTabTextOther:     { color: Colors.deepText },
+
   itemsContainer: {
-    backgroundColor: '#fff',
+    backgroundColor: Colors.white,
     borderRadius: 20,
-    shadowColor: '#ff69b4',
+    shadowColor: Colors.pinkDeep,
     shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.1,
     shadowRadius: 12,
     elevation: 8,
     borderWidth: 1,
-    borderColor: '#ffeef2',
+    borderColor: Colors.pinkBorder,
     overflow: 'hidden',
   },
   itemRow: {
@@ -205,155 +157,105 @@ const babyChecklistStyles = StyleSheet.create({
     alignItems: 'center',
     padding: 18,
     borderBottomWidth: 1,
-    borderBottomColor: '#fce4ec',
-    backgroundColor: '#fff',
+    borderBottomColor: Colors.pinkLight,
+    backgroundColor: Colors.white,
   },
-  itemRowLast: {
-    borderBottomWidth: 0,
-  },
-  itemRowChecked: {
-    backgroundColor: '#fef7f9',
-  },
+  itemRowLast: { borderBottomWidth: 0 },
+  itemRowChecked: { backgroundColor: Colors.pinkBg },
+
   checkbox: {
     width: 28,
     height: 28,
     borderRadius: 8,
     borderWidth: 2,
-    borderColor: '#fce4ec',
+    borderColor: Colors.pinkLight,
     marginRight: 16,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#fff',
-    shadowColor: '#ff69b4',
+    backgroundColor: Colors.white,
+    shadowColor: Colors.pinkDeep,
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,
     shadowRadius: 2,
     elevation: 2,
   },
   checkboxChecked: {
-    backgroundColor: '#e91e63',
-    borderColor: '#e91e63',
-    shadowColor: '#e91e63',
+    backgroundColor: Colors.pink,
+    borderColor: Colors.pink,
+    shadowColor: Colors.pink,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 4,
     elevation: 4,
   },
-  checkboxIcon: {
-    color: '#fff',
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
+  checkboxIcon: { color: Colors.white, fontSize: 18, fontWeight: 'bold' },
+
   itemText: {
     flex: 1,
     fontSize: 16,
-    color: '#9c27b0',
+    color: Colors.purple,
     lineHeight: 24,
     fontWeight: '500',
   },
   itemTextChecked: {
     textDecorationLine: 'line-through',
-    color: '#ba68c8',
+    color: Colors.violet,
     fontStyle: 'italic',
   },
+
   categoryHeader: {
-    backgroundColor: '#fef7f9',
+    backgroundColor: Colors.pinkBg,
     padding: 16,
     borderBottomWidth: 2,
-    borderBottomColor: '#fce4ec',
+    borderBottomColor: Colors.pinkLight,
   },
-  categoryHeaderText: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#e91e63',
-    textAlign: 'center',
-  },
-  emptyState: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 60,
-  },
-  emptyStateIcon: {
-    fontSize: 48,
-    color: '#ba68c8',
-    marginBottom: 16,
-  },
-  emptyStateText: {
-    fontSize: 16,
-    color: '#ba68c8',
-    textAlign: 'center',
-    marginTop: 8,
-    lineHeight: 22,
-  },
-  buttonsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginTop: 24,
-    paddingHorizontal: 4,
-  },
+  categoryHeaderText: { fontSize: 20, fontWeight: 'bold', color: Colors.pink, textAlign: 'center' },
+
+  emptyState: { alignItems: 'center', justifyContent: 'center', padding: 60 },
+  emptyStateIcon: { fontSize: 48, color: Colors.violet, marginBottom: 16 },
+  emptyStateText: { fontSize: 16, color: Colors.violet, textAlign: 'center', marginTop: 8, lineHeight: 22 },
+
+  buttonsContainer: { flexDirection: 'row', justifyContent: 'center', marginTop: 24, paddingHorizontal: 4 },
+
   resetButton: {
-    backgroundColor: '#f44336',
+    backgroundColor: Colors.red,
     paddingHorizontal: 20,
     paddingVertical: 12,
     borderRadius: 15,
-    shadowColor: '#f44336',
+    shadowColor: Colors.red,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 6,
     elevation: 6,
   },
-  resetButtonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
+  resetButtonText: { color: Colors.white, fontSize: 16, fontWeight: 'bold', textAlign: 'center' },
+
   saveButton: {
-    backgroundColor: '#4caf50',
+    backgroundColor: Colors.green,
     paddingHorizontal: 24,
     paddingVertical: 16,
     borderRadius: 15,
     flex: 0.48,
-    shadowColor: '#4caf50',
+    shadowColor: Colors.green,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 6,
     elevation: 6,
   },
-  saveButtonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  buttonHalf: {
-    flex: 0.48,
-  },
-  // Additional decorative elements
+  saveButtonText: { color: Colors.white, fontSize: 16, fontWeight: 'bold', textAlign: 'center' },
+  buttonHalf: { flex: 0.48 },
+
   decorativeLine: {
     height: 3,
-    backgroundColor: '#e91e63',
+    backgroundColor: Colors.pink,
     borderRadius: 2,
     marginVertical: 8,
     alignSelf: 'center',
     width: 60,
   },
-  itemCountBadge: {
-    backgroundColor: '#e91e63',
-    borderRadius: 15,
-    paddingHorizontal: 10,
-    paddingVertical: 6,
-    marginLeft: 8,
-  },
-  itemCountText: {
-    color: '#fff',
-    fontSize: 12,
-    fontWeight: 'bold',
-  },
-  categoryIcon: {
-    marginRight: 8,
-    fontSize: 18,
-  },
+  itemCountBadge: { backgroundColor: Colors.pink, borderRadius: 15, paddingHorizontal: 10, paddingVertical: 6, marginLeft: 8 },
+  itemCountText: { color: Colors.white, fontSize: 12, fontWeight: 'bold' },
+  categoryIcon: { marginRight: 8, fontSize: 18 },
 });
 
-export default babyChecklistStyles; 
+export default babyChecklistStyles;

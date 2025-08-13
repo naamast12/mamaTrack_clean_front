@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { Colors } from '@/constants/Colors';
 
 export default StyleSheet.create({
     tabsContainer: {
@@ -14,49 +15,36 @@ export default StyleSheet.create({
         borderRadius: 20,
         marginHorizontal: 4,
         marginBottom: 8,
-        shadowColor: '#d81b60',
+        shadowColor: Colors.pinkDeep,
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.1,
         shadowRadius: 4,
         elevation: 3,
     },
-    categoryTabActive: {
-        backgroundColor: '#d81b60',
-    },
-    categoryTabHygiene: {
-        backgroundColor: '#e8f5e8',
-    },
-    categoryTabClothing: {
-        backgroundColor: '#fff3e0',
-    },
-    categoryTabMedical: {
-        backgroundColor: '#fce4ec',
-    },
-    categoryTabBaby: {
-        backgroundColor: '#e3f2fd',
-    },
+
+    /* רקעים לפי קטגוריה/מצב */
+    categoryTabActive:   { backgroundColor: Colors.pinkDeep },
+    categoryTabHygiene:  { backgroundColor: Colors.greenBg },
+    categoryTabClothing: { backgroundColor: Colors.orangeBg },
+    categoryTabMedical:  { backgroundColor: Colors.pinkLight },
+    categoryTabBaby:     { backgroundColor: Colors.blueBg },
+
+    /* טקסטים */
     categoryTabText: {
         fontSize: 14,
         fontWeight: '600',
         textAlign: 'center',
+        color: Colors.purple,     // ברירת מחדל עדינה
     },
-    categoryTabTextActive: {
-        color: '#fff',
-    },
-    categoryTabTextHygiene: {
-        color: '#2e7d32',
-    },
-    categoryTabTextClothing: {
-        color: '#f57c00',
-    },
-    categoryTabTextMedical: {
-        color: '#c2185b',
-    },
-    categoryTabTextBaby: {
-        color: '#1976d2',
-    },
+    categoryTabTextActive:  { color: Colors.white },
+    categoryTabTextHygiene: { color: Colors.green },
+    categoryTabTextClothing:{ color: Colors.orange },
+    categoryTabTextMedical: { color: Colors.pink },
+    categoryTabTextBaby:    { color: Colors.blue },
+
+    /* באדג' ספירה */
     itemCountBadge: {
-        backgroundColor: '#d81b60',
+        backgroundColor: Colors.pinkDeep,
         borderRadius: 12,
         paddingHorizontal: 8,
         paddingVertical: 2,
@@ -65,7 +53,7 @@ export default StyleSheet.create({
         alignItems: 'center',
     },
     itemCountText: {
-        color: '#fff',
+        color: Colors.white,
         fontSize: 12,
         fontWeight: 'bold',
     },

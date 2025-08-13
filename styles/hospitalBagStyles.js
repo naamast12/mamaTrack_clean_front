@@ -1,18 +1,21 @@
+// styles/<your-file>.js
 import { StyleSheet } from 'react-native';
+import { Colors } from '@/constants/Colors';
 
 export default StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff5f8', // Light pink background
+        backgroundColor: Colors.pinkBg,
         padding: 20,
     },
+
     title: {
         textAlign: 'center',
-        color: '#d81b60', // Deep pink
+        color: Colors.pinkDeep,
         fontSize: 28,
         fontWeight: 'bold',
         marginBottom: 8,
-        textShadowColor: 'rgba(216, 27, 96, 0.3)',
+        textShadowColor: Colors.pinkShadowSoft,
         textShadowOffset: { width: 1, height: 1 },
         textShadowRadius: 3,
     },
@@ -20,15 +23,16 @@ export default StyleSheet.create({
         textAlign: 'center',
         marginBottom: 25,
         fontSize: 16,
-        color: '#666',
+        color: Colors.mutedText,
         lineHeight: 22,
     },
+
     progressContainer: {
-        backgroundColor: '#fff',
+        backgroundColor: Colors.white,
         borderRadius: 15,
         padding: 20,
         marginBottom: 20,
-        shadowColor: '#d81b60',
+        shadowColor: Colors.pinkDeep,
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.15,
         shadowRadius: 8,
@@ -37,28 +41,29 @@ export default StyleSheet.create({
     progressTitle: {
         fontSize: 18,
         fontWeight: 'bold',
-        color: '#d81b60',
+        color: Colors.pinkDeep,
         textAlign: 'center',
         marginBottom: 15,
     },
     progressBar: {
         height: 12,
-        backgroundColor: '#fce4ec',
+        backgroundColor: Colors.pinkLight,
         borderRadius: 6,
         overflow: 'hidden',
     },
     progressFill: {
         height: '100%',
-        backgroundColor: '#d81b60',
+        backgroundColor: Colors.pinkDeep,
         borderRadius: 6,
     },
     progressText: {
         textAlign: 'center',
         marginTop: 10,
         fontSize: 14,
-        color: '#666',
+        color: Colors.mutedText,
         fontWeight: '500',
     },
+
     tabsContainer: {
         flexDirection: 'row',
         flexWrap: 'wrap',
@@ -72,119 +77,77 @@ export default StyleSheet.create({
         borderRadius: 20,
         marginHorizontal: 4,
         marginBottom: 8,
-        shadowColor: '#d81b60',
+        shadowColor: Colors.pinkDeep,
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.1,
         shadowRadius: 4,
         elevation: 3,
     },
-    categoryTabActive: {
-        backgroundColor: '#d81b60',
-    },
-    categoryTabHygiene: {
-        backgroundColor: '#e8f5e8',
-    },
-    categoryTabClothing: {
-        backgroundColor: '#fff3e0',
-    },
-    categoryTabMedical: {
-        backgroundColor: '#fce4ec',
-    },
-    categoryTabBaby: {
-        backgroundColor: '#e3f2fd',
-    },
-    categoryTabText: {
-        fontSize: 14,
-        fontWeight: '600',
-        textAlign: 'center',
-    },
-    categoryTabTextActive: {
-        color: '#fff',
-    },
-    categoryTabTextHygiene: {
-        color: '#2e7d32',
-    },
-    categoryTabTextClothing: {
-        color: '#f57c00',
-    },
-    categoryTabTextMedical: {
-        color: '#c2185b',
-    },
-    categoryTabTextBaby: {
-        color: '#1976d2',
-    },
-    itemsContainer: {
-        flex: 1,
-    },
+    categoryTabActive:   { backgroundColor: Colors.pinkDeep },
+    categoryTabHygiene:  { backgroundColor: Colors.greenBg },
+    categoryTabClothing: { backgroundColor: Colors.orangeBg },
+    categoryTabMedical:  { backgroundColor: Colors.pinkLight },
+    categoryTabBaby:     { backgroundColor: Colors.blueBg },
+
+    categoryTabText: { fontSize: 14, fontWeight: '600', textAlign: 'center' },
+    categoryTabTextActive:  { color: Colors.white },
+    categoryTabTextHygiene: { color: Colors.green },
+    categoryTabTextClothing:{ color: Colors.orange },
+    categoryTabTextMedical: { color: Colors.pink },
+    categoryTabTextBaby:    { color: Colors.blue },
+
+    itemsContainer: { flex: 1 },
+
     itemRow: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#fff',
+        backgroundColor: Colors.white,
         paddingHorizontal: 20,
         paddingVertical: 16,
         marginBottom: 8,
         borderRadius: 12,
-        shadowColor: '#d81b60',
+        shadowColor: Colors.pinkDeep,
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.08,
         shadowRadius: 4,
         elevation: 2,
     },
     itemRowChecked: {
-        backgroundColor: '#fce4ec',
+        backgroundColor: Colors.pinkLight,
         borderLeftWidth: 4,
-        borderLeftColor: '#d81b60',
+        borderLeftColor: Colors.pinkDeep,
     },
+
     checkbox: {
         width: 24,
         height: 24,
         borderRadius: 6,
         borderWidth: 2,
-        borderColor: '#d81b60',
+        borderColor: Colors.pinkDeep,
         marginRight: 15,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#fff',
-        shadowColor: '#d81b60',
+        backgroundColor: Colors.white,
+        shadowColor: Colors.pinkDeep,
         shadowOffset: { width: 0, height: 1 },
         shadowOpacity: 0.2,
         shadowRadius: 2,
         elevation: 1,
     },
-    checkboxChecked: {
-        backgroundColor: '#d81b60',
-        borderColor: '#d81b60',
-    },
-    checkboxIcon: {
-        color: '#fff',
-        fontSize: 16,
-        fontWeight: 'bold',
-    },
-    itemText: {
-        flex: 1,
-        fontSize: 16,
-        color: '#333',
-        lineHeight: 22,
-    },
+    checkboxChecked: { backgroundColor: Colors.pinkDeep, borderColor: Colors.pinkDeep },
+    checkboxIcon: { color: Colors.white, fontSize: 16, fontWeight: 'bold' },
+
+    itemText: { flex: 1, fontSize: 16, color: Colors.text, lineHeight: 22 },
     itemTextChecked: {
-        color: '#d81b60',
+        color: Colors.pinkDeep,
         textDecorationLine: 'line-through',
-        textDecorationColor: '#d81b60',
+        textDecorationColor: Colors.pinkDeep,
     },
-    emptyState: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingVertical: 40,
-    },
-    emptyStateIcon: {
-        fontSize: 48,
-        marginBottom: 10,
-    },
-    emptyStateText: {
-        fontSize: 16,
-        color: '#666',
-        textAlign: 'center',
-    },
+
+    emptyState: { alignItems: 'center', justifyContent: 'center', paddingVertical: 40 },
+    emptyStateIcon: { fontSize: 48, marginBottom: 10 },
+    emptyStateText: { fontSize: 16, color: Colors.mutedText, textAlign: 'center' },
+
     buttonsContainer: {
         flexDirection: 'row',
         justifyContent: 'center',
@@ -192,31 +155,28 @@ export default StyleSheet.create({
         marginBottom: 10,
     },
     resetButton: {
-        backgroundColor: '#d81b60',
+        backgroundColor: Colors.pinkDeep,
         paddingHorizontal: 24,
         paddingVertical: 12,
         borderRadius: 25,
-        shadowColor: '#d81b60',
+        shadowColor: Colors.pinkDeep,
         shadowOffset: { width: 0, height: 3 },
         shadowOpacity: 0.3,
         shadowRadius: 6,
         elevation: 4,
     },
-    resetButtonText: {
-        color: '#fff',
-        fontSize: 16,
-        fontWeight: 'bold',
-        textAlign: 'center',
-    },
+    resetButtonText: { color: Colors.white, fontSize: 16, fontWeight: 'bold', textAlign: 'center' },
+
     decorativeLine: {
         height: 3,
-        backgroundColor: '#d81b60',
+        backgroundColor: Colors.pinkDeep,
         borderRadius: 2,
         marginVertical: 15,
         opacity: 0.3,
     },
+
     itemCountBadge: {
-        backgroundColor: '#d81b60',
+        backgroundColor: Colors.pinkDeep,
         borderRadius: 12,
         paddingHorizontal: 8,
         paddingVertical: 2,
@@ -224,9 +184,5 @@ export default StyleSheet.create({
         minWidth: 20,
         alignItems: 'center',
     },
-    itemCountText: {
-        color: '#fff',
-        fontSize: 12,
-        fontWeight: 'bold',
-    },
+    itemCountText: { color: Colors.white, fontSize: 12, fontWeight: 'bold' },
 });
