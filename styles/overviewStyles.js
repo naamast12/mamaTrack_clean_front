@@ -1,11 +1,9 @@
 // styles/overviewStyles.js
 import { StyleSheet } from 'react-native';
-// אם יש לך alias:
 import { Colors } from '@/constants/Colors';
-// או מסלול יחסי:
-// import { Colors } from '../../constants/Colors';
 import { Dimensions } from 'react-native';
 
+const { width } = Dimensions.get('window');
 const shadow = {
     shadowColor: Colors.brand,
     shadowOffset: { width: 0, height: 4 },
@@ -13,15 +11,12 @@ const shadow = {
     shadowRadius: 8,
     elevation: 5,
 };
-const { width } = Dimensions.get('window');
-
 
 export default function getOverviewStyles() {
     return StyleSheet.create({
-        /* פריסת עמוד */
         container: {
             flex: 1,
-            backgroundColor: Colors.brandBg, // רקע כמו במסך הצ'אט
+            backgroundColor: Colors.brandBg,
         },
         pageContent: { paddingBottom: 24 },
 
@@ -32,6 +27,30 @@ export default function getOverviewStyles() {
             paddingHorizontal: 24,
             paddingTop: 16,
         },
+        headerColumn: {
+            flexDirection: 'column',
+            marginBottom: 12,
+        },
+
+        navGrid: {
+            flexDirection: 'row-reverse',
+            flexWrap: 'wrap',
+            justifyContent: 'space-between',
+            marginTop: 8,
+        },
+
+        navItem: {
+            flexBasis: '32%', // שלוש בעמודה
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginBottom: 12,
+        },
+
+// נשתמש ב-headerRight הקיים אבל נשנה:
+        headerRight: {
+            width: '100%',
+        },
+
 
         /* כותרת מסך */
         screenTitle: {
@@ -44,10 +63,10 @@ export default function getOverviewStyles() {
             textShadowOffset: { width: 1, height: 1 },
             textShadowRadius: 3,
         },
-// בתוך getOverviewStyles() במערך הסגנונות:
+        // בתוך getOverviewStyles() במערך הסגנונות:
         fabProfile: {
             position: 'absolute',
-            bottom: 4,
+            bottom: 0,
             left: 400,              // RTL: כפתור בפינה הימנית-תחתונה
             width: 56,
             height: 40,
@@ -60,30 +79,6 @@ export default function getOverviewStyles() {
         },
 // למעלה בקובץ כבר יש headerRow/headerRight/headerNavCol — לא נשתמש ב-headerRow/headerNavCol במבנה החדש
 
-        headerColumn: {
-            flexDirection: 'column',
-            marginBottom: 8,
-        },
-
-// כרטיס הסקירה – שיהיה 100%
-        headerRight: { width: '100%', flexShrink: 0 },
-
-// גריד לכפתורי הניווט – שלישייה
-        navGrid: {
-            flexDirection: 'row-reverse',
-            justifyContent: 'space-between',
-            flexWrap: 'wrap',
-            marginTop: 6,
-            rowGap: 8, // אם אפקטיבי בגרסת RN שלך; אם לא, אפשר marginBottom ב-navItem
-        },
-
-
-        navItem: {
-            flexBasis: '32%',       // שלושה בעמודה
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginBottom: 18,
-        },
 
 
         /* אזור עליון (Hero + ניווט) */
@@ -94,7 +89,6 @@ export default function getOverviewStyles() {
             flexWrap: 'nowrap',
             marginBottom: 8,
         },
-      //  headerRight: { width: 360, flexShrink: 0 },
         headerNavCol: { width: 280, flexShrink: 0 },
 
         /* כרטיסי מידע קטנים */
@@ -105,11 +99,10 @@ export default function getOverviewStyles() {
             paddingHorizontal: 14,
             ...shadow,
         },
-
         heroMiniWeek: { fontSize: 26, fontWeight: '800', color: Colors.darkText, textAlign: 'right', marginBottom: 4 },
         heroMiniLine: { flexDirection: 'row-reverse', alignItems: 'center', marginBottom: 8 },
         heroMiniEmoji: { fontSize: 40, lineHeight: 44, marginLeft: 8, includeFontPadding: false },
-        heroMiniSize: { fontSize: 15, color: Colors.darkText,  marginLeft: 4,},
+        heroMiniSize: { fontSize: 15, color: Colors.darkText },
 
         /* התקדמות */
         progressMini:     { height: 6, borderRadius: 999, backgroundColor: Colors.brandBorder },
@@ -135,8 +128,8 @@ export default function getOverviewStyles() {
             flexDirection: 'row-reverse',
             justifyContent: 'space-between',
             flexWrap: 'wrap',
-            marginTop: 0,
-            marginBottom: 18,
+            marginTop: 12,
+            marginBottom: 12,
         },
         actionBtn: {
             flexBasis: '32%',
@@ -151,6 +144,23 @@ export default function getOverviewStyles() {
             ...shadow,
         },
         actionText: { fontSize: 16, fontWeight: '700', color: Colors.darkText },
+// בתוך getOverviewStyles() אחרי שאר הסגנונות
+        chatBtnWide: {
+            width: '100%',
+            paddingVertical: 16,
+            borderRadius: 16,
+            backgroundColor: Colors.brandLight,
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginTop: 8,
+            ...shadow,
+        },
+        chatBtnText: {
+            fontSize: 18,
+            fontWeight: '700',
+            color: Colors.darkText,
+            textAlign: 'center',
+        },
 
         /* כרטיסי תוכן */
         section: {
@@ -175,30 +185,15 @@ export default function getOverviewStyles() {
             marginBottom: 12,
         },
         halfItem: { width: '48%' },
-// בתוך getOverviewStyles() אחרי שאר הסגנונות
-        chatBtnWide: {
-            width: '100%',
-            paddingVertical: 16,
-            borderRadius: 16,
-            backgroundColor: Colors.brandLight,
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginTop: 8,
-            ...shadow,
-        },
-        chatBtnText: {
-            fontSize: 18,
-            fontWeight: '700',
-            color: Colors.darkText,
-            textAlign: 'center',
-        },
 
         /* צ׳יפים/תגיות */
         pillsRow: { flexDirection: 'row-reverse', flexWrap: 'wrap', marginHorizontal: -6 },
         pill: { backgroundColor: Colors.brandLight, paddingVertical: 6, paddingHorizontal: 10, borderRadius: 999, marginHorizontal: 6, marginBottom: 8, borderWidth: 1, borderColor: Colors.brandBorder },
         pillSecondary: { backgroundColor: Colors.light },
-        pillText: { fontSize:  width * 0.009, color: Colors.brand },
-
+        pillText: {
+            fontSize: width * 0.009, // 3.5% מרוחב המסך
+            color: Colors.brand,
+        },
         /* מרכזיות */
         centerBox: { alignItems: 'center', justifyContent: 'center', paddingVertical: 24 },
         centerNote:{ fontSize: 14, color: Colors.muted, marginTop: 8 },

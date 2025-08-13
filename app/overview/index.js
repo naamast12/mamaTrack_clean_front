@@ -2,14 +2,13 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { View, Text, TouchableOpacity, ActivityIndicator, ScrollView, Platform } from 'react-native';
 import {Feather, MaterialCommunityIcons} from '@expo/vector-icons';import { useRouter } from 'expo-router';
-
 import ProtectedRoute from '@/components/ProtectedRoute';
 import api from '@/src/api/axiosConfig';
 import getOverviewStyles from '../../styles/overviewStyles';
 import {dashboardStyles} from "../../styles/dashboardStyles";
 import {Colors} from "../../constants/Colors";
 import {LinearGradient} from "expo-linear-gradient";
-
+import styles from '../../styles/overviewStyles';
 const useWeeklyApi = () => {
     const getWeeklyUpdate = useCallback(async (week) => {
         const { data } = await api.get(`/api/weekly/${week}`);
