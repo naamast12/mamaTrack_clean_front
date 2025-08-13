@@ -1,7 +1,7 @@
 
 
 import React, { useState, useEffect } from 'react';
-import { View, Text, Pressable, ScrollView, Platform } from 'react-native';
+import { View, Text, Pressable, ScrollView, Platform , Image as RNImage} from 'react-native';
 import { FontAwesome, Feather } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -17,6 +17,7 @@ import sharedStyles from '../styles/sharedStyles';
 import { dashboardStyles } from '../styles/dashboardStyles';
 import { Colors } from '../constants/Colors';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
 
 import api from '../src/api/axiosConfig';
 
@@ -100,7 +101,22 @@ export default function MyProfile() {
                             <Text style={dashboardStyles.gradientTitle}>פרופיל אישי</Text>
                         </LinearGradient>
                     <View style={myProfileStyles.avatarWrapper}>
-                        <MaterialCommunityIcons name="human-pregnant" size={100} color={Colors.primary} />
+                        <View style={{
+                            width: myProfileStyles.__avatarSize ?? 120,
+                            height: myProfileStyles.__avatarSize ?? 120,
+                            borderRadius: (myProfileStyles.__avatarSize ?? 120) / 2,
+                            backgroundColor: '#f2f2f2',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            overflow: 'hidden',
+                        }}>
+                            <RNImage
+                                source={require('../assets/images/pregnant-women.png')}
+                                style={{ width: '100%', height: '100%' }}
+                                accessible
+                                accessibilityLabel="תמונת פרופיל"
+                            />
+                        </View>
                     </View>
                     {isLoading ? (
                         <Text style={myProfileStyles.loadingText}>טוען נתוני משתמש...</Text>
