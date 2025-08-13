@@ -5,6 +5,8 @@ import {widthPercentageToDP as wp} from "react-native-responsive-screen";
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 const baseSize = Math.min(screenWidth, screenHeight);
+const { width } = Dimensions.get('window');
+
 
 const dashboardStyles = StyleSheet.create({
     scrollContainer: {
@@ -40,6 +42,7 @@ const dashboardStyles = StyleSheet.create({
         color: Colors.accent,
     },
     logoutIconButton: {
+        padding: width * 0.02,
         flexDirection: 'row',
         alignItems: 'center',
         borderColor: Colors.primary,
