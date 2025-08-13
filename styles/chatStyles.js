@@ -1,7 +1,8 @@
 // styles/chatStyles.js
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 import { Colors } from "@/constants/Colors";
 
+const { width } = Dimensions.get("window"); // אופציונלי אם תרצי גם פונטים רספונסיביים
 const shadow = {
     shadowColor: Colors.pinkDeep,
     shadowOffset: { width: 0, height: 4 },
@@ -11,16 +12,29 @@ const shadow = {
 };
 
 export default StyleSheet.create({
-    // פריסת עמוד
+    /* פריסת עמוד */
     page: {
         flex: 1,
-        backgroundColor: Colors.pinkBg,
+        backgroundColor: Colors.pinkBg, // אם את רוצה זהה ל-overview, השתמשי Colors.brandBg
         width: "100%",
     },
-    scrollContent: { paddingVertical: 24, flexGrow: 1 },
-    content: { width: "90%", alignSelf: "center", paddingHorizontal: 20 },
+    // כמו pageContent ב-overview
+    scrollContent: {
+        flexGrow: 1,
+        paddingBottom: 24,      // כמו ב-overview
+        // אם את צריכה גם מרווח עליון השאירי: paddingVertical: 24
+    },
 
-    // כרטיס / קונטיינר
+    // כמו inner ב-overview
+    content: {
+        width: "100%",
+        maxWidth: 900,          // ⬅️ ההגבלה במסכים רחבים
+        alignSelf: "center",
+        paddingHorizontal: 24,  // ⬅️ ריווח צדדי זהה
+        // paddingTop: 16        // אם תרצי אותו ספייס עליון כמו ב-overview
+    },
+
+    /* כרטיס / קונטיינר */
     card: {
         backgroundColor: Colors.white,
         borderRadius: 16,
@@ -48,7 +62,7 @@ export default StyleSheet.create({
         lineHeight: 22,
     },
 
-    // אזור רשימה
+    /* אזור רשימה */
     sectionHeader: { marginTop: 6, marginBottom: 8 },
     listTitle: {
         fontSize: 20,
@@ -96,10 +110,9 @@ export default StyleSheet.create({
     itemMiddle: { flex: 1 },
     itemTitle: { fontSize: 16, color: Colors.text, marginBottom: 2, fontWeight: "600", textAlign: "right" },
     itemSubtitle: { fontSize: 14, color: Colors.mutedText, textAlign: "right" },
-
     itemRight: { marginLeft: 12, alignItems: "flex-end" },
 
-    // כפתורים / באדג'ים
+    /* כפתורים / באדג'ים */
     primaryButton: {
         backgroundColor: Colors.pinkDeep,
         paddingHorizontal: 18,
@@ -113,7 +126,6 @@ export default StyleSheet.create({
         fontWeight: "bold",
         textAlign: "center",
     },
-
     badge: {
         backgroundColor: Colors.pinkLight,
         paddingHorizontal: 10,
@@ -124,13 +136,12 @@ export default StyleSheet.create({
     badgeText: { color: Colors.pinkDeep, fontSize: 15, fontWeight: "700" },
     badgeSubText: { fontSize: 10, color: Colors.redDark, marginTop: 2 },
 
-    // עזרים
+    /* עזרים */
     center: { alignItems: "center", justifyContent: "center" },
     emptyStateText: { fontSize: 16, color: Colors.mutedText, textAlign: "center", marginTop: 8 },
     err: { color: Colors.redDarker, textAlign: "center", fontSize: 14 },
 
-    // --- חדר צ'אט ([roomId]) ---
-
+    /* --- חדר צ'אט ([roomId]) --- */
     backBtn: { padding: 10, alignSelf: "flex-start" },
     backBtnText: { color: Colors.pinkDeep, fontSize: 16 },
 
@@ -155,7 +166,7 @@ export default StyleSheet.create({
         alignItems: "center",
         justifyContent: "space-between",
     },
-    rightMeta: { flexDirection: "row", alignItems: "center", gap: 8 },
+    rightMeta: { flexDirection: "row-reverse", alignItems: "center", gap: 8 },
 
     replyBadge: { backgroundColor: Colors.pinkLight, paddingVertical: 4, paddingHorizontal: 10, borderRadius: 12 },
     replyBadgeText: { color: Colors.pinkDeep, fontSize: 12, fontWeight: "700" },
@@ -198,7 +209,7 @@ export default StyleSheet.create({
     },
     secondaryButtonText: { color: Colors.pinkDeep, fontWeight: "700", fontSize: 14 },
 
-    // אזור פיד וכותרת
+    /* אזור פיד וכותרת */
     feedArea: { flex: 1 },
     feedHeaderRow: {
         flexDirection: "row",

@@ -169,10 +169,11 @@ export default StyleSheet.create({
 
   // עוטף פנימי ששולט על הרוחב בפועל של כל התוכן
   content: {
-    width: '90%', // -100% אם תרצי מסך מלא
-    // maxWidth: 900,
+    width: '100%',
+    maxWidth: 900,        // הגבלה במחשב/טאבלט
     alignSelf: 'center',
-    paddingHorizontal: 20,
+    paddingHorizontal: 24,
+    paddingTop: 16,
   },
 
   card: {
