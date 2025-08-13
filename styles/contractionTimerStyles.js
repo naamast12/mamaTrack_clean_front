@@ -169,7 +169,7 @@ export default StyleSheet.create({
 
   // עוטף פנימי ששולט על הרוחב בפועל של כל התוכן
   content: {
-    width: '70%', // השאירי כפי שרצית; אפשר לשנות ל-100% אם תרצי מסך מלא
+    width: '90%', // -100% אם תרצי מסך מלא
     // maxWidth: 900,
     alignSelf: 'center',
     paddingHorizontal: 20,

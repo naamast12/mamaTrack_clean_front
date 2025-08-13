@@ -18,7 +18,7 @@ export default StyleSheet.create({
         width: "100%",
     },
     scrollContent: { paddingVertical: 24, flexGrow: 1 },
-    content: { width: "70%", alignSelf: "center", paddingHorizontal: 20 },
+    content: { width: "90%", alignSelf: "center", paddingHorizontal: 20 },
 
     // כרטיס / קונטיינר
     card: {

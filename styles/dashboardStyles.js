@@ -27,7 +27,7 @@ const dashboardStyles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'flex-end', // ✅ שם את התוכן בימין
         alignItems: 'center',
-        marginTop: 40,
+        marginTop: 20,
     },
 
     logo: {
@@ -54,7 +54,7 @@ const dashboardStyles = StyleSheet.create({
     logoutLabel: {
         color: Colors.primary,
         fontWeight: '600',
-        marginRight: 6,
+        marginRight: 3,
         fontSize: 14,
     },
     gradientTitleWrapper: {
