@@ -31,8 +31,9 @@ export default function ChatRoomScreen() {
     const [text, setText] = useState("");
     const [sending, setSending] = useState(false);
 
-    const [showTips, setShowTips] = useState(false);
-
+    const [inputH, setInputH] = useState(0);
+    const MIN_H = 36;   // שורה אחת
+    const MAX_H = 160;  // תקרה
     const listRef = useRef<FlatList<Msg>>(null);
 
     const topLevelMessages = useMemo(
@@ -76,6 +77,7 @@ export default function ChatRoomScreen() {
         try {
             setSending(true);
             setText("");
+            setInputH(0);                  // ← חוזר לשורה אחת
 
             const optimistic: Msg = {
                 id: tempId as any,
@@ -159,6 +161,7 @@ export default function ChatRoomScreen() {
     const maxLen = 1000;
     const isDisabled = sending || text.trim().length === 0;
 
+
     return (
         <ProtectedRoute requireAuth={true}>
             <>
@@ -177,7 +180,7 @@ export default function ChatRoomScreen() {
                             </TouchableOpacity>
                             <Text style={styles.title}>{name}</Text>
                             <Text style={[chatStyles.guidanceText, { marginTop: 4 }]}>
-                                כאן המקום לשתף, לשאול ולהתייעץ. שמרו על שפה נעימה 🌷
+                                כאן המקום לשתף, לשאול ולהתייעץ 🌷
                             </Text>
                         </View>
 
@@ -222,12 +225,22 @@ export default function ChatRoomScreen() {
                                 <TextInput
                                     style={[
                                         styles.input,
-                                        { textAlignVertical: "top", minHeight: 64, maxHeight: 160, paddingVertical: 8 }
+                                        {
+                                            flex: 1,
+                                            textAlignVertical: 'top',
+                                            paddingVertical: 6,
+                                            height: Math.min(MAX_H, Math.max(MIN_H, inputH || MIN_H)),
+                                        },
                                     ]}
                                     placeholder="כתבי כאן את הפוסט…"
                                     value={text}
                                     onChangeText={setText}
                                     multiline
+                                    numberOfLines={1}               // מתחיל שורה אחת
+                                    onContentSizeChange={e => {
+                                        const h = e.nativeEvent.contentSize?.height || 0;
+                                        setInputH(h);
+                                    }}
                                     maxLength={maxLen}
                                     blurOnSubmit={false}
                                 />

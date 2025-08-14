@@ -25,6 +25,10 @@ export default function ThreadScreen() {
     const [text, setText] = useState("");
     const [sending, setSending] = useState(false);
 
+    const [inputH, setInputH] = useState(0);
+    const MIN_H = 36;   // שורה אחת
+    const MAX_H = 160;  // תקרה
+
     const listRef = useRef<FlatList<Msg>>(null);
     const lastId = useMemo(() => (messages.length ? messages[messages.length - 1].id : 0), [messages]);
 
@@ -76,6 +80,7 @@ export default function ThreadScreen() {
 
         setSending(true);
         setText("");
+        setInputH(0);                  // ← חוזר לשורה אחת
 
         const tempId = Date.now() + Math.random();
         const optimistic: Msg = {
@@ -187,11 +192,24 @@ export default function ThreadScreen() {
 
                             <View style={[styles.inputBar, { marginTop: 6 }]}>
                                 <TextInput
-                                    style={[styles.input, { textAlignVertical: "top", minHeight: 70, maxHeight: 200 }]}
-                                    placeholder="כתבי תגובה…"
+                                    style={[
+                                        styles.input,
+                                        {
+                                            flex: 1,
+                                            textAlignVertical: 'top',
+                                            paddingVertical: 6,
+                                            height: Math.min(MAX_H, Math.max(MIN_H, inputH || MIN_H)),
+                                        },
+                                    ]}
+                                    placeholder="כתבי כאן את התגובה…"
                                     value={text}
                                     onChangeText={setText}
                                     multiline
+                                    numberOfLines={1}               // מתחיל שורה אחת
+                                    onContentSizeChange={e => {
+                                        const h = e.nativeEvent.contentSize?.height || 0;
+                                        setInputH(h);
+                                    }}
                                     maxLength={maxLen}
                                     blurOnSubmit={false}
                                 />
