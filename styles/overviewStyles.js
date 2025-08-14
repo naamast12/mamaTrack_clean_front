@@ -100,8 +100,8 @@ export default function getOverviewStyles() {
             ...shadow,
         },
         heroMiniWeek: { fontSize: 26, fontWeight: '800', color: Colors.darkText, textAlign: 'right', marginBottom: 4 },
-        heroMiniLine: { flexDirection: 'row-reverse', alignItems: 'center', marginBottom: 8 },
-        heroMiniEmoji: { fontSize: 40, lineHeight: 44, marginLeft: 8, includeFontPadding: false },
+        heroMiniLine: { flexDirection: 'row-reverse', alignItems: 'center', marginBottom: 18 },
+        heroMiniEmoji: { fontSize: 70, lineHeight: 44, marginLeft: 8, includeFontPadding: false },
         heroMiniSize: { fontSize: 15, color: Colors.darkText },
 
         /* התקדמות */
@@ -191,7 +191,7 @@ export default function getOverviewStyles() {
         pill: { backgroundColor: Colors.brandLight, paddingVertical: 6, paddingHorizontal: 10, borderRadius: 999, marginHorizontal: 6, marginBottom: 8, borderWidth: 1, borderColor: Colors.brandBorder },
         pillSecondary: { backgroundColor: Colors.light },
         pillText: {
-            fontSize: width * 0.009, // 3.5% מרוחב המסך
+            fontSize: width * 0.01, // 3.5% מרוחב המסך
             color: Colors.brand,
         },
         /* מרכזיות */

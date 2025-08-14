@@ -80,9 +80,16 @@ const babyChecklistStyles = StyleSheet.create({
     borderWidth: 1,
     borderColor: Colors.pinkBorder,
   },
+
+  // categoryTabs: {
+  //   flexDirection: 'row',
+  //   flexWrap: 'wrap',
+  //   padding: 16,
+  // },
   categoryTabs: {
-    flexDirection: 'row',
+    flexDirection: 'row',   // כמו שהיה
     flexWrap: 'wrap',
+    justifyContent: 'flex-end', // יישור לשול הימני
     padding: 16,
   },
   categoryTab: {
@@ -108,6 +115,7 @@ const babyChecklistStyles = StyleSheet.create({
     shadowRadius: 6,
     elevation: 4,
   },
+
 
   // רקע/מסגרת לפי קטגוריות
   categoryTabAll:       { backgroundColor: Colors.blueBg,   borderColor: Colors.blue },

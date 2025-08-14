@@ -1,11 +1,13 @@
 // app/upcomingTests/index.js
 import React, { useEffect, useMemo, useState, useCallback } from 'react';
-import { View, Text, TouchableOpacity, FlatList, ActivityIndicator /*, TextInput */ } from 'react-native';
+import { View, Text, TouchableOpacity, FlatList,Pressable, Modal, ActivityIndicator /*, TextInput */ } from 'react-native';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import { screenStyles as styles } from '../../styles/upcomingTestsStyles';
 import api from '../../src/api/axiosConfig';
 import TestCard from './TestCard';
 import { HomeButton } from '../utils/HomeButton';
+import { MaterialCommunityIcons, Feather } from '@expo/vector-icons';
+import { Colors } from '../../constants/Colors'; // או '@/constants/Colors'
 
 async function fetchAllPrenatalTests() {
     const { data } = await api.get('/api/tests/all');
@@ -30,6 +32,56 @@ export default function UpcomingTests() {
     const [refreshing, setRefreshing] = useState(false);
     const [error, setError] = useState('');
     const weekToTri = (w) => (w <= 13 ? 1 : w <= 27 ? 2 : 3);
+    const [weekPickerOpen, setWeekPickerOpen] = useState(false);
+    const weekOptions = Array.from({ length: 42 }, (_, i) => i + 1);
+// ↓ בתוך UpcomingTests, לפני return
+    const WeekSelector = ({ week, onSelect }) => {
+        const [open, setOpen] = useState(false);
+        const options = Array.from({ length: 42 }, (_, i) => i + 1);
+
+        return (
+            <>
+                {/* כפתור חץ לפתיחה */}
+                <TouchableOpacity
+                    style={styles.arrowBtn}
+                    onPress={() => setOpen(true)}
+                    accessibilityLabel="פתח רשימת שבועות"
+                >
+                    <MaterialCommunityIcons name="chevron-down" size={24} color="#333" />
+                </TouchableOpacity>
+
+                {/* המודאל עם רשימת השבועות */}
+                <Modal
+                    visible={open}
+                    transparent
+                    animationType="slide"
+                    onRequestClose={() => setOpen(false)}
+                >
+                    <TouchableOpacity
+                        style={styles.backdrop}
+                        activeOpacity={1}
+                        onPress={() => setOpen(false)}
+                    />
+                    <View style={styles.listContainer}>
+                        <FlatList
+                            data={options}
+                            keyExtractor={(item) => String(item)}
+                            renderItem={({ item }) => (
+                                <TouchableOpacity
+                                    style={[styles.option, item === week && styles.selectedOption]}
+                                    onPress={() => { onSelect(item); setOpen(false); }}
+                                >
+                                    <Text style={[styles.optionTxt, item === week && styles.selectedOptionTxt]}>
+                                        שבוע {item}
+                                    </Text>
+                                </TouchableOpacity>
+                            )}
+                        />
+                    </View>
+                </Modal>
+            </>
+        );
+    };
 
 
     useEffect(() => {
@@ -166,17 +218,19 @@ export default function UpcomingTests() {
                 {/* שליטת פילטר */}
                 {mode === 'week' ? (
                     <View style={styles.weekRow}>
-                        <TouchableOpacity onPress={onIncWeek} style={styles.stepBtn} accessibilityLabel="הגדלת שבוע">
-                            <Text style={styles.stepTxt}>+</Text>
-                        </TouchableOpacity>
                         <Text style={styles.weekLabel}>שבוע {week}</Text>
-                        <TouchableOpacity onPress={onDecWeek} style={styles.stepBtn} accessibilityLabel="הקטנת שבוע">
-                            <Text style={styles.stepTxt}>−</Text>
-                        </TouchableOpacity>
+                        <WeekSelector
+                            week={week}
+                            onSelect={(w) => {
+                                setMode('week');
+                                setWeek(w);
+                                loadByWeek(w);    // חשוב לרענון התוכן
+                            }}
+                        />
                     </View>
                 ) : (
                     <View style={styles.triRow}>
-                        {[1, 2, 3].map((t) => (
+                        {[1,2,3].map(t => (
                             <TouchableOpacity
                                 key={t}
                                 onPress={() => onPickTri(t)}
@@ -191,6 +245,23 @@ export default function UpcomingTests() {
                         ))}
                     </View>
                 )}
+                {/*: (*/}
+                {/*    <View style={styles.triRow}>*/}
+                {/*        {[1, 2, 3].map((t) => (*/}
+                {/*            <TouchableOpacity*/}
+                {/*                key={t}*/}
+                {/*                onPress={() => onPickTri(t)}*/}
+                {/*                style={[styles.triBtn, tri === t && styles.triActive]}*/}
+                {/*                accessibilityRole="button"*/}
+                {/*                accessibilityState={{ selected: tri === t }}*/}
+                {/*            >*/}
+                {/*                <Text style={[styles.triTxt, tri === t && styles.triTxtActive]}>*/}
+                {/*                    {t === 1 ? 'ראשון' : t === 2 ? 'שני' : 'שלישי'}*/}
+                {/*                </Text>*/}
+                {/*            </TouchableOpacity>*/}
+                {/*        ))}*/}
+                {/*    </View>*/}
+                {/*)}*/}
 
                 {/* חיפוש (אם תרצי, החזירי את ה־TextInput) */}
                 {/* <TextInput ... /> */}
