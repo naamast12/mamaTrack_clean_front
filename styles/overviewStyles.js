@@ -91,14 +91,7 @@ export default function getOverviewStyles() {
         },
         headerNavCol: { width: 280, flexShrink: 0 },
 
-        /* כרטיסי מידע קטנים */
-        heroMini: {
-            backgroundColor: Colors.surface,
-            borderRadius: 16,
-            paddingVertical: 12,
-            paddingHorizontal: 14,
-            ...shadow,
-        },
+
         heroMiniWeek: { fontSize: 26, fontWeight: '800', color: Colors.darkText, textAlign: 'right', marginBottom: 4 },
         heroMiniLine: { flexDirection: 'row-reverse', alignItems: 'center', marginBottom: 18 },
         heroMiniEmoji: { fontSize: 70, lineHeight: 44, marginLeft: 8, includeFontPadding: false },
@@ -197,5 +190,40 @@ export default function getOverviewStyles() {
         /* מרכזיות */
         centerBox: { alignItems: 'center', justifyContent: 'center', paddingVertical: 24 },
         centerNote:{ fontSize: 14, color: Colors.muted, marginTop: 8 },
+
+
+        profileBtnMiniText: {
+            color: '#FFF',
+            fontWeight: '600',
+            fontSize: 14,
+            marginRight: 6,
+        },
+        // heroMini – הוסף/י:
+        heroMini: {
+            backgroundColor: Colors.surface,
+            borderRadius: 16,
+            paddingVertical: 12,
+            paddingHorizontal: 14,
+            ...shadow,
+            position: 'relative',
+            overflow: 'visible',   // ← חשוב
+            zIndex: 1,
+        },
+
+// profileBtnMini – עדכני:
+        profileBtnMini: {
+            position: 'absolute',
+            top: 8,
+            left: 8,
+            flexDirection: 'row-reverse',
+            alignItems: 'center',
+            backgroundColor: Colors.brand,
+            paddingHorizontal: 10,
+            height: 32,
+            borderRadius: 16,
+            ...shadow,
+            zIndex: 100,     // ← מביא לקדמה ב-iOS/Web
+            elevation: 10,   // ← מביא לקדמה באנדרואיד
+        }
     });
 }

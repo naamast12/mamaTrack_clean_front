@@ -26,16 +26,16 @@ export default function OverviewScreen() {
     const [weekly, setWeekly] = useState(null);
     const [loading, setLoading] = useState(true);
     const [err, setErr] = useState('');
-      /* ── כפתור פרופיל צף ── */
-          const ProfileButton = () => (
-            <TouchableOpacity
-      style={styles.fabProfile}
-          onPress={() => router.push('/MyProfile')}
-          accessibilityLabel="עמוד פרופיל"
-            >
-              <MaterialCommunityIcons name="account-circle-outline" size={26} color="#FFF" />
-            </TouchableOpacity>
-      );
+      // /* ── כפתור פרופיל צף ── */
+      //     const ProfileButton = () => (
+      //       <TouchableOpacity
+      // style={styles.fabProfile}
+      //     onPress={() => router.push('/MyProfile')}
+      //     accessibilityLabel="עמוד פרופיל"
+      //       >
+      //         <MaterialCommunityIcons name="account-circle-outline" size={26} color="#FFF" />
+      //       </TouchableOpacity>
+      // );
     const handleLogout = async () => {
         try {
             await storage.remove('userToken');
@@ -89,7 +89,7 @@ export default function OverviewScreen() {
         <ProtectedRoute requireAuth={true}>
             <View style={styles.container}>
                 <View style={dashboardStyles.header}>
-                    <ProfileButton />
+                    {/*<ProfileButton />*/}
 
                     <TouchableOpacity onPress={handleLogout} style={dashboardStyles.logoutIconButton}>
                         <Feather name="log-out" size={18} color={Colors.primary} />
@@ -132,6 +132,20 @@ export default function OverviewScreen() {
                                     {/* מלבן סקירה כללית */}
                                     <View style={styles.headerRight}>
                                         <View style={styles.heroMini}>
+                                            {/* כפתור פרופיל בתוך הכרטיס */}
+                                            <TouchableOpacity
+                                                style={styles.profileBtnMini}
+                                                onPress={() => router.push('/MyProfile')}
+                                                accessibilityLabel="עמוד פרופיל"
+                                            >
+                                                <MaterialCommunityIcons
+                                                    name="account-circle-outline"
+                                                    size={18}
+                                                    color="#FFF"
+                                                />
+                                                <Text style={styles.profileBtnMiniText}>עמוד פרופיל</Text>
+                                            </TouchableOpacity>
+
                                             <Text style={styles.heroMiniWeek}>את בשבוע {week}</Text>
 
                                             {(sizeEmoji || sizeLabel) ? (
