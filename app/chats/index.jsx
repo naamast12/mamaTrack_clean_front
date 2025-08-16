@@ -1,4 +1,4 @@
-// app/chats/index.tsx
+// app/chats/index.jsx
 import React, { useEffect, useState } from "react";
 import { View, Text, ActivityIndicator, TouchableOpacity, Alert, ScrollView } from "react-native";
 import { useRouter } from "expo-router";
@@ -7,17 +7,16 @@ import { HomeButton } from "../utils/HomeButton";
 import chatStyles from "../../styles/chatStyles";
 import api from "../../src/api/axiosConfig";
 
-type Room = { id: number; code: "general" | "t1" | "t2" | "t3"; name: string };
-
 export default function ChatsHome() {
     const router = useRouter();
-    const [rooms, setRooms] = useState<Room[] | null>(null);
-    const [userTrimester, setUserTrimester] = useState<number | null>(null);
-    const [err, setErr] = useState<string>("");
+    const [rooms, setRooms] = useState(null);
+    const [userTrimester, setUserTrimester] = useState(null);
+    const [err, setErr] = useState("");
 
     useEffect(() => {
         let cancelled = false;
-        const weekToTrimester = (w: number | null | undefined) => {
+
+        const weekToTrimester = (w) => {
             if (!w || w < 1) return null;
             if (w <= 12) return 1;
             if (w <= 27) return 2;
@@ -45,19 +44,17 @@ export default function ChatsHome() {
                 } else {
                     setUserTrimester(null);
                 }
-            } catch (e: any) {
+            } catch (e) {
                 if (cancelled) return;
                 setErr("שגיאת רשת");
                 Alert.alert("שגיאת רשת", e?.message || "Network/Unknown error");
             }
         })();
 
-        return () => {
-            cancelled = true;
-        };
+        return () => { cancelled = true; };
     }, []);
 
-    const canEnterRoom = (room: Room) => {
+    const canEnterRoom = (room) => {
         if (room.code === "general") return true;
         if (!userTrimester) return false;
         const codeToNum = room.code === "t1" ? 1 : room.code === "t2" ? 2 : 3;
@@ -79,6 +76,7 @@ export default function ChatsHome() {
                         <View style={chatStyles.card}>
                             <Text style={chatStyles.title}>💬 פורום</Text>
                             <Text style={chatStyles.subtitle}>שאלות, תמיכה ושיתוף לפי שלבי ההריון 💗</Text>
+                            <Text style={chatStyles.subtitle}>הכל באנונימיות מלאה 🤫</Text>
                         </View>
 
                         {/* הודעת שגיאה / טעינה / רשימת חדרים */}

@@ -76,20 +76,6 @@ export default function ProtectedRoute({ children, requireAuth = false }) {
             </View>
 
             {children}
-            {/* הסימנים המרחפים */}
-            <Animated.View
-                style={[dashboardStyles.floatingSymbol, { transform: [{ translateY: floatAnim }] }]}
-                pointerEvents="none"
-            >
-                <Text style={dashboardStyles.floatingText}>👶</Text>
-            </Animated.View>
-
-            <Animated.View
-                style={[dashboardStyles.floatingSymbol, dashboardStyles.bottomLeft, { transform: [{ translateY: floatAnim }] }]}
-                pointerEvents="none"
-            >
-                <Text style={dashboardStyles.floatingText}>🤰</Text>
-            </Animated.View>
 
         </View>
     );
