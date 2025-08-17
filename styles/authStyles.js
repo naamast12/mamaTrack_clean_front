@@ -89,14 +89,14 @@ const authStyles = StyleSheet.create({
     appTitle: {
         fontSize: 60,
         fontWeight: 'bold',
-        color: Colors.dodgerBlue,
+        color: Colors.blueDeep,
         fontFamily: 'Lato',
         marginTop: 120,
     },
     appSubtitle: {
         fontSize: 40,
         fontWeight: 'normal',
-        color: Colors.dodgerBlue,
+        color: Colors.blueDeep,
         textAlign: 'center',
         marginBottom: 450,
         fontFamily: 'Cochin',

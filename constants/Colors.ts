@@ -25,7 +25,41 @@ export const Colors = {
   gray500: '#6B7280',
   gray700: '#374151',
   gray800: '#111827',
+  bg:         '#FFF9FB', // רקע כללי ורדרד-תכלת בהיר
+  ink:        '#475569', // טקסט כהה עדין
+  inkSoft:    '#94A3B8', // טקסט משני
 
+
+
+  // ===== PINKS =====
+  pink:       '#F7A9C4',
+  pinkDeep:   '#EB6EA5',
+  pinkLight:  '#FFE7F1',
+  pinkBorder: '#FAD9E6',
+      pinkOutline: '#f2c9d6',
+      pinkAccent: '#f48fb1',
+  pink50:  '#FFF1F7', // רקעי עמוד סופר עדינים
+  pink100: '#FFE4EF', // רקע כרטיס עדין
+  pink200: '#FFCDE1', // רקע/מסגרת בהירים
+  pink400: '#F084B0', // הדגשה קלה/אייקונים
+  pink600: '#D9578F', // hover/pressed
+  pink700: '#C23C78', // דגש חזק
+  pink800: '#A72E64', // נדיר — טקסט כהה על ורוד
+
+  // ===== BLUES =====
+  blue:       '#A8D8F7',
+  blueDeep:   '#79C3F2',
+  blueLight:  '#EAF6FF',
+  blueBorder: '#CFE8FF',
+  blue50:  '#F1F8FF', // רקעי עמוד/פסי הפרדה עדינים
+  blue200: '#D8EEFF', // רקע/מסגרת בהירים
+  blue300: '#C0E4FF', // base לתגים/כפתור משני
+  blue500: '#90CBF5', // דומיננטי משני
+  blue700: '#4FAAE5', // דגש חזק
+  blue800: '#2C90D1', // נדיר — אייקונים כהים
+
+  // צל רך ורוד
+  shadow1: 'rgba(235,110,165,0.22)',
   text: '#333',
   borderLight: '#eee',
   // רקע למודאל/Backdrop
@@ -33,11 +67,8 @@ export const Colors = {
   // סגול רך לבחירה ברשימה
   violetSoftBg: 'rgba(167,139,250,0.08)',
   // פלטת ורודים למסך רשימת קניות
-  pink: '#e91e63',
-  pinkDeep: '#d81b60',
-  pinkLight: '#fce4ec',
+
   pinkBg: '#fff5f8',
-  pinkBorder: '#ffeef2',
   pinkShadowSoft: 'rgba(233, 30, 99, 0.10)',
 
   // סגולים / ויולט
@@ -46,7 +77,6 @@ export const Colors = {
   violet: '#ba68c8',
 
   // קטגוריות צבעוניות
-  blue: '#2196f3',
   blueBg: '#e3f2fd',
   orange: '#ff9800',
   orangeBg: '#fff3e0',
@@ -64,15 +94,26 @@ export const Colors = {
   grayBg: '#fafafa',
   deepText: '#424242',
 
-  pinkOutline: '#f2c9d6',
-  pinkAccent: '#f48fb1',
+
+  // תכלת (Accent)
+  accentLight: '#EAF6FF',    // רקעים משניים
+  accentBorder: '#CFE8FF',
+  accentShadow: 'rgba(124, 197, 242, 0.25)',
+
+  /* אם יש שימושי עבר בפרויקט – שימרי תאימות */
+  brandLight2: '#FFE7F1',  // אופציונלי
+
+
+  // גוונים שציינת במסכים אחרים
+
+  redDark: '#C62828',
+  redDarker: '#B71C1C',
+  brand2: '#E85A8C', // אם יש “brand” כפול
   // אפורי רקע/משטחים
   appBg: '#f2f4f7',   // רקע כללי למסכים
   surfaceAlt: '#f8f9fa',
   grayBg2: '#f0f0f0',
   greenDeep: '#054b44',
-  redDark: '#b71c1c',
-  redDarker: '#c62828',
   // אפקטים
   shadow: '#00000020',
   inputBackground: '#fafafa',

@@ -1,7 +1,7 @@
 // app/overview/index.js
 import React, { useEffect, useState, useCallback } from 'react';
 import { View, Text, TouchableOpacity, ActivityIndicator, ScrollView, Platform } from 'react-native';
-import {Feather, MaterialCommunityIcons} from '@expo/vector-icons';import { useRouter } from 'expo-router';
+import {FontAwesome,Feather, MaterialCommunityIcons} from '@expo/vector-icons';import { useRouter } from 'expo-router';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import api from '@/src/api/axiosConfig';
 import getOverviewStyles from '../../styles/overviewStyles';
@@ -9,6 +9,7 @@ import {dashboardStyles} from "../../styles/dashboardStyles";
 import {Colors} from "../../constants/Colors";
 import {LinearGradient} from "expo-linear-gradient";
 import styles from '../../styles/overviewStyles';
+
 const useWeeklyApi = () => {
     const getWeeklyUpdate = useCallback(async (week) => {
         const { data } = await api.get(`/api/weekly/${week}`);
@@ -100,7 +101,7 @@ export default function OverviewScreen() {
                 <ScrollView contentContainerStyle={styles.pageContent}>
                     <View style={styles.inner}>
                         <LinearGradient
-                            colors={[Colors.primary, Colors.accent]}
+                            colors={[Colors.pink, Colors.blue]}
                             start={{ x: 1, y: 0 }}
                             end={{ x: 0, y: 0 }}
                             style={dashboardStyles.gradientTitleWrapper}
@@ -150,16 +151,17 @@ export default function OverviewScreen() {
 
                                             {(sizeEmoji || sizeLabel) ? (
                                                 <View style={styles.heroMiniLine}>
-                                                    {sizeLabel ? (
-                                                        <Text style={styles.heroMiniSize}>
-                                                             השבוע העובר בגודל של {sizeLabel}
-                                                        </Text>
-                                                    ) : null}
                                                     {sizeEmoji ? (
                                                         <Text style={styles.heroMiniEmoji}>{sizeEmoji}</Text>
                                                     ) : null}
+                                                    {sizeLabel ? (
+                                                        <Text style={styles.heroMiniSize}>
+                                                            השבוע העובר בגודל של {sizeLabel}
+                                                        </Text>
+                                                    ) : null}
                                                 </View>
                                             ) : null}
+
 
                                             <View style={styles.progressMini} accessibilityLabel={`התפתחות ${progressPct}%`}>
                                                 <View style={[styles.progressMiniFill, { width: `${progressPct}%` }]} />
@@ -190,24 +192,32 @@ export default function OverviewScreen() {
                                         onPress={() => router.push('/weeklyUpdates')}
                                         style={[styles.navBtn, styles.navBtnPrimary, styles.navItem]}
                                     >
-                                        <Text style={styles.navBtnText}>עדכונים שבועיים</Text>
+                                        <View style={styles.btnContent}>
+                                            <FontAwesome name="calendar" size={20} color={Colors.ink} style={styles.btnIcon} />
+                                            <Text style={styles.navBtnText}>עדכונים שבועיים</Text>
+                                        </View>
                                     </TouchableOpacity>
 
                                     <TouchableOpacity
                                         onPress={() => router.push('/upcomingTests')}
                                         style={[styles.navBtn, styles.navBtnGhost, styles.navItem]}
                                     >
-                                        <Text style={[styles.navBtnText, styles.navBtnGhostText]}>בדיקות צפויות</Text>
+                                        <View style={styles.btnContent}>
+                                            <Feather name="clipboard" size={20} color={Colors.ink} style={styles.btnIcon} />
+                                            <Text style={[styles.navBtnText, styles.navBtnGhostText]}>בדיקות צפויות</Text>
+                                        </View>
                                     </TouchableOpacity>
 
                                     <TouchableOpacity
                                         onPress={() => router.push('/faq')}
                                         style={[styles.navBtn, styles.navItem]}
                                     >
-                                        <Text style={[styles.navBtnText, styles.navBtnGhostText]}>שאלות נפוצות</Text>
+                                        <View style={styles.btnContent}>
+                                            <Feather name="help-circle" size={20} color={Colors.ink} style={styles.btnIcon} />
+                                            <Text style={[styles.navBtnText, styles.navBtnGhostText]}>שאלות נפוצות</Text>
+                                        </View>
                                     </TouchableOpacity>
                                 </View>
-
                                 {!!whatsHappening && (
                                     <View style={[styles.section, styles.sectionLg, styles.cardSpace]}>
                                         <Text style={styles.sectionTitle}>מה קורה השבוע</Text>
@@ -250,30 +260,41 @@ export default function OverviewScreen() {
                                 onPress={() => router.push('/babyChecklist')}
                                 style={[styles.actionBtn, styles.actionLilac]}
                             >
-                                <Text style={styles.actionText}>רשימת קניות לתינוק</Text>
+                                <View style={styles.btnContent}>
+                                    <Feather name="shopping-cart" size={20} color={Colors.ink} style={styles.btnIcon} />
+                                    <Text style={styles.actionText}>רשימת קניות לתינוק</Text>
+                                </View>
                             </TouchableOpacity>
 
-                            {/* 2. טיימר צירים – תכלת-בינוני */}
                             <TouchableOpacity
                                 onPress={() => router.push('/contractionTimer')}
                                 style={[styles.actionBtn, styles.actionBlue]}
                             >
-                                <Text style={styles.actionText}>טיימר צירים</Text>
+                                <View style={styles.btnContent}>
+                                    <Feather name="clock" size={20} color={Colors.ink} style={styles.btnIcon} />
+                                    <Text style={styles.actionText}>טיימר צירים</Text>
+                                </View>
                             </TouchableOpacity>
 
-                            {/* 3. ציוד לחדר לידה – אפרסק-בינוני */}
                             <TouchableOpacity
                                 onPress={() => router.push('/hospitalBag')}
                                 style={[styles.actionBtn, styles.actionPeach]}
                             >
-                                <Text style={styles.actionText}>רשימת ציוד לחדר לידה</Text>
+                                <View style={styles.btnContent}>
+                                    <MaterialCommunityIcons name="bag-suitcase" size={20} color={Colors.ink} style={styles.btnIcon} />
+                                    <Text style={styles.actionText}>רשימת ציוד לחדר לידה</Text>
+                                </View>
                             </TouchableOpacity>
+
 
                             <TouchableOpacity
                                 onPress={() => router.push('/chats')}
                                 style={styles.chatBtnWide}
                             >
-                                <Text style={styles.chatBtnText}>הצטרפי לקהילה שלנו</Text>
+                                <View style={styles.btnContent}>
+                                    <Feather name="message-circle" size={20} color={Colors.ink} style={styles.btnIcon} />
+                                    <Text style={styles.chatBtnText}>הצטרפי לקהילה שלנו</Text>
+                                </View>
                             </TouchableOpacity>
 
 

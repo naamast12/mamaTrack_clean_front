@@ -12,7 +12,7 @@ const sharedStyles = StyleSheet.create({
 
     },
     linkText: {
-        color: Colors.primary,
+        color: Colors.blue,
         fontWeight: 'bold',
         textDecorationLine: 'underline',
     },
@@ -30,7 +30,7 @@ const sharedStyles = StyleSheet.create({
 
     // כפתורים
     primaryButton: {
-        backgroundColor: Colors.primary,
+        backgroundColor: Colors.pink,
         paddingVertical: 14,
         borderRadius: 100,
         alignItems: 'center',
@@ -63,7 +63,7 @@ const sharedStyles = StyleSheet.create({
         marginBottom: 12,
         width: '100%',
         fontSize: 18,
-        backgroundColor: Colors.grayish,
+        backgroundColor: Colors.white,
         textAlign: 'right',
         alignSelf: 'center',
     },

@@ -13,10 +13,10 @@ const logoStyle = StyleSheet.create({
         alignSelf: 'flex-start',
     },
     mathColor: {
-        color: Colors.primary,
+        color: Colors.pink,
     },
     JourneyColor: {
-        color: Colors.accent,
+        color: Colors.blue,
     },
 });
 

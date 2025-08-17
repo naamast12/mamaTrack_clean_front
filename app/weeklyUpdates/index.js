@@ -109,23 +109,25 @@ export default function WeeklyUpdatesPage() {
     const [loading, setLoading] = useState(true);
     const [err, setErr] = useState('');
 
-    // גווני רקע עדינים
-    const ACCENT_TINT_DARK   = 'rgba(167,139,250,0.08)';
-    const ACCENT_TINT_LIGHT  = 'rgba(167,139,250,0.04)';
-    const PRIMARY_TINT_DARK  = 'rgba(192,132,151,0.08)';
-    const PRIMARY_TINT_LIGHT = 'rgba(192,132,151,0.04)';
-    const WARN_TINT          = 'rgba(220, 38, 38, 0.06)';
+    // במקום ה-rgba הקשיחים:
+    const ACCENT_TINT_DARK   = Colors.blueLight; // תכלת עדין
+    const ACCENT_TINT_LIGHT  = Colors.blueBorder;  // תכלת הכי עדין
+    const PRIMARY_TINT_DARK  = Colors.pink100; // ורוד עדין
+    const PRIMARY_TINT_LIGHT = Colors.pink50;  // ורוד הכי עדין
+    const WARN_TINT          = Colors.pinkLight;   // רקע אדמדם מהרשימה
 
+// המפה לפי כותרת → רק מצבעי Colors
     const themeByTitle = {
-        'מידע על התפתחות העובר': { bg: ACCENT_TINT_DARK,   accent: Colors.accent },
-        'שינויים בגוף האישה':     { bg: PRIMARY_TINT_LIGHT, accent: Colors.primary },
-        'תסמינים צפויים':         { bg: ACCENT_TINT_LIGHT,  accent: Colors.accent },
-        'תזונה מומלצת':           { bg: PRIMARY_TINT_DARK,  accent: Colors.primary },
-        'פעילות גופנית':           { bg: ACCENT_TINT_LIGHT,  accent: Colors.accent },
-        'טיפים':                   { bg: PRIMARY_TINT_LIGHT, accent: Colors.primary },
-        'מתי לפנות לרופא':         { bg: WARN_TINT,          accent: '#DC2626' },
-        'גודל התינוק':             { bg: ACCENT_TINT_LIGHT,  accent: Colors.accent },
+        'מידע על התפתחות העובר': { bg: ACCENT_TINT_DARK,   accent: Colors.blue500 },
+        'שינויים בגוף האישה':     { bg: PRIMARY_TINT_LIGHT, accent: Colors.pinkDeep },
+        'תסמינים צפויים':         { bg: ACCENT_TINT_LIGHT,  accent: Colors.blueDeep },
+        'תזונה מומלצת':           { bg: PRIMARY_TINT_DARK,  accent: Colors.pinkDeep },
+        'פעילות גופנית':           { bg: ACCENT_TINT_LIGHT,  accent: Colors.blueDeep },
+        'טיפים':                   { bg: PRIMARY_TINT_LIGHT, accent: Colors.pinkDeep },
+        'מתי לפנות לרופא':         { bg: WARN_TINT,          accent: Colors.redDark },
+        'גודל התינוק':             { bg: ACCENT_TINT_LIGHT,  accent: Colors.blueDeep },
     };
+
 
     const Section = ({ title, value }) => {
         const isList = Array.isArray(value);

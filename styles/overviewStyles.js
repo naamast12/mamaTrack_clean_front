@@ -1,8 +1,8 @@
 // styles/overviewStyles.js
-import { StyleSheet } from 'react-native';
 import { Colors } from '@/constants/Colors';
-import { Dimensions } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 
+const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
 const { width } = Dimensions.get('window');
 const shadow = {
     shadowColor: Colors.brand,
@@ -11,6 +11,13 @@ const shadow = {
     shadowRadius: 8,
     elevation: 5,
 };
+
+// גדלים דינמיים לפי רוחב מסך (מוגבלים כדי לא להשתולל במסכים גדולים)
+const pillFont   = clamp(width * 0.035, 12, 16);  // ~3.5% מרוחב, בין 12-16px
+const pillHPad   = clamp(width * 0.02,  8, 14);   // padding אופקי
+const pillVPad   = clamp(width * 0.012, 4, 8);    // padding אנכי
+const pillGapX   = 6;
+const pillGapY   = 8;
 
 export default function getOverviewStyles() {
     return StyleSheet.create({
@@ -56,7 +63,7 @@ export default function getOverviewStyles() {
         screenTitle: {
             fontSize: 28,
             fontWeight: '800',
-            color: Colors.brand,
+            color: Colors.pink,
             textAlign: 'center',
             marginBottom: 8,
             textShadowColor: Colors.brandShadow,
@@ -73,7 +80,7 @@ export default function getOverviewStyles() {
             borderRadius: 28,
             alignItems: 'center',
             justifyContent: 'center',
-            backgroundColor: Colors.brand, // רקע צבעוני כדי שהאייקון הלבן יבלוט
+            backgroundColor: Colors.blueDeep, // רקע צבעוני כדי שהאייקון הלבן יבלוט
             ...shadow,
             zIndex: 1000,
         },
@@ -91,15 +98,26 @@ export default function getOverviewStyles() {
         },
         headerNavCol: { width: 280, flexShrink: 0 },
 
+        heroMiniLine: {
+            flexDirection: 'row-reverse',   // מימין לשמאל
+            alignItems: 'center',
+            justifyContent: 'flex-start',
+            marginTop: 6,
+            marginBottom: 40,
+        },
+        heroMiniEmoji: {
+            fontSize: 70,        // או 70 אם תרצי גדול יותר
+            lineHeight: 44,
+            includeFontPadding: false,
+            marginLeft: 0,       // רווח בין האימוג׳י לטקסט (ב-RTL)
+        },
 
-        heroMiniWeek: { fontSize: 26, fontWeight: '800', color: Colors.darkText, textAlign: 'right', marginBottom: 4 },
-        heroMiniLine: { flexDirection: 'row-reverse', alignItems: 'center', marginBottom: 18 },
-        heroMiniEmoji: { fontSize: 70, lineHeight: 44, marginLeft: 8, includeFontPadding: false },
-        heroMiniSize: { fontSize: 15, color: Colors.darkText },
+        heroMiniWeek: { fontSize: 26, fontWeight: '800', color: Colors.darkText, textAlign: 'right', marginBottom: 0 },
+        heroMiniSize: {textAlign: 'right', fontSize: 15, color: Colors.darkText },
 
         /* התקדמות */
-        progressMini:     { height: 6, borderRadius: 999, backgroundColor: Colors.brandBorder },
-        progressMiniFill: { height: 6, borderRadius: 999, backgroundColor: Colors.brand },
+        progressMini:     { height: 6, borderRadius: 999, backgroundColor: Colors.pinkOutline },
+        progressMiniFill: { height: 6, borderRadius: 999, backgroundColor: Colors.brand2 },
         progressMiniText: { fontSize: 14, color: Colors.muted, textAlign: 'right', marginTop: 4 },
 
         /* כפתורי ניווט */
@@ -109,8 +127,8 @@ export default function getOverviewStyles() {
             borderRadius: 16,
             ...shadow,
         },
-        navBtnPrimary:  { backgroundColor: Colors.brandLight },
-        navBtnGhost:    { backgroundColor: Colors.surface, borderWidth: 1, borderColor: Colors.brandBorder },
+        navBtnPrimary:  { backgroundColor: Colors.pinkLight },
+        navBtnGhost:    { backgroundColor: Colors.blueBgSoft, borderWidth: 1, borderColor: Colors.blueBorder },
         navBtnText:     { fontSize: 18, fontWeight: '700', color: Colors.darkText },
         navBtnGhostText:{ opacity: 0.85 },
         navBtnFull: { width: '90%', alignItems: 'center', justifyContent: 'center' },
@@ -131,7 +149,7 @@ export default function getOverviewStyles() {
             alignItems: 'center',
             justifyContent: 'center',
             marginBottom: 8,
-            backgroundColor: Colors.surface,
+            backgroundColor: Colors.pinkLight,
             borderWidth: 1,
             borderColor: Colors.brandBorder,
             ...shadow,
@@ -142,7 +160,7 @@ export default function getOverviewStyles() {
             width: '100%',
             paddingVertical: 16,
             borderRadius: 16,
-            backgroundColor: Colors.brandLight,
+            backgroundColor: Colors.blue200,
             alignItems: 'center',
             justifyContent: 'center',
             marginTop: 8,
@@ -168,7 +186,7 @@ export default function getOverviewStyles() {
         sectionMd: { minHeight: 96 },
         sectionSm: { minHeight: 84 },
 
-        sectionTitle: { fontSize: 16, fontWeight: '800', color: Colors.brand, textAlign: 'right', marginBottom: 8 },
+        sectionTitle: { fontSize: 16, fontWeight: '800', color: Colors.blueDeep, textAlign: 'right', marginBottom: 8 },
         sectionText:  { fontSize: 16, lineHeight: 24, color: Colors.darkText, textAlign: 'right' },
 
         /* גריד חצאים */
@@ -180,16 +198,59 @@ export default function getOverviewStyles() {
         halfItem: { width: '48%' },
 
         /* צ׳יפים/תגיות */
-        pillsRow: { flexDirection: 'row-reverse', flexWrap: 'wrap', marginHorizontal: -6 },
-        pill: { backgroundColor: Colors.brandLight, paddingVertical: 6, paddingHorizontal: 10, borderRadius: 999, marginHorizontal: 6, marginBottom: 8, borderWidth: 1, borderColor: Colors.brandBorder },
-        pillSecondary: { backgroundColor: Colors.light },
-        pillText: {
-            fontSize: width * 0.01, // 3.5% מרוחב המסך
-            color: Colors.brand,
+        // pillsRow: { flexDirection: 'row-reverse', flexWrap: 'wrap', marginHorizontal: -6 },
+        // pill: { backgroundColor: Colors.brandLight, paddingVertical: 6, paddingHorizontal: 10, borderRadius: 999, marginHorizontal: 6, marginBottom: 8, borderWidth: 1, borderColor: Colors.brandBorder },
+        // pillSecondary: { backgroundColor: Colors.light },
+        // pillText: {
+        //     fontSize: width * 0.01, // 3.5% מרוחב המסך
+        //     color: Colors.brand,
+        // },
+        // שורת צ'יפים: מימין לשמאל, יורדת שורות, בלי שלילי margins כדי לא "לצאת" מהכרטיס
+        pillsRow: {
+            flexDirection: 'row-reverse',
+            flexWrap: 'wrap',
+            alignItems: 'flex-start',
+            justifyContent: 'flex-start',
+            // אפשר להשאיר מעט padding פנימי של ההורה במקום negative margins
         },
+
+        pill: {
+            backgroundColor: Colors.blueBgSoft,
+            borderColor: Colors.borderColor,
+            borderWidth: 1,
+            borderRadius: 999,
+            paddingHorizontal: pillHPad,
+            paddingVertical: pillVPad,
+
+            // רווחים בין הצ'יפים
+            marginLeft:  pillGapX,  // ב-RTL זה ייראה כמרווח בין ה"עמודות"
+            marginRight: pillGapX,
+            marginBottom: pillGapY,
+
+            // חשוב לרספונסיביות
+            alignSelf: 'flex-start',
+            flexShrink: 1,        // מאפשר לצ'יפ "להצטמצם" ולא לפרוץ רוחב
+            maxWidth: '100%',     // עובד בווב; בנייטיב מתעלם, אבל flexShrink פותר
+        },
+
+        pillSecondary: { backgroundColor: Colors.pinkAccent, borderColor: Colors.borderColor },
+
+        pillText: {
+            fontSize: pillFont,
+            color: Colors.darkText ,
+            flexShrink: 1,        // שהטקסט לא יפרוץ את הקונטיינר שלו
+        },
+
+        btnContent: {
+            flexDirection: 'row-reverse',   // אייקון בצד ימין, טקסט משמאלו (RTL)
+            alignItems: 'center',
+            justifyContent: 'center',
+        },
+        btnIcon: { marginLeft: 8 },        // רווח קטן בין האייקון לטקסט (ב-RTL)
+
         /* מרכזיות */
         centerBox: { alignItems: 'center', justifyContent: 'center', paddingVertical: 24 },
-        centerNote:{ fontSize: 14, color: Colors.muted, marginTop: 8 },
+        centerNote:{ fontSize: 14, color: Colors.pink200, marginTop: 8 },
 
 
         profileBtnMiniText: {
@@ -217,7 +278,7 @@ export default function getOverviewStyles() {
             left: 8,
             flexDirection: 'row-reverse',
             alignItems: 'center',
-            backgroundColor: Colors.brand,
+            backgroundColor: Colors.pinkAccent,
             paddingHorizontal: 10,
             height: 32,
             borderRadius: 16,

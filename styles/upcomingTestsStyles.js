@@ -77,7 +77,7 @@ export const screenStyles = StyleSheet.create({
     screenTitle: {
         fontSize: m(20),
         fontWeight: '800',
-        color: Colors.primary,
+        color: Colors.blue500,
         textAlign: 'center',
         marginBottom: 14,
     },
@@ -98,8 +98,8 @@ export const screenStyles = StyleSheet.create({
     stepTxt: { fontSize: m(20), fontWeight: '700' },
 
     triRow: { flexDirection: 'row-reverse', justifyContent: 'center', gap: 10, marginBottom: 10 },
-    triBtn: { backgroundColor: Colors.white, paddingVertical: 10, paddingHorizontal: 14, borderRadius: 12, elevation: 1 },
-    triActive: { backgroundColor: Colors.accent },
+    triBtn: { backgroundColor: Colors.blueLight, paddingVertical: 10, paddingHorizontal: 14, borderRadius: 12, elevation: 1 },
+    triActive: { backgroundColor: Colors.pinkAccent },
     triTxt: { fontWeight: '700', fontSize: m(14) },
     triTxtActive: { color: Colors.white },
 

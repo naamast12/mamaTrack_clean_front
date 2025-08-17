@@ -126,7 +126,7 @@ export default function MyProfile() {
                     <View style={styles.inner}>
 
                         <LinearGradient
-                            colors={[Colors.primary, Colors.accent]}
+                            colors={[Colors.pink, Colors.blue]}
                             start={{ x: 1, y: 0 }}
                             end={{ x: 0, y: 0 }}
                             style={dashboardStyles.gradientTitleWrapper}
