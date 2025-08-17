@@ -185,7 +185,7 @@ export default function ContractionTimer() {
               {/* כרטיס הטיימר – סטטי, לא נגלל */}
               <View style={contractionTimerStyles.card}>
                 <Text style={contractionTimerStyles.title}>⏱️ טיימר צירים</Text>
-                <Text style={contractionTimerStyles.subtitle}>עקבי אחרי משך הציר והמרווחים ביניהם</Text>
+                <Text style={contractionTimerStyles.subtitle}>עקבי אחרי משך הציר והמרווחים ביניהם, נתריע לך כשיגיע הזמן לצאת לבית חולים 💗</Text>
                 <Text style={contractionTimerStyles.timerText}>
                   {isTiming ? `משך: ${duration} שניות` : 'לחצי "התחל ציר" כדי להתחיל לתזמן'}
                 </Text>

@@ -12,7 +12,7 @@ const sharedStyles = StyleSheet.create({
 
     },
     linkText: {
-        color: Colors.blue,
+        color: Colors.blue800,
         fontWeight: 'bold',
         textDecorationLine: 'underline',
     },
