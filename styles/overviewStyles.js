@@ -103,10 +103,10 @@ export default function getOverviewStyles() {
             alignItems: 'center',
             justifyContent: 'flex-start',
             marginTop: 6,
-            marginBottom: 40,
+            marginBottom: 20,
         },
         heroMiniEmoji: {
-            fontSize: 70,        // או 70 אם תרצי גדול יותר
+            fontSize: 50,        // או 70 אם תרצי גדול יותר
             lineHeight: 44,
             includeFontPadding: false,
             marginLeft: 0,       // רווח בין האימוג׳י לטקסט (ב-RTL)
@@ -216,7 +216,7 @@ export default function getOverviewStyles() {
 
         pill: {
             backgroundColor: Colors.blueBgSoft,
-            borderColor: Colors.borderColor,
+            borderColor: Colors.white,
             borderWidth: 1,
             borderRadius: 999,
             paddingHorizontal: pillHPad,
