@@ -1,6 +1,6 @@
 // styles/contractionTimerStyles.js
 import { StyleSheet } from 'react-native';
-import { Colors } from '@/constants/Colors';
+import { Colors } from '../constants/Colors';
 
 const shadow = {
   shadowColor: Colors.pinkDeep,
@@ -31,13 +31,13 @@ export default StyleSheet.create({
     textAlign: 'center',
     marginBottom: 18,
     fontSize: 15,
-    color: Colors.mutedText,
+    color: Colors.pink700,
     lineHeight: 22,
   },
   timerText: {
     fontSize: 18,
     textAlign: 'center',
-    color: Colors.text,
+    color: Colors.pink700,
     marginBottom: 14,
   },
 
@@ -63,15 +63,15 @@ export default StyleSheet.create({
     backgroundColor: Colors.redDark, // "עצור"
   },
   ghostButton: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.blue,
     borderWidth: 2,
-    borderColor: Colors.pinkDeep,
+    borderColor: Colors.blue,
     paddingHorizontal: 18,
     paddingVertical: 12,
     borderRadius: 25,
   },
   ghostButtonText: {
-    color: Colors.pinkDeep,
+    color: Colors.white,
     fontSize: 16,
     fontWeight: 'bold',
     textAlign: 'center',
@@ -105,23 +105,25 @@ export default StyleSheet.create({
   },
   emptyStateText: {
     fontSize: 16,
-    color: Colors.mutedText,
+    color: Colors.blue700,
     textAlign: 'center',
   },
 
   itemRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.blueLight,
     paddingHorizontal: 16,
     paddingVertical: 14,
     marginBottom: 10,
     borderRadius: 14,
-    shadowColor: Colors.pinkDeep,
+    shadowColor: Colors.blue,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.08,
     shadowRadius: 4,
     elevation: 2,
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.pinkLight,
   },
   itemLeft: { marginRight: 12 },
   itemIndexBadge: {
@@ -135,8 +137,8 @@ export default StyleSheet.create({
     fontWeight: 'bold',
   },
   itemMiddle: { flex: 1 },
-  itemTitle: { fontSize: 16, color: Colors.text, marginBottom: 2, fontWeight: '600' },
-  itemSubtitle: { fontSize: 14, color: Colors.mutedText },
+  itemTitle: { fontSize: 16, color: Colors.blue700, marginBottom: 2, fontWeight: '600' },
+  itemSubtitle: { fontSize: 14, color: Colors.blue700 },
 
   itemRight: { marginLeft: 12 },
   badge: {
@@ -177,12 +179,18 @@ export default StyleSheet.create({
   },
 
   card: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.blueLight,
     borderRadius: 16,
     padding: 18,
     marginBottom: 20,
     width: '100%',
-    ...shadow,
+    shadowColor: Colors.blue,
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.1,
+    shadowRadius: 12,
+    elevation: 8,
+    borderWidth: 1,
+    borderColor: Colors.blue,
   },
 
   hospitalMessageBox: {
