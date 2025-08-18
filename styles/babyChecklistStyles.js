@@ -1,38 +1,43 @@
 import { StyleSheet } from 'react-native';
-import { Colors } from '@/constants/Colors';
+import { Colors } from '../constants/Colors';
 
 const babyChecklistStyles = StyleSheet.create({
+  centeredBox: {
+    width: '90%',
+    maxWidth: 600,
+    alignSelf: 'center',
+  },
   container: {
     flex: 1,
-    backgroundColor: Colors.pinkBg,
+    backgroundColor: Colors.pink100, // רקע ורוד בהיר כמו בעמוד השאלות הנפוצות
     padding: 16,
   },
   header: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.blueLight, // תכלת בהיר כמו בעמוד השאלות הנפוצות
     padding: 24,
     borderRadius: 20,
     marginBottom: 20,
-    shadowColor: Colors.pinkDeep,
+    shadowColor: Colors.blue,
     shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.1,
     shadowRadius: 12,
     elevation: 8,
     borderWidth: 1,
-    borderColor: Colors.pinkBorder,
+    borderColor: Colors.blue,
   },
   title: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: Colors.pink,
+    color: Colors.pink700, // ורוד כהה לכותרת - יותר יפה עם התכלת
     textAlign: 'center',
     marginBottom: 8,
-    textShadowColor: Colors.pinkShadowSoft,
+    textShadowColor: Colors.pink700,
     textShadowOffset: { width: 0, height: 1 },
     textShadowRadius: 2,
   },
   subtitle: {
     fontSize: 16,
-    color: Colors.purple,
+    color: Colors.pink, // ורוד בהיר לכותרת המשנה - יותר יפה עם התכלת
     textAlign: 'center',
     marginBottom: 20,
     lineHeight: 22,
@@ -62,23 +67,23 @@ const babyChecklistStyles = StyleSheet.create({
   },
   progressText: {
     fontSize: 14,
-    color: Colors.purple,
+    color: Colors.pink, // ורוד בהיר לטקסט ההתקדמות - יותר יפה עם התכלת
     textAlign: 'center',
     marginTop: 12,
     fontWeight: '600',
   },
 
   categoryTabsContainer: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.blueLight, // תכלת בהיר כמו בעמוד השאלות הנפוצות
     borderRadius: 20,
     marginBottom: 20,
-    shadowColor: Colors.pinkDeep,
+    shadowColor: Colors.blue,
     shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.1,
     shadowRadius: 12,
     elevation: 8,
     borderWidth: 1,
-    borderColor: Colors.pinkBorder,
+    borderColor: Colors.blue,
   },
 
   // categoryTabs: {
@@ -97,9 +102,9 @@ const babyChecklistStyles = StyleSheet.create({
     paddingVertical: 10,
     margin: 4,
     borderRadius: 25,
-    backgroundColor: Colors.pinkBg,
+    backgroundColor: Colors.pinkLight, // ורוד בהיר לכל הקטגוריות
     borderWidth: 2,
-    borderColor: Colors.pinkLight,
+    borderColor: Colors.pink, // ורוד למסגרת
     shadowColor: Colors.pinkDeep,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
@@ -107,9 +112,9 @@ const babyChecklistStyles = StyleSheet.create({
     elevation: 2,
   },
   categoryTabActive: {
-    backgroundColor: Colors.pink,
-    borderColor: Colors.pink,
-    shadowColor: Colors.pink,
+    backgroundColor: Colors.blue, // תכלת לטאבים פעילים
+    borderColor: Colors.blue,
+    shadowColor: Colors.blue,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 6,
@@ -117,47 +122,58 @@ const babyChecklistStyles = StyleSheet.create({
   },
 
 
-  // רקע/מסגרת לפי קטגוריות
-  categoryTabAll:       { backgroundColor: Colors.blueBg,   borderColor: Colors.blue },
+  // רקע/מסגרת לפי קטגוריות - כולן ורוד בהיר
+  categoryTabAll:       { backgroundColor: Colors.pinkLight, borderColor: Colors.pink },
   categoryTabClothing:  { backgroundColor: Colors.pinkLight, borderColor: Colors.pink },
-  categoryTabFeeding:   { backgroundColor: Colors.orangeBg, borderColor: Colors.orange },
-  categoryTabSleep:     { backgroundColor: Colors.greenBg,  borderColor: Colors.green },
-  categoryTabHygiene:   { backgroundColor: Colors.purpleLight, borderColor: Colors.purple },
-  categoryTabSafety:    { backgroundColor: Colors.redBg,    borderColor: Colors.red },
-  categoryTabTransport: { backgroundColor: Colors.tealBg,   borderColor: Colors.teal },
-  categoryTabToys:      { backgroundColor: Colors.amberBg,  borderColor: Colors.amber },
-  categoryTabMedical:   { backgroundColor: Colors.limeBg,   borderColor: Colors.lime },
-  categoryTabOther:     { backgroundColor: Colors.grayBg,   borderColor: Colors.gray },
+  categoryTabFeeding:   { backgroundColor: Colors.pinkLight, borderColor: Colors.pink },
+  categoryTabSleep:     { backgroundColor: Colors.pinkLight, borderColor: Colors.pink },
+  categoryTabHygiene:   { backgroundColor: Colors.pinkLight, borderColor: Colors.pink },
+  categoryTabSafety:    { backgroundColor: Colors.pinkLight, borderColor: Colors.pink },
+  categoryTabTransport: { backgroundColor: Colors.pinkLight, borderColor: Colors.pink },
+  categoryTabToys:      { backgroundColor: Colors.pinkLight, borderColor: Colors.pink },
+  categoryTabMedical:   { backgroundColor: Colors.pinkLight, borderColor: Colors.pink },
+  categoryTabOther:     { backgroundColor: Colors.pinkLight, borderColor: Colors.pink },
 
+  categoryTabContent: {
+    flexDirection: 'row-reverse',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+  },
+  categoryTabIcon: {
+    fontSize: 22,
+    marginLeft: 4,
+    marginRight: 4,
+  },
   categoryTabText: {
     fontSize: 14,
-    color: Colors.purple,
+    color: Colors.pink700, // ורוד כהה לטקסט הקטגוריות - יותר יפה עם התכלת
     fontWeight: '600',
   },
   categoryTabTextActive: { color: Colors.white, fontWeight: 'bold' },
 
-  // צבעי טקסט לקטגוריות
-  categoryTabTextAll:       { color: Colors.blue },
-  categoryTabTextClothing:  { color: Colors.pink },
-  categoryTabTextFeeding:   { color: Colors.orange },
-  categoryTabTextSleep:     { color: Colors.green },
-  categoryTabTextHygiene:   { color: Colors.purple },
-  categoryTabTextSafety:    { color: Colors.red },
-  categoryTabTextTransport: { color: Colors.teal },
-  categoryTabTextToys:      { color: Colors.amber },
-  categoryTabTextMedical:   { color: Colors.lime },
-  categoryTabTextOther:     { color: Colors.deepText },
+  // צבעי טקסט לקטגוריות - כולן ורוד כהה
+  categoryTabTextAll:       { color: Colors.pink700 },
+  categoryTabTextClothing:  { color: Colors.pink700 },
+  categoryTabTextFeeding:   { color: Colors.pink700 },
+  categoryTabTextSleep:     { color: Colors.pink700 },
+  categoryTabTextHygiene:   { color: Colors.pink700 },
+  categoryTabTextSafety:    { color: Colors.pink700 },
+  categoryTabTextTransport: { color: Colors.pink700 },
+  categoryTabTextToys:      { color: Colors.pink700 },
+  categoryTabTextMedical:   { color: Colors.pink700 },
+  categoryTabTextOther:     { color: Colors.pink700 },
 
   itemsContainer: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.blueLight, // תכלת בהיר כמו בעמוד השאלות הנפוצות
     borderRadius: 20,
-    shadowColor: Colors.pinkDeep,
+    shadowColor: Colors.blue,
     shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.1,
     shadowRadius: 12,
     elevation: 8,
     borderWidth: 1,
-    borderColor: Colors.pinkBorder,
+    borderColor: Colors.blue,
     overflow: 'hidden',
   },
   itemRow: {
@@ -166,10 +182,10 @@ const babyChecklistStyles = StyleSheet.create({
     padding: 18,
     borderBottomWidth: 1,
     borderBottomColor: Colors.pinkLight,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.blueLight, // תכלת בהיר כמו בעמוד השאלות הנפוצות
   },
   itemRowLast: { borderBottomWidth: 0 },
-  itemRowChecked: { backgroundColor: Colors.pinkBg },
+  itemRowChecked: { backgroundColor: Colors.pink100 }, // ורוד בהיר לשורות מסומנות
 
   checkbox: {
     width: 28,
@@ -188,9 +204,9 @@ const babyChecklistStyles = StyleSheet.create({
     elevation: 2,
   },
   checkboxChecked: {
-    backgroundColor: Colors.pink,
-    borderColor: Colors.pink,
-    shadowColor: Colors.pink,
+    backgroundColor: Colors.blue, // תכלת לצ'קבוקס מסומן
+    borderColor: Colors.blue,
+    shadowColor: Colors.blue,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 4,
@@ -201,13 +217,13 @@ const babyChecklistStyles = StyleSheet.create({
   itemText: {
     flex: 1,
     fontSize: 16,
-    color: Colors.purple,
+    color: Colors.blue, // תכלת לטקסט הפריטים - יותר יפה עם התכלת
     lineHeight: 24,
     fontWeight: '500',
   },
   itemTextChecked: {
     textDecorationLine: 'line-through',
-    color: Colors.violet,
+    color: Colors.blue, // תכלת לפריטים מסומנים - יותר יפה עם התכלת
     fontStyle: 'italic',
   },
 
@@ -220,17 +236,17 @@ const babyChecklistStyles = StyleSheet.create({
   categoryHeaderText: { fontSize: 20, fontWeight: 'bold', color: Colors.pink, textAlign: 'center' },
 
   emptyState: { alignItems: 'center', justifyContent: 'center', padding: 60 },
-  emptyStateIcon: { fontSize: 48, color: Colors.violet, marginBottom: 16 },
-  emptyStateText: { fontSize: 16, color: Colors.violet, textAlign: 'center', marginTop: 8, lineHeight: 22 },
+  emptyStateIcon: { fontSize: 48, color: Colors.blue, marginBottom: 16 }, // תכלת לאייקון
+  emptyStateText: { fontSize: 16, color: Colors.blue, textAlign: 'center', marginTop: 8, lineHeight: 22 }, // תכלת לטקסט
 
   buttonsContainer: { flexDirection: 'row', justifyContent: 'center', marginTop: 24, paddingHorizontal: 4 },
 
   resetButton: {
-    backgroundColor: Colors.red,
+    backgroundColor: Colors.blue, // תכלת לכפתור איפוס
     paddingHorizontal: 20,
     paddingVertical: 12,
     borderRadius: 15,
-    shadowColor: Colors.red,
+    shadowColor: Colors.blue,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 6,
@@ -255,13 +271,13 @@ const babyChecklistStyles = StyleSheet.create({
 
   decorativeLine: {
     height: 3,
-    backgroundColor: Colors.pink,
+    backgroundColor: Colors.blue, // תכלת לקו הדקורטיבי
     borderRadius: 2,
     marginVertical: 8,
     alignSelf: 'center',
     width: 60,
   },
-  itemCountBadge: { backgroundColor: Colors.pink, borderRadius: 15, paddingHorizontal: 10, paddingVertical: 6, marginLeft: 8 },
+  itemCountBadge: { backgroundColor: Colors.blue, borderRadius: 15, paddingHorizontal: 10, paddingVertical: 6, marginLeft: 8 }, // תכלת לתגים
   itemCountText: { color: Colors.white, fontSize: 12, fontWeight: 'bold' },
   categoryIcon: { marginRight: 8, fontSize: 18 },
 });

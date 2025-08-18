@@ -1,12 +1,14 @@
 // app/babyChecklist/BabyChecklist.js (או הנתיב הנוכחי שלך)
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, Alert } from 'react-native';
+// Using emoji icons for categories to match FAQ style
 import babyChecklistStyles from '../../styles/babyChecklistStyles';
 import babyChecklistData from './babyChecklistData';
 import { HomeButton } from "../utils/HomeButton";
 import ProtectedRoute from "../../components/ProtectedRoute";
 import storage from '../utils/storage';
 import api from '../../src/api/axiosConfig';
+import { Colors } from '../../constants/Colors';
 
 const BabyChecklist = () => {
   const [items, setItems] = useState(babyChecklistData);
@@ -198,6 +200,7 @@ const BabyChecklist = () => {
               showsVerticalScrollIndicator={true}
               contentContainerStyle={{ paddingBottom: 20 }}
           >
+            <View style={babyChecklistStyles.centeredBox}>
             {/* הודעת שגיאה עדינה */}
             {userError && (
                 <View style={{ backgroundColor: '#fff3cd', padding: 10, borderRadius: 8, marginBottom: 10 }}>
@@ -239,18 +242,22 @@ const BabyChecklist = () => {
                           style={[babyChecklistStyles.categoryTab, getCategoryTabStyle(category)]}
                           onPress={() => setSelectedCategory(category)}
                       >
-                        <Text style={[babyChecklistStyles.categoryTabText, getCategoryTextStyle(category)]}>
-                          {category === 'all' ? '📦 הכל' :
-                              category === 'clothing' ? '👕 בגדים' :
-                                  category === 'feeding' ? '🍼 האכלה' :
-                                      category === 'sleep' ? '😴 שינה' :
-                                          category === 'hygiene' ? '🧴 היגיינה' :
-                                              category === 'safety' ? '🛡️ בטיחות' :
-                                                  category === 'transport' ? '🚗 תחבורה' :
-                                                      category === 'toys' ? '🧸 צעצועים' :
-                                                          category === 'medical' ? '💊 רפואי' :
-                                                              category === 'other' ? '📝 אחר' : category}
-                        </Text>
+                                                <View style={babyChecklistStyles.categoryTabContent}>
+                          <Text style={babyChecklistStyles.categoryTabIcon}>
+                            {category === 'all' ? '📦' :
+                              category === 'בגדים' ? '👕' :
+                              category === 'האכלה' ? '🍼' :
+                              category === 'שינה ולינה' ? '😴' :
+                              category === 'החתלה והיגיינה' ? '🧴' :
+                              category === 'יציאות וטיולים' ? '🚗' :
+                              category === 'מוצצים ואביזרים' ? '🧷' :
+                              category === 'צעצועים וגירויים' ? '🧸' :
+                              category === 'לבית' ? '🏠' : '📋'}
+                          </Text>
+                          <Text style={[babyChecklistStyles.categoryTabText, getCategoryTextStyle(category)]}>
+                            {category === 'all' ? 'הכל' : category}
+                          </Text>
+                        </View>
                         {categoryChecked > 0 && (
                             <View style={babyChecklistStyles.itemCountBadge}>
                               <Text style={babyChecklistStyles.itemCountText}>{categoryChecked}</Text>
@@ -303,6 +310,7 @@ const BabyChecklist = () => {
               <TouchableOpacity style={babyChecklistStyles.resetButton} onPress={resetChecklist}>
                 <Text style={babyChecklistStyles.resetButtonText}>🔄 אפס הכל</Text>
               </TouchableOpacity>
+            </View>
             </View>
           </ScrollView>
         </>
