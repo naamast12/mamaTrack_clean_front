@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import styles from '../../styles/itemList';
+import styles from '../../styles/hospitalBagStyles';
 import checklistItems from './checklistItems';
 
 export default function ItemList({ category, checkedItems, onToggleItem }) {

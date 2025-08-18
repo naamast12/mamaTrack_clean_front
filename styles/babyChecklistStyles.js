@@ -37,7 +37,7 @@ const babyChecklistStyles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 16,
-    color: Colors.pink, // ורוד בהיר לכותרת המשנה - יותר יפה עם התכלת
+    color: Colors.pink700, // ורוד כהה לכותרת המשנה - יותר קריא
     textAlign: 'center',
     marginBottom: 20,
     lineHeight: 22,
@@ -67,7 +67,7 @@ const babyChecklistStyles = StyleSheet.create({
   },
   progressText: {
     fontSize: 14,
-    color: Colors.pink, // ורוד בהיר לטקסט ההתקדמות - יותר יפה עם התכלת
+    color: Colors.pink700, // ורוד כהה לטקסט ההתקדמות - יותר קריא
     textAlign: 'center',
     marginTop: 12,
     fontWeight: '600',
@@ -217,13 +217,13 @@ const babyChecklistStyles = StyleSheet.create({
   itemText: {
     flex: 1,
     fontSize: 16,
-    color: Colors.blue, // תכלת לטקסט הפריטים - יותר יפה עם התכלת
+    color: Colors.blue700, // תכלת כהה לטקסט הפריטים - יותר קריא
     lineHeight: 24,
     fontWeight: '500',
   },
   itemTextChecked: {
     textDecorationLine: 'line-through',
-    color: Colors.blue, // תכלת לפריטים מסומנים - יותר יפה עם התכלת
+    color: Colors.blue700, // תכלת כהה לפריטים מסומנים - יותר קריא
     fontStyle: 'italic',
   },
 
@@ -236,8 +236,8 @@ const babyChecklistStyles = StyleSheet.create({
   categoryHeaderText: { fontSize: 20, fontWeight: 'bold', color: Colors.pink, textAlign: 'center' },
 
   emptyState: { alignItems: 'center', justifyContent: 'center', padding: 60 },
-  emptyStateIcon: { fontSize: 48, color: Colors.blue, marginBottom: 16 }, // תכלת לאייקון
-  emptyStateText: { fontSize: 16, color: Colors.blue, textAlign: 'center', marginTop: 8, lineHeight: 22 }, // תכלת לטקסט
+  emptyStateIcon: { fontSize: 48, color: Colors.blue700, marginBottom: 16 }, // תכלת כהה לאייקון - יותר קריא
+  emptyStateText: { fontSize: 16, color: Colors.blue700, textAlign: 'center', marginTop: 8, lineHeight: 22 }, // תכלת כהה לטקסט - יותר קריא
 
   buttonsContainer: { flexDirection: 'row', justifyContent: 'center', marginTop: 24, paddingHorizontal: 4 },
 

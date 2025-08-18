@@ -1,53 +1,16 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import styles from '../../styles/categoryTabs';
+import styles from '../../styles/hospitalBagStyles';
 import checklistItems from './checklistItems';
 
 const categories = [
-    { id: "היגיינה וטיפוח", emoji: "🧴", color: "hygiene" },
-    { id: "בגדים (לאם)", emoji: "👕", color: "clothing" },
-    { id: "רפואי ומסמכים", emoji: "📋", color: "medical" },
-    { id: "מוצרים לתינוק", emoji: "👶", color: "baby" }
+    { id: "היגיינה וטיפוח", emoji: "🧴" },
+    { id: "בגדים (לאם)", emoji: "👕" },
+    { id: "רפואי ומסמכים", emoji: "📋" },
+    { id: "מוצרים לתינוק", emoji: "👶" }
 ];
 
 export default function CategoryTabs({ selected, onSelect, checkedItems }) {
-    const getCategoryTabStyle = (category) => {
-        if (selected === category.id) {
-            return styles.categoryTabActive;
-        }
-
-        switch (category.color) {
-            case 'hygiene':
-                return styles.categoryTabHygiene;
-            case 'clothing':
-                return styles.categoryTabClothing;
-            case 'medical':
-                return styles.categoryTabMedical;
-            case 'baby':
-                return styles.categoryTabBaby;
-            default:
-                return {};
-        }
-    };
-
-    const getCategoryTextStyle = (category) => {
-        if (selected === category.id) {
-            return styles.categoryTabTextActive;
-        }
-
-        switch (category.color) {
-            case 'hygiene':
-                return styles.categoryTabTextHygiene;
-            case 'clothing':
-                return styles.categoryTabTextClothing;
-            case 'medical':
-                return styles.categoryTabTextMedical;
-            case 'baby':
-                return styles.categoryTabTextBaby;
-            default:
-                return styles.categoryTabText;
-        }
-    };
 
     return (
         <View style={styles.tabsContainer}>
@@ -60,16 +23,19 @@ export default function CategoryTabs({ selected, onSelect, checkedItems }) {
                         key={category.id}
                         style={[
                             styles.categoryTab,
-                            getCategoryTabStyle(category)
+                            selected === category.id && styles.categoryTabActive
                         ]}
                         onPress={() => onSelect(category.id)}
                     >
-                        <Text style={[
-                            styles.categoryTabText,
-                            getCategoryTextStyle(category)
-                        ]}>
-                            {category.emoji} {category.id}
-                        </Text>
+                        <View style={styles.categoryTabContent}>
+                            <Text style={styles.categoryTabIcon}>{category.emoji}</Text>
+                            <Text style={[
+                                styles.categoryTabText,
+                                selected === category.id && styles.categoryTabTextActive
+                            ]}>
+                                {category.id}
+                            </Text>
+                        </View>
                         {categoryChecked > 0 && (
                             <View style={styles.itemCountBadge}>
                                 <Text style={styles.itemCountText}>

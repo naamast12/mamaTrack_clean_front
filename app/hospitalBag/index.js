@@ -155,41 +155,48 @@ export default function Index() {
                 showsVerticalScrollIndicator={true}
                 contentContainerStyle={{ paddingBottom: 30 }}
             >
-                <Text style={styles.title}>🏥 תיק חדר לידה</Text>
-                <Text style={styles.subtitle}>הרשימה האולטימטיבית לציוד לחדר הלידה שלך</Text>
+                <View style={styles.centeredBox}>
+                    {/* Header */}
+                    <View style={styles.header}>
+                        <Text style={styles.title}>🏥 תיק חדר לידה</Text>
+                        <View style={styles.decorativeLine} />
+                        <Text style={styles.subtitle}>
+                            📋 הרשימה האולטימטיבית לציוד לחדר הלידה שלך
+                        </Text>
 
-                {/* Progress */}
-                <View style={styles.progressContainer}>
-                    <Text style={styles.progressTitle}>📊 התקדמות הכנת התיק</Text>
-                    <View style={styles.progressBar}>
-                        <View style={[styles.progressFill, { width: `${progressPercentage}%` }]} />
+                        {/* Progress */}
+                        <View style={styles.progressContainer}>
+                            <View style={styles.progressBar}>
+                                <View style={[styles.progressFill, { width: `${progressPercentage}%` }]} />
+                            </View>
+                            <Text style={styles.progressText}>
+                                📊 התקדמות: {checkedItems.length} מתוך {totalItems} פריטים ({Math.round(progressPercentage)}%)
+                            </Text>
+                        </View>
                     </View>
-                    <Text style={styles.progressText}>
-                        {checkedItems.length} מתוך {totalItems} פריטים מוכנים ({Math.round(progressPercentage)}%)
-                    </Text>
-                </View>
 
-                {/* Category Tabs */}
-                <CategoryTabs
-                    selected={selectedCategory}
-                    onSelect={setSelectedCategory}
-                    checkedItems={checkedItems}
-                />
-
-                {/* Items List */}
-                <View style={styles.itemsContainer}>
-                    <ItemList
-                        category={selectedCategory}
+                    {/* Category Tabs */}
+                    <CategoryTabs
+                        selected={selectedCategory}
+                        onSelect={setSelectedCategory}
                         checkedItems={checkedItems}
-                        onToggleItem={toggleItem}
                     />
-                </View>
 
-                {/* Reset Button */}
-                <View style={styles.buttonsContainer}>
-                    <TouchableOpacity style={styles.resetButton} onPress={resetAllItems}>
-                        <Text style={styles.resetButtonText}>🔄 אפס הכל</Text>
-                    </TouchableOpacity>
+                    {/* Items List */}
+                    <View style={styles.itemsContainer}>
+                        <ItemList
+                            category={selectedCategory}
+                            checkedItems={checkedItems}
+                            onToggleItem={toggleItem}
+                        />
+                    </View>
+
+                    {/* Reset Button */}
+                    <View style={styles.buttonsContainer}>
+                        <TouchableOpacity style={styles.resetButton} onPress={resetAllItems}>
+                            <Text style={styles.resetButtonText}>🔄 אפס הכל</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </ScrollView>
         </ProtectedRoute>
