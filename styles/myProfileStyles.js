@@ -14,17 +14,10 @@ export const myProfileStyles = StyleSheet.create({
         height: 120,
         borderRadius: 60,
         overflow: 'hidden',
-        backgroundColor: Colors.lavenderBlush, // ורוד לבנדר בהיר לרקע האווטאר
+        backgroundColor: Colors.softGray, // במקום '#f2f2f2'
         alignItems: 'center',
         justifyContent: 'center',
         marginLeft: 8,
-        borderWidth: 3,
-        borderColor: Colors.palePink,
-        elevation: 3,
-        shadowColor: Colors.pinkShadowSoft,
-        shadowOpacity: 0.15,
-        shadowOffset: { width: 0, height: 3 },
-        shadowRadius: 6,
     },
 
     infoRow: {
@@ -35,7 +28,6 @@ export const myProfileStyles = StyleSheet.create({
 
     infoIcon: {
         marginLeft: 6,
-        color: Colors.skyBlue, // תכלת שמיים בהיר לאייקונים
     },
 
     inlineRow: {
@@ -57,24 +49,24 @@ export const myProfileStyles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 16,
         padding: 8,
-        border: '2px solid ' + Colors.mistyRose, // ורוד ערפל עדין למסגרת
+        border: '1px solid ' + Colors.brandBorder,
         borderRadius: 10,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.white, // במקום '#fff'
         cursor: 'pointer',
     },
 
     // מובייל: תיבה לקריאה בלבד לפתיחת ה‑picker
     nativeDateBox: {
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.white,   // במקום '#fff'
         paddingVertical: 8,
         paddingHorizontal: 12,
         borderRadius: 10,
         textAlign: 'center',
         width: 130,
         fontSize: 16,
-        color: Colors.deepText,
-        borderWidth: 2,
-        borderColor: Colors.mistyRose, // ורוד ערפל עדין למסגרת
+        color: Colors.darkText,          // במקום '#000'
+        borderWidth: 1,
+        borderColor: Colors.brandBorder,
     },
 
     // כפתור שמירה פרוס לרוחב כמו הכרטיסים
@@ -83,22 +75,11 @@ export const myProfileStyles = StyleSheet.create({
         width: '100%',
         alignSelf: 'center',
         marginTop: 8,
-        backgroundColor: Colors.skyBlue, // תכלת שמיים בהיר לכפתור שמירה
-        paddingVertical: 12,
-        borderRadius: 12,
-        elevation: 3,
-        shadowColor: Colors.skyBlue,
-        shadowOpacity: 0.2,
-        shadowOffset: { width: 0, height: 3 },
-        shadowRadius: 6,
-        borderWidth: 2,
-        borderColor: Colors.lightSkyBlue,
     },
 
     saveBtnText: {
-        color: Colors.white, // לבן לטקסט על רקע תכלת
+        color: Colors.primary,
         fontWeight: '700',
         textAlign: 'center',
-        fontSize: 16,
     },
 });

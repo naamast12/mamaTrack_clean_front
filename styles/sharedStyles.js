@@ -6,22 +6,23 @@ const sharedStyles = StyleSheet.create({
     // טקסטים כלליים
     text: {
         fontSize: 18,
-        color: Colors.deepText,
+        color: 'black',
         marginBottom: 10,
         fontWeight: 'bold',
+
     },
     linkText: {
-        color: Colors.skyBlue, // תכלת שמיים בהיר לקישורים
+        color: Colors.blue800,
         fontWeight: 'bold',
         textDecorationLine: 'underline',
     },
     successText: {
-        color: Colors.success,
+        color: 'green',
         fontSize: 14,
         marginTop: 5,
     },
     errorText: {
-        color: Colors.danger,
+        color: 'red',
         fontSize: 12,
         marginBottom: 10,
         alignSelf: 'center',
@@ -29,17 +30,12 @@ const sharedStyles = StyleSheet.create({
 
     // כפתורים
     primaryButton: {
-        backgroundColor: Colors.pink400, // ורוד בהיר לכפתור ראשי
+        backgroundColor: Colors.pink,
         paddingVertical: 14,
         borderRadius: 100,
         alignItems: 'center',
         marginTop: 20,
         width: '100%',
-        elevation: 3,
-        shadowColor: Colors.pinkShadowSoft,
-        shadowOpacity: 0.2,
-        shadowOffset: { width: 0, height: 2 },
-        shadowRadius: 6,
     },
     primaryButtonText: {
         color: Colors.white,
@@ -47,27 +43,21 @@ const sharedStyles = StyleSheet.create({
         fontSize: 16,
     },
     saveButton: {
-        backgroundColor: Colors.skyBlue, // תכלת שמיים בהיר לכפתור שמירה
+        backgroundColor: Colors.white,
         padding: 12,
-        borderRadius: 8,
+        borderRadius: 5,
         alignItems: 'center',
-        elevation: 2,
-        shadowColor: Colors.skyBlue,
-        shadowOpacity: 0.15,
-        shadowOffset: { width: 0, height: 2 },
-        shadowRadius: 4,
     },
     saveButtonText: {
-        color: Colors.white,
+        color: 'white',
         fontSize: 16,
-        fontWeight: '500',
     },
 
     // שדות טקסט / טפסים
     loginInput: {
         height: 50,
-        borderWidth: 2,
-        borderColor: Colors.mistyRose, // ורוד ערפל עדין למסגרת
+        borderWidth: 1,
+        borderColor: Colors.primary,
         borderRadius: 25,
         paddingHorizontal: 20,
         marginBottom: 12,
@@ -76,18 +66,13 @@ const sharedStyles = StyleSheet.create({
         backgroundColor: Colors.white,
         textAlign: 'right',
         alignSelf: 'center',
-        elevation: 1,
-        shadowColor: Colors.pinkShadowSoft,
-        shadowOpacity: 0.1,
-        shadowOffset: { width: 0, height: 1 },
-        shadowRadius: 2,
     },
 
     // כותרת גדולה
     bigBoldText: {
         fontSize: 24,
         fontWeight: 'bold',
-        color: Colors.pink700, // ורוד כהה לכותרת
+        color: 'black',
         textAlign: 'center',
         marginBottom: 20,
     },
@@ -97,6 +82,7 @@ const sharedStyles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center',
     },
+
 });
 
 export default sharedStyles;

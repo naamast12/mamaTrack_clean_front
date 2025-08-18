@@ -6,92 +6,57 @@ const { width } = Dimensions.get('window');
 const faqScreenStyles = StyleSheet.create({
     container: {
         flexGrow: 1,
-        backgroundColor: Colors.softBluePink, // רקע תכלת-ורוד רך כמו בתמונה
+        backgroundColor: Colors.appBg,  // היה '#f2f4f7'
         paddingVertical: 24,
         paddingHorizontal: 16,
         writingDirection: 'rtl',
     },
 
     pinkBox: {
-        backgroundColor: Colors.lavenderBlush, // ורוד לבנדר בהיר מאוד כמו בתמונה
-        borderRadius: 24,
-        padding: 28,
-        width: '90%', // לא על כל המסך
-        maxWidth: 600, // מקסימום רוחב מוגבל
+        backgroundColor: Colors.pinkBg, // היה '#fff0f5'
+        borderRadius: 20,
+        padding: 24,
+        width: '100%',
+        maxWidth: 800,
         alignSelf: 'center',
         alignItems: 'center',
         marginBottom: 40,
-        elevation: 8,
-        shadowColor: Colors.pinkShadowSoft,
-        shadowOpacity: 0.2,
-        shadowOffset: { width: 0, height: 8 },
-        shadowRadius: 20,
-        borderWidth: 2,
-        borderColor: Colors.palePink,
+        elevation: 4,
+        shadowColor: Colors.black,      // היה '#000'
+        shadowOpacity: 0.05,
+        shadowOffset: { width: 0, height: 4 },
+        shadowRadius: 12,
     },
 
     title: {
         fontSize: 32,
         fontWeight: 'bold',
-        color: Colors.pink700, // ורוד כהה לכותרת כמו בתמונה
+        color: Colors.greenDeep,        // היה '#054b44'
         textAlign: 'center',
         marginBottom: 10,
     },
 
-    // שדה חיפוש חדש
-    searchContainer: {
-        width: '100%',
-        marginTop: 20,
-        alignItems: 'center',
-    },
-
-    searchInput: {
-        backgroundColor: Colors.white,
-        width: '90%',
-        maxWidth: 400,
-        paddingVertical: 16,
-        paddingHorizontal: 20,
-        borderRadius: 16,
-        fontSize: 16,
-        borderWidth: 2,
-        borderColor: Colors.skyBlue, // תכלת שמיים בהיר למסגרת
-        elevation: 3,
-        shadowColor: Colors.skyBlue,
-        shadowOpacity: 0.15,
-        shadowOffset: { width: 0, height: 3 },
-        shadowRadius: 8,
-        color: Colors.deepText,
-        textAlign: 'right', // טקסט מימין
-        writingDirection: 'rtl', // כיוון כתיבה מימין לשמאל
-    },
-
     chooseMessage: {
         marginTop: 20,
-        padding: 24,
-        backgroundColor: Colors.lightCyan, // ציאן בהיר לרקע ההודעה
-        color: Colors.blue700, // כחול כהה לטקסט
+        padding: 20,
+        backgroundColor: Colors.surfaceAlt, // היה '#f8f9fa'
+        color: Colors.deepText,             // היה '#444'
         fontSize: 20,
         textAlign: 'center',
-        borderRadius: 16,
-        shadowColor: Colors.skyBlue,
-        shadowOpacity: 0.15,
-        shadowOffset: { width: 0, height: 4 },
-        shadowRadius: 12,
-        elevation: 4,
-        width: '80%', // עוד יותר קטן
-        maxWidth: 400, // מקסימום רוחב קטן יותר
-        borderWidth: 2,
-        borderColor: Colors.powderBlue,
+        borderRadius: 12,
+        shadowColor: Colors.black,
+        shadowOpacity: 0.05,
+        shadowOffset: { width: 0, height: 2 },
+        shadowRadius: 8,
+        elevation: 2,
+        width: '90%',
+        maxWidth: 500,
     },
 
-    fullWidthBox: { 
-        width: '90%', // לא על כל המסך
-        maxWidth: 600, // מקסימום רוחב מוגבל
-        alignSelf: 'center',
-    },
+    fullWidthBox: { width: '100%' },
 
     image: {
-        width: width * 0.7, // קטן יותר
+        width: width * 0.9,
         height: undefined,
         aspectRatio: 1,
         opacity: 0.3,
