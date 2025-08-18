@@ -1,18 +1,28 @@
 import React, { useState } from 'react';
-import { ScrollView, View, Text, Image } from 'react-native';
+import { ScrollView, View, Text, Image, TextInput } from 'react-native';
 import FaqTabs from './FaqTabs';
 import FaqList from './faqList';
 import faqScreenStyles from '../../styles/faqScreen';
 import ProtectedRoute from "../../components/ProtectedRoute";
 import {HomeButton} from "../utils/HomeButton";
+import { Colors } from '../../constants/Colors';
 
 export default function FaqScreen() {
     const [selectedCategory, setSelectedCategory] = useState(null);
+    const [searchQuery, setSearchQuery] = useState('');
 
     const handleCategorySelect = (category) => {
         setSelectedCategory(prev =>
             prev === category ? null : category
         );
+    };
+
+    const handleSearch = (text) => {
+        setSearchQuery(text);
+        // אם יש חיפוש, נבטל את הקטגוריה הנבחרת
+        if (text.trim()) {
+            setSelectedCategory(null);
+        }
     };
 
     return (
@@ -25,17 +35,27 @@ export default function FaqScreen() {
                 <View style={faqScreenStyles.pinkBox}>
                     <Text style={faqScreenStyles.title}>שאלות ותשובות נפוצות</Text>
                     <FaqTabs selected={selectedCategory} onSelect={handleCategorySelect} />
-                    {!selectedCategory && (
-                        <Text style={faqScreenStyles.chooseMessage}>
-                            ❓ בחרי קטגוריה כדי להציג את השאלות
-                        </Text>
-                    )}
+                    
+                    {/* שדה חיפוש במקום המשפט */}
+                    <View style={faqScreenStyles.searchContainer}>
+                        <TextInput
+                            style={faqScreenStyles.searchInput}
+                            placeholder="חפשי שאלה... 🔍"
+                            placeholderTextColor={Colors.mutedText}
+                            value={searchQuery}
+                            onChangeText={handleSearch}
+                            textAlign="right"
+                        />
+                    </View>
                 </View>
 
-                {/* הצגת שאלות כשקטגוריה נבחרת */}
-                {selectedCategory && (
+                {/* הצגת שאלות כשקטגוריה נבחרת או יש חיפוש */}
+                {(selectedCategory || searchQuery.trim()) && (
                     <View style={faqScreenStyles.fullWidthBox}>
-                        <FaqList selectedCategory={selectedCategory} />
+                        <FaqList 
+                            selectedCategory={selectedCategory} 
+                            searchQuery={searchQuery}
+                        />
                     </View>
                 )}
 
@@ -47,8 +67,5 @@ export default function FaqScreen() {
             </ScrollView>
 
         </ProtectedRoute>
-
-
-
     );
 }

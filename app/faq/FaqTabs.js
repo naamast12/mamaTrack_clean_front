@@ -2,6 +2,15 @@ import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import styles from '../../styles/faqTabsStyles';
 
+// אייקונים חמודים לכל קטגוריה
+const categoryIcons = {
+    "בדיקות": "🔬",
+    "תזונה": "🥗",
+    "פעילות גופנית": "🧘‍♀️",
+    "הכנה ללידה": "👶",
+    "תרופות ותוספים": "💊"
+};
+
 const categories = [
     "בדיקות",
     "תזונה",
@@ -22,9 +31,12 @@ export default function FaqTabs({ selected, onSelect }) {
                         selected === cat && styles.tabButtonActive
                     ]}
                 >
-                    <Text style={selected === cat ? styles.tabButtonTextActive : styles.tabButtonText}>
-                        {cat}
-                    </Text>
+                    <View style={styles.tabContent}>
+                        <Text style={styles.tabIcon}>{categoryIcons[cat]}</Text>
+                        <Text style={selected === cat ? styles.tabButtonTextActive : styles.tabButtonText}>
+                            {cat}
+                        </Text>
+                    </View>
                 </TouchableOpacity>
             ))}
         </View>

@@ -29,8 +29,6 @@ export const Colors = {
   ink:        '#475569', // טקסט כהה עדין
   inkSoft:    '#94A3B8', // טקסט משני
 
-
-
   // ===== PINKS =====
   pink:       '#F7A9C4',
   pinkDeep:   '#EB6EA5',
@@ -94,7 +92,6 @@ export const Colors = {
   grayBg: '#fafafa',
   deepText: '#424242',
 
-
   // תכלת (Accent)
   accentLight: '#EAF6FF',    // רקעים משניים
   accentBorder: '#CFE8FF',
@@ -103,12 +100,11 @@ export const Colors = {
   /* אם יש שימושי עבר בפרויקט – שימרי תאימות */
   brandLight2: '#FFE7F1',  // אופציונלי
 
-
   // גוונים שציינת במסכים אחרים
 
   redDark: '#C62828',
   redDarker: '#B71C1C',
-  brand2: '#E85A8C', // אם יש “brand” כפול
+  brand2: '#E85A8C', // אם יש "brand" כפול
   // אפורי רקע/משטחים
   appBg: '#f2f4f7',   // רקע כללי למסכים
   surfaceAlt: '#f8f9fa',
@@ -118,4 +114,23 @@ export const Colors = {
   shadow: '#00000020',
   inputBackground: '#fafafa',
   inputBorder: '#ccc',
+
+  // ===== צבעים חדשים לשילוב תכלת/כחול בהיר וורוד =====
+  // תכלת בהיר יותר
+  skyBlue: '#87CEEB',        // תכלת שמיים בהיר
+  lightSkyBlue: '#B0E0E6',   // תכלת בהיר מאוד
+  powderBlue: '#B0E0E6',     // תכלת אבקה
+  lightCyan: '#E0FFFF',      // ציאן בהיר
+  
+  // ורוד בהיר יותר
+  lightPink: '#FFB6C1',      // ורוד בהיר
+  palePink: '#FFC0CB',       // ורוד חיוור
+  mistyRose: '#FFE4E1',      // ורוד ערפל
+  lavenderBlush: '#FFF0F5',  // ורוד לבנדר
+  
+  // שילובים מיוחדים
+  softBluePink: '#E6F3FF',   // תכלת-ורוד רך
+  gentlePink: '#FFE6F2',     // ורוד עדין
+  babyBlue: '#E0F6FF',       // תכלת תינוק
+  roseGold: '#FFE4E1',       // ורוד זהב
 };

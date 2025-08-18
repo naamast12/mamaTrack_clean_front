@@ -18,13 +18,17 @@ const homeButtonStyles = StyleSheet.create({
         borderRadius: baseSize * 0.04,
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundColor: Colors.skyBlue, // תכלת שמיים בהיר לרקע הכפתור
+        borderWidth: 2,
+        borderColor: Colors.lightSkyBlue,
         shadowOffset: { width: 0, height: 3 },
-        shadowOpacity: 0.15,
-        shadowRadius: 4,
-        elevation: 3,
+        shadowOpacity: 0.2,
+        shadowRadius: 6,
+        shadowColor: Colors.skyBlue,
+        elevation: 4,
     },
     buttonText: {
-        color: Colors.danger,
+        color: Colors.white, // לבן לטקסט על רקע תכלת
         fontSize: baseSize * 0.02, // יותר עקבי
         fontWeight: 'bold',
     },

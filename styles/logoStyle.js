@@ -21,10 +21,10 @@ const logoStyle = StyleSheet.create({
         lineHeight: FONT,
     },
     mathColor: {
-        color: Colors.pink,
+        color: Colors.pink400, // ורוד בהיר יותר למילה "math"
     },
     JourneyColor: {
-        color: Colors.blue,
+        color: Colors.skyBlue, // תכלת שמיים בהיר למילה "Journey"
     },
     logoContainer: {
         position: "relative",
