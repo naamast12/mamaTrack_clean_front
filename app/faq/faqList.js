@@ -77,4 +77,6 @@ export default function FaqList({ selectedCategory, searchQuery }) {
             )}
         </View>
     );
+
+
 }
