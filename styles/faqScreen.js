@@ -6,7 +6,7 @@ const { width } = Dimensions.get('window');
 const faqScreenStyles = StyleSheet.create({
     container: {
         flexGrow: 1,
-        backgroundColor: Colors.pink100, // רקע ורוד קצת יותר כהה כמו שביקשת
+        // backgroundColor: Colors.pink100, // רקע ורוד קצת יותר כהה כמו שביקשת
         paddingVertical: 24,
         paddingHorizontal: 16,
         writingDirection: 'rtl',

@@ -9,7 +9,7 @@ const babyChecklistStyles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: Colors.pink100, // רקע ורוד בהיר כמו בעמוד השאלות הנפוצות
+    // backgroundColor: Colors.pink100, // רקע ורוד בהיר כמו בעמוד השאלות הנפוצות
     padding: 16,
   },
   header: {

@@ -10,7 +10,7 @@ export default StyleSheet.create({
     },
     container: {
         flex: 1,
-        backgroundColor: Colors.pink100,
+        // backgroundColor: Colors.pink100,
         padding: 20,
     },
 
@@ -52,6 +52,13 @@ export default StyleSheet.create({
         alignSelf: 'center',
         width: 60,
     },
+    // decorativeLine: {
+    //     height: 3,
+    //     backgroundColor: Colors.blue,
+    //     borderRadius: 2,
+    //     marginVertical: 15,
+    //     opacity: 0.3,
+    // },
 
     progressContainer: { marginBottom: 20 },
 
@@ -246,13 +253,7 @@ export default StyleSheet.create({
     },
     resetButtonText: { color: Colors.white, fontSize: 16, fontWeight: 'bold', textAlign: 'center' },
 
-    decorativeLine: {
-        height: 3,
-        backgroundColor: Colors.blue,
-        borderRadius: 2,
-        marginVertical: 15,
-        opacity: 0.3,
-    },
+
 
     itemCountBadge: {
         backgroundColor: Colors.blue,

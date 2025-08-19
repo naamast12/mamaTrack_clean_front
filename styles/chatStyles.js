@@ -15,7 +15,7 @@ export default StyleSheet.create({
     /* פריסת עמוד */
     page: {
         flex: 1,
-        backgroundColor: Colors.pink100, // רקע וורוד בהיר
+        // backgroundColor: Colors.pink100, // רקע וורוד בהיר
         width: "100%",
     },
     // כמו pageContent ב-overview
