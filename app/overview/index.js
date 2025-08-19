@@ -233,7 +233,7 @@ export default function OverviewScreen() {
                                             <View style={styles.pillsRow}>
                                                 {previewTips.map((t, i) => (
                                                     <View key={i} style={[styles.pill, styles.pillSecondary]}>
-                                                        <Text style={styles.pillText}>{t}</Text>
+                                                        <Text style={styles.pillText}>• {t}</Text>
                                                     </View>
                                                 ))}
                                             </View>
@@ -246,7 +246,7 @@ export default function OverviewScreen() {
                                             <View style={styles.pillsRow}>
                                                 {previewSymptoms.map((s, i) => (
                                                     <View key={i} style={styles.pill}>
-                                                        <Text style={styles.pillText}>{s}</Text>
+                                                        <Text style={styles.pillText}>• {s}</Text>
                                                     </View>
                                                 ))}
                                             </View>

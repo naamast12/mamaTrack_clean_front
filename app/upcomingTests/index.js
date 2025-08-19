@@ -183,6 +183,7 @@ export default function UpcomingTests() {
             <HomeButton />
 
             <View style={styles.container}>
+                <View style={styles.inner}>
                 <View style={styles.pageHeader}>
 
                 <Text style={styles.screenTitle}>בדיקות צפויות</Text>
@@ -291,6 +292,7 @@ export default function UpcomingTests() {
                         }
                     />
                 )}
+                </View>
             </View>
         </ProtectedRoute>
     );

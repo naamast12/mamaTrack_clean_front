@@ -12,6 +12,15 @@ export const screenStyles = StyleSheet.create({
         paddingTop: 12,
         ...(Platform.OS === 'web' ? { minHeight: '100vh' } : {}), // ← גובה מסך מלא ב-web
     },
+
+    inner: {
+        width: '100%',
+        maxWidth: 900,
+        alignSelf: 'center',
+        paddingHorizontal: 16,
+        paddingTop: 12,
+    },
+
 // בתוך export const screenStyles = StyleSheet.create({...})
     weekRow: {
         flexDirection: 'row-reverse',
