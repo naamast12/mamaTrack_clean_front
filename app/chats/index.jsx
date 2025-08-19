@@ -74,9 +74,13 @@ export default function ChatsHome() {
                     <View style={chatStyles.content}>
                         {/* כרטיס כותרת */}
                         <View style={chatStyles.card}>
-                            <Text style={chatStyles.title}>💬 פורום</Text>
+                            <View style={chatStyles.titleContainer}>
+                                <Text style={chatStyles.title}>💬 פורום קהילתי</Text>
+                                <View style={chatStyles.titleDecoration} />
+                            </View>
                             <Text style={chatStyles.subtitle}>שאלות, תמיכה ושיתוף לפי שלבי ההריון 💗</Text>
                             <Text style={chatStyles.subtitle}>הכל באנונימיות מלאה 🤫</Text>
+                            <View style={chatStyles.subtitleDecoration} />
                         </View>
 
                         {/* הודעת שגיאה / טעינה / רשימת חדרים */}

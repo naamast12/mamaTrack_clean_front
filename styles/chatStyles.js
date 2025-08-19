@@ -15,7 +15,7 @@ export default StyleSheet.create({
     /* פריסת עמוד */
     page: {
         flex: 1,
-        backgroundColor: Colors.pinkBg, // אם את רוצה זהה ל-overview, השתמשי Colors.brandBg
+        backgroundColor: Colors.pink100, // רקע וורוד בהיר
         width: "100%",
     },
     // כמו pageContent ב-overview
@@ -36,21 +36,27 @@ export default StyleSheet.create({
 
     /* כרטיס / קונטיינר */
     card: {
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.blueLight,
         borderRadius: 16,
         padding: 18,
         marginBottom: 20,
         width: "100%",
-        ...shadow,
+        borderWidth: 2,
+        borderColor: Colors.pink,
+        shadowColor: Colors.blue,
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.15,
+        shadowRadius: 8,
+        elevation: 5,
     },
 
     title: {
         textAlign: "center",
-        color: Colors.pinkDeep,
+        color: Colors.pink700,
         fontSize: 28,
         fontWeight: "bold",
         marginBottom: 6,
-        textShadowColor: Colors.pinkShadowSoft,
+        textShadowColor: Colors.blue,
         textShadowOffset: { width: 1, height: 1 },
         textShadowRadius: 3,
     },
@@ -58,8 +64,31 @@ export default StyleSheet.create({
         textAlign: "center",
         marginBottom: 6,
         fontSize: 15,
-        color: Colors.mutedText,
+        color: Colors.blue700,
         lineHeight: 22,
+    },
+
+    /* אלמנטים דקורטיביים לכותרת */
+    titleContainer: {
+        alignItems: "center",
+        marginBottom: 8,
+    },
+    titleDecoration: {
+        width: 60,
+        height: 3,
+        backgroundColor: Colors.blue,
+        borderRadius: 2,
+        marginTop: 8,
+        opacity: 0.7,
+    },
+    subtitleDecoration: {
+        width: 40,
+        height: 2,
+        backgroundColor: Colors.pink,
+        borderRadius: 1,
+        marginTop: 8,
+        opacity: 0.6,
+        alignSelf: "center",
     },
 
     /* אזור רשימה */
@@ -67,15 +96,15 @@ export default StyleSheet.create({
     listTitle: {
         fontSize: 20,
         fontWeight: "bold",
-        color: Colors.pinkDeep,
+        color: Colors.pink700,
         textAlign: "center",
         marginBottom: 6,
     },
     decorativeLine: {
         height: 3,
-        backgroundColor: Colors.pinkDeep,
+        backgroundColor: Colors.blue,
         borderRadius: 2,
-        opacity: 0.3,
+        opacity: 0.6,
         alignSelf: "center",
         width: "100%",
         marginBottom: 6,
@@ -85,20 +114,22 @@ export default StyleSheet.create({
     itemRow: {
         flexDirection: "row",
         alignItems: "center",
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.blueLight,
         paddingHorizontal: 16,
         paddingVertical: 14,
         marginBottom: 10,
         borderRadius: 14,
-        shadowColor: Colors.pinkDeep,
+        borderWidth: 1,
+        borderColor: Colors.pink,
+        shadowColor: Colors.blue,
         shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.08,
+        shadowOpacity: 0.1,
         shadowRadius: 4,
         elevation: 2,
     },
     itemLeft: { marginRight: 12 },
     itemIndexBadge: {
-        backgroundColor: Colors.pinkDeep,
+        backgroundColor: Colors.pink,
         color: Colors.white,
         minWidth: 26,
         textAlign: "center",
@@ -106,19 +137,28 @@ export default StyleSheet.create({
         paddingVertical: 4,
         borderRadius: 10,
         fontWeight: "bold",
+        shadowColor: Colors.blue,
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.3,
+        shadowRadius: 3,
+        elevation: 3,
     },
     itemMiddle: { flex: 1 },
-    itemTitle: { fontSize: 16, color: Colors.text, marginBottom: 2, fontWeight: "600", textAlign: "right" },
-    itemSubtitle: { fontSize: 14, color: Colors.mutedText, textAlign: "right" },
+    itemTitle: { fontSize: 16, color: Colors.blue700, marginBottom: 2, fontWeight: "600", textAlign: "right" },
+    itemSubtitle: { fontSize: 14, color: Colors.pink700, textAlign: "right" },
     itemRight: { marginLeft: 12, alignItems: "flex-end" },
 
     /* כפתורים / באדג'ים */
     primaryButton: {
-        backgroundColor: Colors.pinkDeep,
+        backgroundColor: Colors.pink,
         paddingHorizontal: 18,
         paddingVertical: 10,
         borderRadius: 25,
-        ...shadow,
+        shadowColor: Colors.blue,
+        shadowOffset: { width: 0, height: 3 },
+        shadowOpacity: 0.25,
+        shadowRadius: 6,
+        elevation: 4,
     },
     primaryButtonText: {
         color: Colors.white,
@@ -127,14 +167,16 @@ export default StyleSheet.create({
         textAlign: "center",
     },
     badge: {
-        backgroundColor: Colors.pinkLight,
+        backgroundColor: Colors.blueLight,
         paddingHorizontal: 10,
         paddingVertical: 6,
         borderRadius: 12,
         alignItems: "center",
+        borderWidth: 1,
+        borderColor: Colors.blue,
     },
-    badgeText: { color: Colors.pinkDeep, fontSize: 15, fontWeight: "700" },
-    badgeSubText: { fontSize: 10, color: Colors.redDark, marginTop: 2 },
+    badgeText: { color: Colors.blue700, fontSize: 15, fontWeight: "700" },
+    badgeSubText: { fontSize: 10, color: Colors.pink700, marginTop: 2 },
 
     /* עזרים */
     center: { alignItems: "center", justifyContent: "center" },
@@ -148,15 +190,17 @@ export default StyleSheet.create({
     listWithInput: { paddingTop: 0, paddingBottom: 90, gap: 10 },
 
     postCard: {
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.blueLight,
         borderRadius: 14,
         padding: 14,
-        shadowColor: Colors.pinkDeep,
+        shadowColor: Colors.blue,
         shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.08,
+        shadowOpacity: 0.1,
         shadowRadius: 4,
         elevation: 2,
         marginTop: 10,
+        borderWidth: 1,
+        borderColor: Colors.pink,
     },
     postText: { fontSize: 16, color: Colors.text, textAlign: "right" },
 
@@ -178,17 +222,18 @@ export default StyleSheet.create({
         alignItems: "center",
         padding: 8,
         borderTopWidth: 1,
-        borderColor: Colors.borderLight,
+        borderColor: Colors.pink,
         marginBottom: 10,
+        backgroundColor: Colors.blueLight,
     },
     input: {
         flex: 1,
         borderWidth: 1,
-        borderColor: Colors.border,
+        borderColor: Colors.pink,
         borderRadius: 12,
         paddingHorizontal: 12,
         paddingVertical: 10,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.blueLight,
     },
     sendBtn: {
         marginLeft: 8,
@@ -210,7 +255,13 @@ export default StyleSheet.create({
     secondaryButtonText: { color: Colors.pinkDeep, fontWeight: "700", fontSize: 14 },
 
     /* אזור פיד וכותרת */
-    feedArea: { flex: 1 },
+    feedArea: { 
+        flex: 1,
+        backgroundColor: Colors.blueLight,
+        borderRadius: 15,
+        padding: 8,
+        marginHorizontal: 4,
+    },
     feedHeaderRow: {
         flexDirection: "row",
         alignItems: "center",
@@ -220,13 +271,13 @@ export default StyleSheet.create({
     },
     feedHeaderCount: {
         borderWidth: 1,
-        borderColor: Colors.pinkOutline,
+        borderColor: Colors.pink,
         borderRadius: 999,
         paddingHorizontal: 10,
         paddingVertical: 4,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.blueLight,
     },
-    feedHeaderCountText: { color: Colors.redDark, fontWeight: "700" },
+    feedHeaderCountText: { color: Colors.pink700, fontWeight: "700" },
 
     guidanceCard: {
         backgroundColor: Colors.white,
@@ -251,7 +302,7 @@ export default StyleSheet.create({
     guidanceItem: { color: Colors.deepText, fontSize: 14, lineHeight: 20, textAlign: "right" },
 
     cardHeaderRow: {
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.blueLight,
         borderRadius: 16,
         paddingVertical: 18,
         paddingHorizontal: 18,
@@ -259,7 +310,13 @@ export default StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         position: "relative",
-        ...shadow,
+        borderWidth: 2,
+        borderColor: Colors.pink,
+        shadowColor: Colors.blue,
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.15,
+        shadowRadius: 8,
+        elevation: 5,
     },
     backCircleSmall: {
         position: "absolute",

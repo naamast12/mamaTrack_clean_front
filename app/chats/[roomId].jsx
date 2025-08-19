@@ -8,7 +8,8 @@ import {
     KeyboardAvoidingView,
     Platform,
     Alert,
-    TouchableOpacity
+    TouchableOpacity,
+    ScrollView
 } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import ProtectedRoute from "../../components/ProtectedRoute";
