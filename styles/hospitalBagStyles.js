@@ -134,12 +134,12 @@ export default StyleSheet.create({
     },
 
     categoryTabText: { 
-        fontSize: 14, 
+        fontSize: 16,
         fontWeight: '600', 
         textAlign: 'center',
         color: Colors.pink700,
     },
-    categoryTabTextActive:  { 
+    categoryTabTextActive:  {
         color: Colors.white,
         fontWeight: 'bold',
     },
@@ -163,7 +163,7 @@ export default StyleSheet.create({
         shadowRadius: 12,
         elevation: 8,
         borderWidth: 1,
-        borderColor: Colors.blueLight,
+        borderColor: Colors.blueBorder,
         overflow: 'hidden',
     },
 
@@ -181,7 +181,7 @@ export default StyleSheet.create({
         shadowRadius: 4,
         elevation: 2,
         borderBottomWidth: 1,
-        borderBottomColor: Colors.pinkLight,
+        borderBottomColor: Colors.pinkDeep,
     },
     itemRowChecked: {
         backgroundColor: Colors.pink100,
@@ -241,7 +241,7 @@ export default StyleSheet.create({
         marginBottom: 10,
     },
     resetButton: {
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.pink100,
         paddingHorizontal: 24,
         paddingVertical: 12,
         borderRadius: 25,
@@ -251,7 +251,7 @@ export default StyleSheet.create({
         shadowRadius: 6,
         elevation: 4,
     },
-    resetButtonText: { color: Colors.white, fontSize: 16, fontWeight: 'bold', textAlign: 'center' },
+    resetButtonText: { color: Colors.blue800, fontSize: 16, fontWeight: 'bold', textAlign: 'center' },
 
 
 

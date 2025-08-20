@@ -12,7 +12,7 @@ const faqScreenStyles = StyleSheet.create({
     },
 
     pinkBox: {
-        backgroundColor: Colors.blueLight, // רקע תכלת בהיר מאוד כמו שביקשת - רק החלון הקטן
+        backgroundColor: Colors.white, // רקע תכלת בהיר מאוד כמו שביקשת - רק החלון הקטן
         borderRadius: 24,
         padding: 28,
         width: '90%', // לא על כל המסך
@@ -26,7 +26,7 @@ const faqScreenStyles = StyleSheet.create({
         shadowOffset: { width: 0, height: 8 },
         shadowRadius: 20,
         borderWidth: 2,
-        borderColor: Colors.blueLight,
+        borderColor: Colors.white,
     },
 
     title: {

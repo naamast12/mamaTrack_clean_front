@@ -60,7 +60,7 @@ const faqListStyles = StyleSheet.create({
         borderRadius: 12,
         width: '100%',
         borderWidth: 1,
-        borderColor: Colors.blue300,
+        borderColor: Colors.blueDeep,
         elevation: 2,
         shadowColor: Colors.blue300,
         shadowOpacity: 0.1,

@@ -180,7 +180,7 @@ const babyChecklistStyles = StyleSheet.create({
     alignItems: 'center',
     padding: 18,
     borderBottomWidth: 1,
-    borderBottomColor: Colors.pinkBorder,
+    borderBottomColor: Colors.pinkDeep,
     backgroundColor: Colors.blueLight, // תכלת בהיר כמו בעמוד השאלות הנפוצות
   },
   itemRowLast: { borderBottomWidth: 0 },
@@ -203,7 +203,7 @@ const babyChecklistStyles = StyleSheet.create({
     elevation: 2,
   },
   checkboxChecked: {
-    backgroundColor: Colors.blue, // תכלת לצ'קבוקס מסומן
+    backgroundColor: Colors.blueDeep, // תכלת לצ'קבוקס מסומן
     borderColor: Colors.blueBorder,
     shadowColor: Colors.brandShadow,
     shadowOffset: { width: 0, height: 2 },
@@ -215,8 +215,8 @@ const babyChecklistStyles = StyleSheet.create({
 
   itemText: {
     flex: 1,
-    fontSize: 16,
-    color: Colors.blue700, // תכלת כהה לטקסט הפריטים - יותר קריא
+    fontSize: 18,
+    color: Colors.blue800, // תכלת כהה לטקסט הפריטים - יותר קריא
     lineHeight: 24,
     fontWeight: '500',
   },
@@ -241,7 +241,7 @@ const babyChecklistStyles = StyleSheet.create({
   buttonsContainer: { flexDirection: 'row', justifyContent: 'center', marginTop: 24, paddingHorizontal: 4 },
 
   resetButton: {
-    backgroundColor: Colors.blue, // תכלת לכפתור איפוס
+    backgroundColor: Colors.pink100, // תכלת לכפתור איפוס
     paddingHorizontal: 20,
     paddingVertical: 12,
     borderRadius: 15,
@@ -251,7 +251,7 @@ const babyChecklistStyles = StyleSheet.create({
     shadowRadius: 6,
     elevation: 6,
   },
-  resetButtonText: { color: Colors.white, fontSize: 16, fontWeight: 'bold', textAlign: 'center' },
+  resetButtonText: { color: Colors.blue800, fontSize: 16, fontWeight: 'bold', textAlign: 'center' },
 
   saveButton: {
     backgroundColor: Colors.green,
