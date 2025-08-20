@@ -268,32 +268,31 @@ export default function UpcomingTests() {
                 {/* <TextInput ... /> */}
 
                 {/* תוכן */}
-                {loading ? (
-                    <View style={styles.centerBox}>
-                        <ActivityIndicator />
-                        <Text style={{ marginTop: 8 }}>טוען...</Text>
-                    </View>
-                ) : error ? (
-                    <View style={styles.centerBox}>
-                        <Text style={{ color: '#DC2626' }}>{error}</Text>
-                    </View>
-                ) : (
-                    <FlatList
-                        data={filtered}
-                        keyExtractor={(item, idx) => `${item.id ?? item.title}-${idx}`}
-                        renderItem={({ item }) => <TestCard item={item} />}
-                        contentContainerStyle={{ paddingBottom: 24 }}
-                        onRefresh={onRefresh}
-                        refreshing={refreshing}
-                        ListEmptyComponent={
-                            <View style={styles.centerBox}>
-                                <Text>אין תוצאות לסינון הנוכחי.</Text>
-                            </View>
-                        }
-                    />
-                )}
+                    {loading ? (
+                        <View style={styles.centerBox}>...</View>
+                    ) : error ? (
+                        <View style={styles.centerBox}>...</View>
+                    ) : (
+                        <View style={{ flex: 1, minHeight: 0 }}>
+                            <FlatList
+                                style={{ flex: 1 }}
+                                data={filtered}
+                                keyExtractor={(item, idx) => `${item.id ?? item.title}-${idx}`}
+                                renderItem={({ item }) => <TestCard item={item} />}
+                                contentContainerStyle={{ paddingBottom: 96 }}  // ↑ רווח נדיב
+                                onRefresh={onRefresh}
+                                refreshing={refreshing}
+                                ListEmptyComponent={<View style={styles.centerBox}><Text>אין תוצאות…</Text></View>}
+                                ListFooterComponent={<View style={{ height: 24 }} />} // ספייסר קטן
+                            />
+                        </View>
+                    )}
+
+
                 </View>
             </View>
+
+
         </ProtectedRoute>
     );
 }

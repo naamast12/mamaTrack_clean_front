@@ -6,20 +6,38 @@ const FONT_SCALE = 1.2;
 const m = n => Math.round(n * FONT_SCALE);
 
 export const screenStyles = StyleSheet.create({
+    // container: {
+    //     flex: 1,
+    //     paddingHorizontal: 16,
+    //     paddingTop: 12,
+    //     ...(Platform.OS === 'web' ? { minHeight: '100vh' } : {}), // ← גובה מסך מלא ב-web
+    // },
+// styles/upcomingTestsStyles.js
     container: {
         flex: 1,
         paddingHorizontal: 16,
         paddingTop: 12,
-        ...(Platform.OS === 'web' ? { minHeight: '100vh' } : {}), // ← גובה מסך מלא ב-web
+        paddingBottom: 16,  // מרווח שימנע חיתוך תחתון
+        ...(Platform.OS === 'web' ? { minHeight: '100vh' } : {}),
     },
 
     inner: {
+        flex: 1,          // ← חשוב
+        minHeight: 0,     // ← חשוב ב-web כדי לא לחסום גלילה
         width: '100%',
         maxWidth: 900,
         alignSelf: 'center',
         paddingHorizontal: 16,
         paddingTop: 12,
     },
+
+    centerBox: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 16,
+    },
+
 
 // בתוך export const screenStyles = StyleSheet.create({...})
     weekRow: {
@@ -124,7 +142,7 @@ export const screenStyles = StyleSheet.create({
         alignSelf: 'stretch', // ← חדש
     },
 
-    centerBox: { alignItems: 'center', justifyContent: 'center', paddingVertical: 26 },
+    // centerBox: { alignItems: 'center', justifyContent: 'center', paddingVertical: 26 },
 });
 
 export const testCardStyles = StyleSheet.create({
