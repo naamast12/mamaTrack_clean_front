@@ -9,11 +9,10 @@ const babyChecklistStyles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    // backgroundColor: Colors.pink100, // רקע ורוד בהיר כמו בעמוד השאלות הנפוצות
     padding: 16,
   },
   header: {
-    backgroundColor: Colors.blueLight, // תכלת בהיר כמו בעמוד השאלות הנפוצות
+    backgroundColor: Colors.white, // תכלת בהיר כמו בעמוד השאלות הנפוצות
     padding: 24,
     borderRadius: 20,
     marginBottom: 20,
@@ -23,7 +22,7 @@ const babyChecklistStyles = StyleSheet.create({
     shadowRadius: 12,
     elevation: 8,
     borderWidth: 1,
-    borderColor: Colors.blue,
+    borderColor: Colors.white,
   },
   title: {
     fontSize: 28,
@@ -83,7 +82,7 @@ const babyChecklistStyles = StyleSheet.create({
     shadowRadius: 12,
     elevation: 8,
     borderWidth: 1,
-    borderColor: Colors.blue,
+    borderColor: Colors.blueLight,
   },
 
   // categoryTabs: {
@@ -104,7 +103,7 @@ const babyChecklistStyles = StyleSheet.create({
     borderRadius: 25,
     backgroundColor: Colors.pinkLight, // ורוד בהיר לכל הקטגוריות
     borderWidth: 2,
-    borderColor: Colors.pink, // ורוד למסגרת
+    borderColor: Colors.pinkLight, // ורוד למסגרת
     shadowColor: Colors.pinkDeep,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
@@ -112,8 +111,8 @@ const babyChecklistStyles = StyleSheet.create({
     elevation: 2,
   },
   categoryTabActive: {
-    backgroundColor: Colors.blue, // תכלת לטאבים פעילים
-    borderColor: Colors.blue,
+    backgroundColor: Colors.blueDeep, // תכלת לטאבים פעילים
+    borderColor: Colors.blueDeep,
     shadowColor: Colors.blue,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
@@ -173,7 +172,7 @@ const babyChecklistStyles = StyleSheet.create({
     shadowRadius: 12,
     elevation: 8,
     borderWidth: 1,
-    borderColor: Colors.blue,
+    borderColor: Colors.blueBorder,
     overflow: 'hidden',
   },
   itemRow: {
@@ -181,7 +180,7 @@ const babyChecklistStyles = StyleSheet.create({
     alignItems: 'center',
     padding: 18,
     borderBottomWidth: 1,
-    borderBottomColor: Colors.pinkLight,
+    borderBottomColor: Colors.pinkBorder,
     backgroundColor: Colors.blueLight, // תכלת בהיר כמו בעמוד השאלות הנפוצות
   },
   itemRowLast: { borderBottomWidth: 0 },
@@ -205,8 +204,8 @@ const babyChecklistStyles = StyleSheet.create({
   },
   checkboxChecked: {
     backgroundColor: Colors.blue, // תכלת לצ'קבוקס מסומן
-    borderColor: Colors.blue,
-    shadowColor: Colors.blue,
+    borderColor: Colors.blueBorder,
+    shadowColor: Colors.brandShadow,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 4,

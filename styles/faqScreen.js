@@ -6,7 +6,6 @@ const { width } = Dimensions.get('window');
 const faqScreenStyles = StyleSheet.create({
     container: {
         flexGrow: 1,
-        // backgroundColor: Colors.pink100, // רקע ורוד קצת יותר כהה כמו שביקשת
         paddingVertical: 24,
         paddingHorizontal: 16,
         writingDirection: 'rtl',
@@ -27,7 +26,7 @@ const faqScreenStyles = StyleSheet.create({
         shadowOffset: { width: 0, height: 8 },
         shadowRadius: 20,
         borderWidth: 2,
-        borderColor: Colors.palePink,
+        borderColor: Colors.blueLight,
     },
 
     title: {
@@ -54,9 +53,9 @@ const faqScreenStyles = StyleSheet.create({
         borderRadius: 16,
         fontSize: 16,
         borderWidth: 2,
-        borderColor: Colors.skyBlue, // תכלת שמיים בהיר למסגרת
+        borderColor: Colors.blueBorder, // תכלת שמיים בהיר למסגרת
         elevation: 3,
-        shadowColor: Colors.skyBlue,
+        shadowColor: Colors.blueDeep,
         shadowOpacity: 0.15,
         shadowOffset: { width: 0, height: 3 },
         shadowRadius: 8,
@@ -68,12 +67,12 @@ const faqScreenStyles = StyleSheet.create({
     chooseMessage: {
         marginTop: 20,
         padding: 24,
-        backgroundColor: Colors.lightCyan, // ציאן בהיר לרקע ההודעה
+        backgroundColor: Colors.blueLight, // ציאן בהיר לרקע ההודעה
         color: Colors.blue700, // כחול כהה לטקסט
         fontSize: 20,
         textAlign: 'center',
         borderRadius: 16,
-        shadowColor: Colors.skyBlue,
+        shadowColor: Colors.blueBorder,
         shadowOpacity: 0.15,
         shadowOffset: { width: 0, height: 4 },
         shadowRadius: 12,
@@ -81,7 +80,7 @@ const faqScreenStyles = StyleSheet.create({
         width: '80%', // עוד יותר קטן
         maxWidth: 400, // מקסימום רוחב קטן יותר
         borderWidth: 2,
-        borderColor: Colors.powderBlue,
+        borderColor: Colors.blueDeep,
     },
 
     fullWidthBox: {

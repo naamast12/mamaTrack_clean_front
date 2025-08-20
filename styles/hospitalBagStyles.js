@@ -15,7 +15,7 @@ export default StyleSheet.create({
     },
 
     header: {
-        backgroundColor: Colors.blueLight,
+        backgroundColor: Colors.white,
         padding: 24,
         borderRadius: 20,
         marginBottom: 20,
@@ -25,7 +25,7 @@ export default StyleSheet.create({
         shadowRadius: 12,
         elevation: 8,
         borderWidth: 1,
-        borderColor: Colors.blue,
+        borderColor: Colors.white,
     },
     title: {
         textAlign: 'center',
@@ -46,7 +46,7 @@ export default StyleSheet.create({
     },
     decorativeLine: {
         height: 3,
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.white,
         borderRadius: 2,
         marginVertical: 8,
         alignSelf: 'center',
@@ -106,7 +106,7 @@ export default StyleSheet.create({
         shadowRadius: 12,
         elevation: 8,
         borderWidth: 1,
-        borderColor: Colors.blue,
+        borderColor: Colors.blueLight,
     },
     categoryTab: {
         paddingHorizontal: 16,
@@ -121,7 +121,7 @@ export default StyleSheet.create({
         elevation: 3,
         backgroundColor: Colors.pinkLight,
         borderWidth: 2,
-        borderColor: Colors.pink,
+        borderColor: Colors.pinkLight,
     },
     categoryTabActive:   { 
         backgroundColor: Colors.blue,
@@ -163,7 +163,7 @@ export default StyleSheet.create({
         shadowRadius: 12,
         elevation: 8,
         borderWidth: 1,
-        borderColor: Colors.blue,
+        borderColor: Colors.blueLight,
         overflow: 'hidden',
     },
 

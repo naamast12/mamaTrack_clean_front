@@ -179,7 +179,7 @@ export default StyleSheet.create({
   },
 
   card: {
-    backgroundColor: Colors.blueLight,
+    backgroundColor: Colors.white,
     borderRadius: 16,
     padding: 18,
     marginBottom: 20,
@@ -190,7 +190,7 @@ export default StyleSheet.create({
     shadowRadius: 12,
     elevation: 8,
     borderWidth: 1,
-    borderColor: Colors.blue,
+    borderColor: Colors.white,
   },
 
   hospitalMessageBox: {

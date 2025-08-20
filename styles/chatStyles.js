@@ -15,7 +15,6 @@ export default StyleSheet.create({
     /* פריסת עמוד */
     page: {
         flex: 1,
-        // backgroundColor: Colors.pink100, // רקע וורוד בהיר
         width: "100%",
     },
     // כמו pageContent ב-overview
@@ -36,14 +35,14 @@ export default StyleSheet.create({
 
     /* כרטיס / קונטיינר */
     card: {
-        backgroundColor: Colors.blueLight,
+        backgroundColor: Colors.white,
         borderRadius: 16,
         padding: 18,
         marginBottom: 20,
         width: "100%",
         borderWidth: 2,
-        borderColor: Colors.pink,
-        shadowColor: Colors.blue,
+        borderColor: Colors.white,
+        shadowColor: Colors.white,
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.15,
         shadowRadius: 8,
@@ -114,13 +113,13 @@ export default StyleSheet.create({
     itemRow: {
         flexDirection: "row",
         alignItems: "center",
-        backgroundColor: Colors.blueLight,
+        backgroundColor: Colors.white,
         paddingHorizontal: 16,
         paddingVertical: 14,
         marginBottom: 10,
         borderRadius: 14,
         borderWidth: 1,
-        borderColor: Colors.pink,
+        borderColor: Colors.white,
         shadowColor: Colors.blue,
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.1,
@@ -185,12 +184,12 @@ export default StyleSheet.create({
 
     /* --- חדר צ'אט ([roomId]) --- */
     backBtn: { padding: 10, alignSelf: "flex-start" },
-    backBtnText: { color: Colors.pinkDeep, fontSize: 16 },
+    backBtnText: { color: Colors.white, fontSize: 16 },
 
     listWithInput: { paddingTop: 0, paddingBottom: 90, gap: 10 },
 
     postCard: {
-        backgroundColor: Colors.blueLight,
+        backgroundColor: Colors.white,
         borderRadius: 14,
         padding: 14,
         shadowColor: Colors.blue,
@@ -200,7 +199,7 @@ export default StyleSheet.create({
         elevation: 2,
         marginTop: 10,
         borderWidth: 1,
-        borderColor: Colors.pink,
+        borderColor: Colors.white,
     },
     postText: { fontSize: 16, color: Colors.text, textAlign: "right" },
 
@@ -222,14 +221,14 @@ export default StyleSheet.create({
         alignItems: "center",
         padding: 8,
         borderTopWidth: 1,
-        borderColor: Colors.pink,
+        borderColor: Colors.white,
         marginBottom: 10,
-        backgroundColor: Colors.blueLight,
+        backgroundColor: Colors.white,
     },
     input: {
         flex: 1,
         borderWidth: 1,
-        borderColor: Colors.pink,
+        borderColor: Colors.blueLight,
         borderRadius: 12,
         paddingHorizontal: 12,
         paddingVertical: 10,
@@ -302,7 +301,7 @@ export default StyleSheet.create({
     guidanceItem: { color: Colors.deepText, fontSize: 14, lineHeight: 20, textAlign: "right" },
 
     cardHeaderRow: {
-        backgroundColor: Colors.blueLight,
+        backgroundColor: Colors.white,
         borderRadius: 16,
         paddingVertical: 18,
         paddingHorizontal: 18,
@@ -311,7 +310,7 @@ export default StyleSheet.create({
         justifyContent: "center",
         position: "relative",
         borderWidth: 2,
-        borderColor: Colors.pink,
+        borderColor: Colors.white,
         shadowColor: Colors.blue,
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.15,

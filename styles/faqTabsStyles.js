@@ -11,13 +11,13 @@ const faqTabsStyles = StyleSheet.create({
         paddingHorizontal: 8,
     },
     tabButton: {
-        backgroundColor: Colors.gentlePink, // ורוד עדין לטאבים לא פעילים
+        backgroundColor: Colors.pinkLight, // ורוד עדין לטאבים לא פעילים
         paddingVertical: 12,
         paddingHorizontal: 20,
         borderRadius: 12,
         margin: 6,
         borderWidth: 2,
-        borderColor: Colors.mistyRose,
+        borderColor: Colors.pinkLight,
         elevation: 2,
         shadowColor: Colors.pinkShadowSoft,
         shadowOpacity: 0.1,
@@ -27,10 +27,10 @@ const faqTabsStyles = StyleSheet.create({
     },
 
     tabButtonActive: {
-        backgroundColor: Colors.skyBlue, // תכלת שמיים בהיר לטאב פעיל
-        borderColor: Colors.lightSkyBlue,
+        backgroundColor: Colors.blue, // תכלת שמיים בהיר לטאב פעיל
+        borderColor: Colors.blue,
         elevation: 4,
-        shadowColor: Colors.skyBlue,
+        shadowColor: Colors.blueDeep,
         shadowOpacity: 0.2,
         shadowOffset: { width: 0, height: 4 },
         shadowRadius: 8,
