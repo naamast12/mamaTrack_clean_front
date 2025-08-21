@@ -9,7 +9,7 @@ export const FONT = baseSize * 0.05;
 export const IMG_H = FONT * 1.2;
 export const IMG_W = IMG_H * 2.4;
 export const LINE_Y_RATIO = 0.68;
-export const TEXT_START_X = IMG_W * 0.38;
+export const TEXT_START_X = IMG_W * 0.41;
 
 const logoStyle = StyleSheet.create({
     logo: {
