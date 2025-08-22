@@ -3,8 +3,8 @@ import { Colors } from '../constants/Colors';
 
 const babyChecklistStyles = StyleSheet.create({
   centeredBox: {
-    width: '90%',
-    maxWidth: 600,
+    width: '100%',
+    maxWidth: 850,
     alignSelf: 'center',
   },
   container: {

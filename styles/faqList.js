@@ -3,6 +3,7 @@ import { StyleSheet } from 'react-native';
 import { Colors } from '../constants/Colors';
 
 const faqListStyles = StyleSheet.create({
+
     card: {
         backgroundColor: Colors.pinkLight, // ורוד לבנדר בהיר במקום לבן
         padding: 20,
@@ -17,8 +18,8 @@ const faqListStyles = StyleSheet.create({
         marginTop: 16,
         borderWidth: 1,
         borderColor: Colors.pinkBorder, // ורוד ערפל עדין
-        width: '90%', // לא על כל המסך
-        maxWidth: 600, // מקסימום רוחב מוגבל
+        width: '100%', // לא על כל המסך
+        maxWidth: 850, // מקסימום רוחב מוגבל
         alignSelf: 'center', // מרכז את הכרטיס
     },
 
@@ -66,6 +67,7 @@ const faqListStyles = StyleSheet.create({
         shadowOpacity: 0.1,
         shadowOffset: { width: 0, height: 2 },
         shadowRadius: 4,
+
     },
     questionText: {
         fontWeight: 'bold',
@@ -78,6 +80,8 @@ const faqListStyles = StyleSheet.create({
         padding: 16,
         backgroundColor: Colors.blueLight, // תכלת בהיר בדיוק כמו החלון הקטן
         marginTop: 8,
+        width: '100%',
+
         borderRadius: 12,
         textAlign: 'right',
         fontSize: 14,
@@ -108,7 +112,7 @@ const faqListStyles = StyleSheet.create({
         paddingVertical: 12,
         paddingHorizontal: 20,
         borderRadius: 12,
-        color: Colors.blue700, // כחול כהה לטקסט
+        color: Colors.pinkDeep, // כחול כהה לטקסט
         fontWeight: 'bold',
         textDecorationLine: 'underline',
         fontSize: 15,

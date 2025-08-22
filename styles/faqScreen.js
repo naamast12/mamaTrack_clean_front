@@ -15,8 +15,8 @@ const faqScreenStyles = StyleSheet.create({
         backgroundColor: Colors.white, // רקע תכלת בהיר מאוד כמו שביקשת - רק החלון הקטן
         borderRadius: 24,
         padding: 28,
-        width: '90%', // לא על כל המסך
-        maxWidth: 600, // מקסימום רוחב מוגבל
+        width: '100%', // לא על כל המסך
+        maxWidth: 850, // מקסימום רוחב מוגבל
         alignSelf: 'center',
         alignItems: 'center',
         marginBottom: 40,
@@ -84,8 +84,8 @@ const faqScreenStyles = StyleSheet.create({
     },
 
     fullWidthBox: {
-        width: '90%', // לא על כל המסך
-        maxWidth: 600, // מקסימום רוחב מוגבל
+        width: '100%', // לא על כל המסך
+        maxWidth: 850, // מקסימום רוחב מוגבל
         alignSelf: 'center',
     },
 

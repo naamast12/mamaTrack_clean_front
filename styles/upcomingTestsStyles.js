@@ -97,7 +97,7 @@ export const screenStyles = StyleSheet.create({
         shadowOpacity: 0.05,
         shadowRadius: 6,
         shadowOffset: { width: 0, height: 3 },
-        width: '90%',          // ← היה '60%'
+        width: '100%',          // ← היה '60%'
         alignSelf: 'center',   // ← במקום center
     },
 
@@ -157,12 +157,10 @@ export const testCardStyles = StyleSheet.create({
         shadowRadius: 6,
         shadowOffset: { width: 0, height: 3 },
 
-        width: '90%',         // ← היה 75%
+        width: '100%',         // ← היה 75%
         alignSelf: 'center',  // ← במקום center
 
-        // הסירי את המגבלות:
-        // minWidth: 320,
-        // maxWidth: 900,
+
     },
 
     headerRow: { flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center' },

@@ -1,17 +1,28 @@
 // styles/<your-file>.js
-import { StyleSheet } from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 import { Colors } from '../constants/Colors';
 
 export default StyleSheet.create({
     centeredBox: {
-        width: '90%',
-        maxWidth: 600,
+        width: '100%',
+        maxWidth: 850,
         alignSelf: 'center',
     },
     container: {
         flex: 1,
-        // backgroundColor: Colors.pink100,
         padding: 20,
+    },
+    root: {
+        flex: 1,
+        backgroundColor: Colors.pageBg ?? '#FDF6F6',
+        ...(Platform.OS === 'web' ? { minHeight: '100vh' } : {}),
+    },
+
+    // התוכן של ה-ScrollView – גורם לתוכן “לדחוף” לגובה ולגלול
+    pageContent: {
+        flexGrow: 1,
+        padding: 20,
+        paddingBottom: 24,
     },
 
     header: {
