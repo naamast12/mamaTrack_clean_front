@@ -21,9 +21,11 @@ export default function ContractionTimer() {
   // ---- helpers ----
   const formatInterval = (seconds) => {
     if (!seconds || seconds < 0) return '-';
-    const mins = Math.floor(seconds / 60);
+    const hours = Math.floor(seconds / 3600);
+    const mins = Math.floor((seconds % 3600) / 60);
     const secs = seconds % 60;
     const parts = [];
+    if (hours > 0) parts.push(`${hours} ${hours === 1 ? 'שעה' : 'שעות'}`);
     if (mins > 0) parts.push(`${mins} ${mins === 1 ? 'דקה' : 'דקות'}`);
     if (secs > 0) parts.push(`${secs} ${secs === 1 ? 'שנייה' : 'שניות'}`);
     return parts.join(' ו');
