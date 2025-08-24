@@ -188,6 +188,8 @@ export default function ContractionTimer() {
               <View style={contractionTimerStyles.card}>
                 <Text style={contractionTimerStyles.title}>⏱️ טיימר צירים</Text>
                 <Text style={contractionTimerStyles.subtitle}>עקבי אחרי משך הציר והמרווחים ביניהם, נתריע לך כשיגיע הזמן לצאת לבית חולים 💗</Text>
+                <Text style={contractionTimerStyles.subtitle}>איך אנחנו מתזמנים? כאשר הצירים מופיעים כל 5 דקות ונמשכים דקה כל אחד הגיע הזמן לצאת לביל חולים🥳</Text>
+
                 <Text style={contractionTimerStyles.timerText}>
                   {isTiming ? `משך: ${duration} שניות` : 'לחצי "התחל ציר" כדי להתחיל לתזמן'}
                 </Text>
