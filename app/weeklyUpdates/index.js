@@ -64,6 +64,7 @@ export default function WeeklyUpdatesPage() {
                     />
                   </TouchableOpacity>
 
+
                 {/* Modal עם הרשימה */}
                 <Modal
                     visible={open}
