@@ -20,6 +20,7 @@ import sharedStyles from '../../styles/sharedStyles';
 import storage from '../utils/storage';
 import { Colors } from '../../constants/Colors';
 import api from '../../src/api/axiosConfig';
+import {useSafeNavigate} from "../utils/useSafeNavigate";
 
 export default function Login() {
     const [mail, setMail] = useState('');
@@ -28,6 +29,8 @@ export default function Login() {
     const [errors, setErrors] = useState({ mail: '', password: '', form: '' });
 
     const router = useRouter();
+    const go = useSafeNavigate();
+
 
     const toggleShowPassword = () => setShowPassword(!showPassword);
     const moveToRegistration = () => router.push('/authentication/Register');
@@ -65,7 +68,7 @@ export default function Login() {
                 alert('התחברות הצליחה!');
                 setMail('');
                 setPassword('');
-                router.replace('/'); // שנה לפי הצורך
+                go('/overview'); // שנה לפי הצורך
             } else {
                 setErrors((e) => ({ ...e, form: data.message || 'שגיאה בהתחברות' }));
             }

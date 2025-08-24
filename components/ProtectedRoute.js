@@ -6,6 +6,7 @@ import { AuthContext } from './ui/AuthProvider';
 import { dashboardStyles } from '../styles/dashboardStyles';
 import { Logo } from '../app/utils/Logo';
 import storage from '../app/utils/storage';
+import {useSafeNavigate} from "../app/utils/useSafeNavigate";
 
 export default function ProtectedRoute({ children, requireAuth = false }) {
     const { user, isInit } = useContext(AuthContext);
@@ -15,6 +16,8 @@ export default function ProtectedRoute({ children, requireAuth = false }) {
 
     const [redirecting, setRedirecting] = useState(false);
     const [hasToken, setHasToken] = useState(null); // null=עוד בודק, true/false=תוצאה
+
+    const go = useSafeNavigate();
 
     useEffect(() => {
         Animated.loop(
@@ -53,7 +56,7 @@ export default function ProtectedRoute({ children, requireAuth = false }) {
         // עמודי אימות: יש user → לדאשבורד/אוברוויו
         if (!requireAuth && user && inAuth) {
             setRedirecting(true);
-            router.replace('/overview'); // אם היעד שלך הוא /overview – החליפי כאן
+            go('/overview'); // אם היעד שלך הוא /overview – החליפי כאן
             return;
         }
     }, [requireAuth, user, isInit, hasToken, segments, router, redirecting]);
