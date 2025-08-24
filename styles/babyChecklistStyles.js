@@ -178,14 +178,25 @@ const babyChecklistStyles = StyleSheet.create({
   itemRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 18,
+    backgroundColor: Colors.blueLight,
+    paddingHorizontal: 20,
+    paddingVertical: 16,
+    marginBottom: 8,
+    borderRadius: 12,
+    shadowColor: Colors.blue,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 4,
+    elevation: 2,
     borderBottomWidth: 1,
     borderBottomColor: Colors.pinkDeep,
-    backgroundColor: Colors.blueLight, // תכלת בהיר כמו בעמוד השאלות הנפוצות
   },
   itemRowLast: { borderBottomWidth: 0 },
-  itemRowChecked: { backgroundColor: Colors.pink100 }, // ורוד בהיר לשורות מסומנות
-
+  itemRowChecked: {
+    backgroundColor: Colors.pink100,
+    borderLeftWidth: 4,
+    borderLeftColor: Colors.pink,
+  },
   checkbox: {
     width: 28,
     height: 28,

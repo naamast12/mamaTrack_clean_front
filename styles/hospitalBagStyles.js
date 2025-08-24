@@ -57,7 +57,7 @@ export default StyleSheet.create({
     },
     decorativeLine: {
         height: 3,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.blue, // תכלת לקו הדקורטיבי
         borderRadius: 2,
         marginVertical: 8,
         alignSelf: 'center',
