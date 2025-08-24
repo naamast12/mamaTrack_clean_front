@@ -1,7 +1,9 @@
 // app/weeklyUpdates/index.js
 import React, { useEffect, useState, useCallback } from 'react';
- import { View, Text, TouchableOpacity, ActivityIndicator, ScrollView,
-          Modal, FlatList } from 'react-native';import { MaterialCommunityIcons } from '@expo/vector-icons';
+ import {
+    View, Text, TouchableOpacity, ActivityIndicator, ScrollView,
+    Modal, FlatList, TouchableWithoutFeedback
+} from 'react-native';import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import ProtectedRoute from '@/components/ProtectedRoute';
 import { HomeButton } from '../utils/HomeButton';
@@ -69,7 +71,10 @@ export default function WeeklyUpdatesPage() {
                     animationType="slide"
                     onRequestClose={() => setOpen(false)}
                 >
-                    <View style={styles.backdrop} onTouchEnd={() => setOpen(false)} />
+
+                    <TouchableWithoutFeedback onPress={() => setOpen(false)}>
+                        <View style={styles.backdrop} />
+                    </TouchableWithoutFeedback>
 
                     <View style={styles.listContainer}>
                         <FlatList
