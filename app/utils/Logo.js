@@ -9,14 +9,17 @@ import {
     LINE_Y_RATIO,
     TEXT_START_X,
 } from "../../styles/logoStyle";
+import {useSafeNavigate} from "./useSafeNavigate";
 
 export function Logo() {
     const router = useRouter();
+    const go = useSafeNavigate();
+
 
     const textTop = IMG_H * LINE_Y_RATIO - FONT * 0.76;
 
     return (
-        <Pressable onPress={() => router.push("/overview")} hitSlop={10}>
+        <Pressable onPress={() => go("/overview")} hitSlop={10}>
             <View style={logoStyle.logoContainer}>
                 <Image
                     source={require("../../assets/images/logo.png")}

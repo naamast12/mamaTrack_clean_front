@@ -135,7 +135,7 @@ export const Register = () => {
                 setMail('');
                 setPassword('');
                 setConfirmPassword('');
-                router.push('/authentication/Login');
+                router.replace('/authentication/Login');
             } else {
                 Alert.alert("שגיאה", response.data.message || "ההרשמה נכשלה, נסה שוב");
             }
@@ -158,7 +158,7 @@ export const Register = () => {
 
 
     const moveToLoginPage = () => {
-        router.push('/authentication/Login');
+        router.replace('/authentication/Login');
     };
 
     return (

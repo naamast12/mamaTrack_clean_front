@@ -7,14 +7,18 @@ import {dashboardStyles} from "../../styles/dashboardStyles";
 import {Feather, FontAwesome} from "@expo/vector-icons";
 import {Colors} from "../../constants/Colors";
 import React from "react";
+import {useSafeNavigate} from "./useSafeNavigate.js";
 
 export function HomeButton() {
 
     const router = useRouter();
 
+    const go = useSafeNavigate();
+
+
     return (
         <View style={dashboardStyles.header}>
-            <TouchableOpacity onPress={() => router.push('/overview')} style={dashboardStyles.logoutIconButton}>
+            <TouchableOpacity onPress={() => go('/overview')} style={dashboardStyles.logoutIconButton}>
                 <FontAwesome name="home" size={30} color={Colors.pink} />
             </TouchableOpacity>
         </View>

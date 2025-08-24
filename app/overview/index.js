@@ -9,7 +9,7 @@ import getOverviewStyles from '../../styles/overviewStyles';
 import {dashboardStyles} from "../../styles/dashboardStyles";
 import {Colors} from "../../constants/Colors";
 import {LinearGradient} from "expo-linear-gradient";
-import styles from '../../styles/overviewStyles';
+import {useSafeNavigate} from "../utils/useSafeNavigate.js";
 
 const useWeeklyApi = () => {
     const getWeeklyUpdate = useCallback(async (week) => {
@@ -18,6 +18,7 @@ const useWeeklyApi = () => {
     }, []);
     return { getWeeklyUpdate };
 };
+
 
 export default function OverviewScreen() {
     const router = useRouter();
@@ -28,7 +29,10 @@ export default function OverviewScreen() {
     const [weekly, setWeekly] = useState(null);
     const [loading, setLoading] = useState(true);
     const [err, setErr] = useState('');
-      // /* ── כפתור פרופיל צף ── */
+
+    const go = useSafeNavigate();
+
+    // /* ── כפתור פרופיל צף ── */
       //     const ProfileButton = () => (
       //       <TouchableOpacity
       // style={styles.fabProfile}
@@ -137,7 +141,7 @@ export default function OverviewScreen() {
                                             {/* כפתור פרופיל בתוך הכרטיס */}
                                             <TouchableOpacity
                                                 style={styles.profileBtnMini}
-                                                onPress={() => router.push('/MyProfile')}
+                                                onPress={() => router.navigate('/MyProfile')}
                                                 accessibilityLabel="עמוד פרופיל"
                                             >
                                                 <MaterialCommunityIcons
@@ -190,7 +194,7 @@ export default function OverviewScreen() {
                                 {/* שלישיית הכפתורים */}
                                 <View style={styles.navGrid}>
                                     <TouchableOpacity
-                                        onPress={() => router.push('/weeklyUpdates')}
+                                        onPress={() => go('/weeklyUpdates')}
                                         style={[styles.navBtn, styles.navBtnPrimary, styles.navItem]}
                                     >
                                         <View style={styles.btnContent}>
@@ -200,7 +204,7 @@ export default function OverviewScreen() {
                                     </TouchableOpacity>
 
                                     <TouchableOpacity
-                                        onPress={() => router.push('/upcomingTests')}
+                                        onPress={() => go('/upcomingTests')}
                                         style={[styles.navBtn, styles.navBtnGhost, styles.navItem]}
                                     >
                                         <View style={styles.btnContent}>
@@ -210,7 +214,7 @@ export default function OverviewScreen() {
                                     </TouchableOpacity>
 
                                     <TouchableOpacity
-                                        onPress={() => router.push('/faq')}
+                                        onPress={() => go('/faq')}
                                         style={[styles.navBtn, styles.navItem]}
                                     >
                                         <View style={styles.btnContent}>
@@ -258,7 +262,7 @@ export default function OverviewScreen() {
                         <View style={styles.actionRow}>
                             {/* 1. רשימת קניות לתינוק – לילך-בינוני */}
                             <TouchableOpacity
-                                onPress={() => router.push('/babyChecklist')}
+                                onPress={() => go('/babyChecklist')}
                                 style={[styles.actionBtn, styles.actionLilac]}
                             >
                                 <View style={styles.btnContent}>
@@ -268,7 +272,7 @@ export default function OverviewScreen() {
                             </TouchableOpacity>
 
                             <TouchableOpacity
-                                onPress={() => router.push('/contractionTimer')}
+                                onPress={() => go('/contractionTimer')}
                                 style={[styles.actionBtn, styles.actionBlue]}
                             >
                                 <View style={styles.btnContent}>
@@ -278,7 +282,7 @@ export default function OverviewScreen() {
                             </TouchableOpacity>
 
                             <TouchableOpacity
-                                onPress={() => router.push('/hospitalBag')}
+                                onPress={() => go('/hospitalBag')}
                                 style={[styles.actionBtn, styles.actionPeach]}
                             >
                                 <View style={styles.btnContent}>
@@ -289,7 +293,7 @@ export default function OverviewScreen() {
 
 
                             <TouchableOpacity
-                                onPress={() => router.push('/chats')}
+                                onPress={() => go('/chats')}
                                 style={styles.chatBtnWide}
                             >
                                 <View style={styles.btnContent}>

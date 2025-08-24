@@ -1,26 +1,29 @@
 // app/_layout.tsx
 import { DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { Slot } from 'expo-router';
+import { Stack } from 'expo-router';
 import React from 'react';
 import { View, Text, ActivityIndicator } from 'react-native';
-import { AuthProvider, AuthContext } from '../components/ui/AuthProvider'; // ✅ נתיב נכון
-
+import { AuthProvider, AuthContext } from '../components/ui/AuthProvider';
 
 export default function RootLayout() {
     return (
         <AuthProvider>
-            <AuthLoader> {/* ✅ מציג טעינת מסך אם צריך */}
+            <AuthLoader>
                 <ThemeProvider value={DefaultTheme}>
-                    <Slot />
+                    <Stack
+                        screenOptions={{
+                            headerShown: false,
+                            freezeOnBlur: true,   // משאיר מסכים חיים כשעוברים לאחרים
+                        }}
+                    />
                 </ThemeProvider>
             </AuthLoader>
         </AuthProvider>
     );
 }
-// AuthLoader - רכיב טעינה עם טיפוס נכון ל-children
+
 function AuthLoader({ children }: { children: React.ReactNode }) {
     const { isInit } = React.useContext(AuthContext);
-
     if (!isInit) {
         return (
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -29,6 +32,5 @@ function AuthLoader({ children }: { children: React.ReactNode }) {
             </View>
         );
     }
-
     return <>{children}</>;
 }
