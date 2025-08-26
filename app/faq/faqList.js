@@ -3,6 +3,8 @@ import { View, Text, TouchableOpacity, Linking } from 'react-native';
 import faqData from './faqData';
 import styles from '../../styles/faqList'; // 👈 הנתיב לקובץ העיצוב
 
+export const ALL = "הכל";
+
 export default function FaqList({ selectedCategory, searchQuery }) {
     const [openIndex, setOpenIndex] = useState(null);
 
@@ -13,20 +15,34 @@ export default function FaqList({ selectedCategory, searchQuery }) {
             const allQuestions = [];
             faqData.forEach(category => {
                 category.questions.forEach(question => {
-                    if (question.question.includes(searchQuery) ||
-                        question.answer.includes(searchQuery)) {
+                    if (
+                        question.question.includes(searchQuery) ||
+                        question.answer.includes(searchQuery)
+                    ) {
                         allQuestions.push({
                             ...question,
-                            categoryName: category.category
+                            categoryName: category.category,
                         });
                     }
                 });
             });
             return allQuestions;
         } else if (selectedCategory) {
-            // הצגת שאלות מקטגוריה נבחרת
+            // "הכל" – איסוף מכל הקטגוריות
+            if (selectedCategory === ALL) {
+                const allQuestions = [];
+                faqData.forEach(category => {
+                    category.questions.forEach(q => {
+                        allQuestions.push({ ...q, categoryName: category.category });
+                    });
+                });
+                return allQuestions;
+            }
+            // קטגוריה ספציפית
             const category = faqData.find(cat => cat.category === selectedCategory);
-            return category ? category.questions.map(q => ({ ...q, categoryName: category.category })) : [];
+            return category
+                ? category.questions.map(q => ({ ...q, categoryName: category.category }))
+                : [];
         }
         return [];
     };
@@ -34,9 +50,9 @@ export default function FaqList({ selectedCategory, searchQuery }) {
     const filteredQuestions = getFilteredQuestions();
 
     if (filteredQuestions.length === 0) {
-        const message = searchQuery ?
-            `לא נמצאו שאלות עבור "${searchQuery}"` :
-            'לא נמצאו שאלות לקטגוריה זו.';
+        const message = searchQuery
+            ? `לא נמצאו שאלות עבור "${searchQuery}"`
+            : 'לא נמצאו שאלות לקטגוריה זו.';
         return <Text style={styles.message}>{message}</Text>;
     }
 
@@ -44,9 +60,12 @@ export default function FaqList({ selectedCategory, searchQuery }) {
         <View style={styles.card}>
             {filteredQuestions.map((q, index) => (
                 <View key={index} style={styles.item}>
-                    {searchQuery && (
-                        <Text style={styles.categoryLabel}>{q.categoryName}</Text>
-                    )}
+
+                    {/*{((searchQuery && searchQuery.trim().length > 0) || selectedCategory === ALL) && (*/}
+                    {/*    <Text style={styles.categoryLabel}></Text>*/}
+                    {/*)}*/}
+
+
                     <View style={styles.questionContainer}>
                         <TouchableOpacity
                             style={styles.question}
@@ -61,21 +80,18 @@ export default function FaqList({ selectedCategory, searchQuery }) {
                 </View>
             ))}
 
-            {/* הצגת קישור רק אם יש קטגוריה נבחרת */}
-            {selectedCategory && !searchQuery && (
-                (() => {
-                    const category = faqData.find(cat => cat.category === selectedCategory);
-                    return category && category.link ? (
-                        <TouchableOpacity
-                            style={styles.linkContainer}
-                            onPress={() => Linking.openURL(category.link)}
-                        >
-                            <Text style={styles.linkText}>למידע נוסף על {category.category}</Text>
-                        </TouchableOpacity>
-                    ) : null;
-                })()
-            )}
+            {/* קישור למידע נוסף יוצג רק בקטגוריה ספציפית, לא ב"הכל" ולא בחיפוש */}
+            {selectedCategory && selectedCategory !== ALL && !searchQuery && (() => {
+                const category = faqData.find(cat => cat.category === selectedCategory);
+                return category && category.link ? (
+                    <TouchableOpacity
+                        style={styles.linkContainer}
+                        onPress={() => Linking.openURL(category.link)}
+                    >
+                        <Text style={styles.linkText}>למידע נוסף על {category.category}</Text>
+                    </TouchableOpacity>
+                ) : null;
+            })()}
         </View>
     );
-
 }

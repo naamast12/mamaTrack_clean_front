@@ -8,7 +8,7 @@ import {HomeButton} from "../utils/HomeButton";
 import { Colors } from '../../constants/Colors';
 
 export default function FaqScreen() {
-    const [selectedCategory, setSelectedCategory] = useState(null);
+  //  const [selectedCategory, setSelectedCategory] = useState(null);
     const [searchQuery, setSearchQuery] = useState('');
 
     const handleCategorySelect = (category) => {
@@ -16,6 +16,7 @@ export default function FaqScreen() {
             prev === category ? null : category
         );
     };
+    const [selectedCategory, setSelectedCategory] = useState("הכל"); // במקום null
 
     const handleSearch = (text) => {
         setSearchQuery(text);
@@ -60,10 +61,10 @@ export default function FaqScreen() {
                 )}
 
                 {/* תמונה תחתונה */}
-                <Image
-                    source={require('../../assets/images/pregnant-illustration.png')}
-                    style={faqScreenStyles.image}
-                />
+                {/*<Image*/}
+                {/*    source={require('../../assets/images/pregnant-illustration.png')}*/}
+                {/*    style={faqScreenStyles.image}*/}
+                {/*/>*/}
             </ScrollView>
 
         </ProtectedRoute>

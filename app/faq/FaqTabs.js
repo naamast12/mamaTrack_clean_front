@@ -2,21 +2,25 @@ import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import styles from '../../styles/faqTabsStyles';
 
+export const ALL = "הכל";
+
 // אייקונים חמודים לכל קטגוריה
 const categoryIcons = {
+    [ALL]: "📚",
     "בדיקות": "🔬",
     "תזונה": "🥗",
     "פעילות גופנית": "🧘‍♀️",
     "הכנה ללידה": "👶",
-    "תרופות ותוספים": "💊"
+    "תרופות ותוספים": "💊",
 };
 
 const categories = [
+    ALL,           // 👈 כפתור "הכל"
     "בדיקות",
     "תזונה",
     "פעילות גופנית",
     "הכנה ללידה",
-    "תרופות ותוספים"
+    "תרופות ותוספים",
 ];
 
 export default function FaqTabs({ selected, onSelect }) {
