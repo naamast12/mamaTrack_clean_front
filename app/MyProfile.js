@@ -1,6 +1,6 @@
 // app/MyProfile.js
 import React, { useState, useEffect } from 'react';
-import { View, Text, Pressable, ScrollView, Platform, Image as RNImage, ActivityIndicator } from 'react-native';
+import { View, Text, Pressable, ScrollView, Platform, Image as RNImage, ActivityIndicator,  TextInput, Alert } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import DatePicker from 'react-datepicker'; // לשימוש בווב
@@ -39,6 +39,29 @@ export default function MyProfile() {
     const [saving, setSaving] = useState(false);
     const [saveOk, setSaveOk] = useState(false);
     const [prevDate, setPrevDate] = useState(null);
+    // פרטים נוספים
+    const [numberOfBirths, setNumberOfBirths] = useState('');
+    const [babyGender, setBabyGender] = useState('');
+    const [preferredHospital, setPreferredHospital] = useState('');
+    const [healthInsurance, setHealthInsurance] = useState('');
+
+// שמירת פרטים נוספים
+    const [savingDetails, setSavingDetails] = useState(false);
+    const [saveDetailsOk, setSaveDetailsOk] = useState(false);
+    const genderOptions = [
+        { label: 'לא ידוע', value: '' },
+        { label: 'זכר', value: 'male' },
+        { label: 'נקבה', value: 'female' },
+    ];
+
+    const insuranceOptions = [
+        { label: 'בחרי קופת חולים', value: '' },
+        { label: 'כללית', value: 'clalit' },
+        { label: 'מכבי', value: 'maccabi' },
+        { label: 'מאוחדת', value: 'meuhedet' },
+        { label: 'לאומית', value: 'leumit' },
+    ];
+
 
     useEffect(() => {
         fetchUserFromServer();
@@ -105,6 +128,40 @@ export default function MyProfile() {
             setTimeout(() => setSaveOk(false), 2500);
         }
     }
+    async function saveAdditionalDetailsToServer() {
+        const details = {
+            numberOfBirths: numberOfBirths ? parseInt(numberOfBirths) : null,
+            babyGender: babyGender || null,
+            preferredHospital: preferredHospital || null,
+            healthInsurance: healthInsurance || null,
+        };
+
+        try {
+            const response = await api.put('/api/user/details', details);
+            return response;
+        } catch (error) {
+            console.error('❌ שגיאה בשמירת פרטים נוספים:', error?.response?.data || error.message);
+            throw error;
+        }
+    }
+
+    async function handleSaveAdditionalDetails() {
+        setSavingDetails(true);
+        setSaveDetailsOk(false);
+
+        try {
+            await saveAdditionalDetailsToServer();
+            setSaveDetailsOk(true);
+            await fetchUserFromServer(); // רענון מהשרת
+            Alert.alert('הצלחה', 'הפרטים הנוספים נשמרו בהצלחה');
+        } catch (e) {
+            Alert.alert('שגיאה', 'אירעה שגיאה בשמירת הפרטים. נסי שוב.');
+        } finally {
+            setSavingDetails(false);
+            setTimeout(() => setSaveDetailsOk(false), 2500);
+        }
+    }
+
 
     // פתיחת פיקר לפי פלטפורמה
     function openDatePicker() {
@@ -220,7 +277,115 @@ export default function MyProfile() {
                                         ) : null}
                                     </View>
 
-                                    {/* כפתור תחתון: "בחרי/ערכי תאריך" בלבד (פותח את הפיקר) */}
+                                {/* כרטיס פרטים נוספים */}
+                                <View style={[styles.section, styles.sectionLg, { marginBottom: 12 }]}>
+                                    <Text style={styles.sectionTitle}>פרטים נוספים:</Text>
+
+                                    {/* מספר לידות קודמות */}
+                                    <View style={myProfileStyles.inputRow}>
+                                        <FontAwesome name="baby" size={18} color={Colors.brand} style={myProfileStyles.infoIcon} />
+                                        <Text style={styles.sectionText}>מספר לידות קודמות:</Text>
+                                        <TextInput
+                                            style={myProfileStyles.textInput}
+                                            value={numberOfBirths}
+                                            onChangeText={setNumberOfBirths}
+                                            placeholder="0"
+                                            keyboardType="numeric"
+                                            maxLength={2}
+                                        />
+                                    </View>
+
+                                    {/* מין העובר */}
+                                    <View style={myProfileStyles.inputRow}>
+                                        <FontAwesome name="venus-mars" size={18} color={Colors.brand} style={myProfileStyles.infoIcon} />
+                                        <Text style={styles.sectionText}>מין העובר:</Text>
+                                        <View style={myProfileStyles.pickerWrapper}>
+                                            {genderOptions.map((option) => (
+                                                <Pressable
+                                                    key={option.value}
+                                                    style={[
+                                                        myProfileStyles.optionButton,
+                                                        babyGender === option.value && myProfileStyles.optionButtonSelected,
+                                                    ]}
+                                                    onPress={() => setBabyGender(option.value)}
+                                                >
+                                                    <Text
+                                                        style={[
+                                                            myProfileStyles.optionText,
+                                                            babyGender === option.value && myProfileStyles.optionTextSelected,
+                                                        ]}
+                                                    >
+                                                        {option.label}
+                                                    </Text>
+                                                </Pressable>
+                                            ))}
+                                        </View>
+                                    </View>
+
+                                    {/* בית חולים מועדף */}
+                                    <View style={myProfileStyles.inputRow}>
+                                        <FontAwesome name="hospital-o" size={18} color={Colors.brand} style={myProfileStyles.infoIcon} />
+                                        <Text style={styles.sectionText}>בית חולים מועדף:</Text>
+                                        <TextInput
+                                            style={[myProfileStyles.textInput, { flex: 1 }]}
+                                            value={preferredHospital}
+                                            onChangeText={setPreferredHospital}
+                                            placeholder="הכניסי שם בית חולים"
+                                            multiline={false}
+                                        />
+                                    </View>
+
+                                    {/* קופת חולים */}
+                                    <View style={myProfileStyles.inputRow}>
+                                        <FontAwesome name="medkit" size={18} color={Colors.brand} style={myProfileStyles.infoIcon} />
+                                        <Text style={styles.sectionText}>קופת חולים:</Text>
+                                        <View style={myProfileStyles.pickerWrapper}>
+                                            {insuranceOptions.map((option) => (
+                                                <Pressable
+                                                    key={option.value}
+                                                    style={[
+                                                        myProfileStyles.optionButton,
+                                                        healthInsurance === option.value && myProfileStyles.optionButtonSelected,
+                                                    ]}
+                                                    onPress={() => setHealthInsurance(option.value)}
+                                                >
+                                                    <Text
+                                                        style={[
+                                                            myProfileStyles.optionText,
+                                                            healthInsurance === option.value && myProfileStyles.optionTextSelected,
+                                                        ]}
+                                                    >
+                                                        {option.label}
+                                                    </Text>
+                                                </Pressable>
+                                            ))}
+                                        </View>
+                                    </View>
+
+                                    {/* כפתור שמירה – ממולא (שיבלוט בתוך הכרטיס) */}
+                                    {/* כפתור "שמרי פרטים נוספים" — הגרסה המקורית */}
+                                    <Pressable
+                                        onPress={handleSaveAdditionalDetails}
+                                        style={[styles.navBtn, myProfileStyles.saveDetailsBtn]}
+                                        disabled={savingDetails}
+                                    >
+                                        <View style={{ flexDirection: 'row-reverse', alignItems: 'center', gap: 6 }}>
+                                            <FontAwesome name="save" size={18} color="white" />
+                                            <Text style={[styles.navBtnText, { color: 'white' }]}>
+                                                שמרי פרטים נוספים
+                                            </Text>
+                                            {savingDetails ? (
+                                                <ActivityIndicator size="small" color="white" />
+                                            ) : saveDetailsOk ? (
+                                                <Text style={{ fontSize: 12, color: '#c8e6c9' }}>  נשמר ✓</Text>
+                                            ) : null}
+                                        </View>
+                                    </Pressable>
+
+                                </View>
+
+
+                                {/* כפתור תחתון: "בחרי/ערכי תאריך" בלבד (פותח את הפיקר) */}
                                     <View style={styles.navGrid}>
                                         <Pressable
                                             onPress={openDatePicker}

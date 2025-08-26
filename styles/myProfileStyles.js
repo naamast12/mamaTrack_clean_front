@@ -8,6 +8,71 @@ export const myProfileStyles = StyleSheet.create({
         alignItems: 'center',
         gap: 16,
     },
+    // הוסיפי את הסטיילים האלה לקובץ myProfileStyles.js
+
+// פריטי עריכה
+    inputRow: {
+        flexDirection: 'row-reverse',
+        alignItems: 'flex-start',
+        marginBottom: 16,
+        gap: 8,
+        flexWrap: 'wrap',
+    },
+
+    textInput: {
+        borderWidth: 1,
+        borderColor: '#ddd',
+        borderRadius: 8,
+        paddingHorizontal: 12,
+        paddingVertical: 8,
+        fontSize: 16,
+        textAlign: 'right',
+        backgroundColor: '#fff',
+        minWidth: 100,
+    },
+
+// אופציות בחירה (מין עובר, קופת חולים)
+    pickerWrapper: {
+        flexDirection: 'row-reverse',
+        flexWrap: 'wrap',
+        gap: 8,
+        flex: 1,
+    },
+
+    optionButton: {
+        paddingHorizontal: 12,
+        paddingVertical: 8,
+        borderRadius: 20,
+        borderWidth: 1,
+        borderColor: Colors.blue,
+        backgroundColor: Colors.white,
+    },
+
+    optionButtonSelected: {
+        backgroundColor: Colors.pinkAccent, // או הצבע המועדף שלך
+        borderColor: Colors.pinkAccent,
+    },
+
+    optionText: {
+        fontSize: 14,
+        color: '#666',
+        textAlign: 'center',
+    },
+
+    optionTextSelected: {
+        color: 'white',
+        fontWeight: 'bold',
+    },
+
+// כפתור שמירת פרטים נוספים
+    saveDetailsBtn: {
+        backgroundColor: Colors.blueBgSoft, // או הצבע המועדף שלך
+        marginTop: 16,
+        paddingVertical: 12,
+        borderRadius: 8,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
 
     avatarWrapper: {
         width: 120,
