@@ -1,6 +1,6 @@
 // app/_layout.tsx
 import { DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { Stack } from 'expo-router';
+import {Slot, Stack} from 'expo-router';
 import React from 'react';
 import { View, Text, ActivityIndicator } from 'react-native';
 import { AuthProvider, AuthContext } from '../components/ui/AuthProvider';
@@ -10,11 +10,7 @@ export default function RootLayout() {
         <AuthProvider>
             <AuthLoader>
                 <ThemeProvider value={DefaultTheme}>
-                    <Stack
-                        screenOptions={{
-                            headerShown: false,
-                            freezeOnBlur: true,   // משאיר מסכים חיים כשעוברים לאחרים
-                        }}
+                    <Slot
                     />
                 </ThemeProvider>
             </AuthLoader>
