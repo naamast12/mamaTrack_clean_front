@@ -29,6 +29,7 @@
     "@toolpad/core": "^0.12.0",
     "@toolpad/utils": "^0.12.0",
     "axios": "^1.7.9",
+    "dayjs": "^1.11.14",
     "expo": "^53.0.12",
     "expo-blur": "~14.0.2",
     "expo-constants": "~17.0.4",
