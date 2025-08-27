@@ -10,7 +10,11 @@ export default function RootLayout() {
         <AuthProvider>
             <AuthLoader>
                 <ThemeProvider value={DefaultTheme}>
-                    <Slot
+                    <Stack
+                        screenOptions={{
+                            headerShown: false,
+                            freezeOnBlur: true,   // משאיר מסכים חיים כשעוברים לאחרים
+                        }}
                     />
                 </ThemeProvider>
             </AuthLoader>
